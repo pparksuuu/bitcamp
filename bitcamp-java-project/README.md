@@ -27,3 +27,13 @@ src/
       단위 테스트 설정 파일을 두는 폴더  
 
 ```
+
+``` java
+package step01;
+
+public class Exam01 {
+    public static void main(String[] args) {
+        System.out.println("src/step01/Exam01");
+    }
+}
+```
