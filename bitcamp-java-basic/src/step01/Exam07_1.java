@@ -18,6 +18,8 @@ public class Exam07_1 {
         //=>특별한 기호('')를 사용하여 문자를 표기하라!
         System.out.println('A');         
         
+        //특수문자를 입력할 수 없는 경우에는 코드값 앞에  \ u 문자를 붙이고
+        //유니코드 값 입력
         System.out.println('\u3182');
 
     }

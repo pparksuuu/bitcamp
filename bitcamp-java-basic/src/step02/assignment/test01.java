@@ -21,6 +21,8 @@ public class test01 {
         System.out.print("수학? ");
         s3 = KeyScan.nextInt();
 
+        System.out.println("===============");
+
         System.out.print(name + " ");
         System.out.print(s1 + " ");
         System.out.print(s2 + " ");
