@@ -1,11 +1,12 @@
 # 자바 프로젝트
 
-## ver-01
+## src01 - 컴파일과 실행
 - 학습목표
   - 메이븐(Maven) 프로젝트 폴더 구조에서 자바 코드를 작성하고, 컴파일하고 실행하는
   방법을 익힌다.
+  - 도메인 이름을 이용하여 패키지를 관리하는 방법을 익힌다.
 - 작업 내용
-  - 인사하는 자바 애플리케이션을 작성하라
+  - "Hello World"를 출력하는 자바 애플리케이션을 작성하라
 
 ## 준비
 - 프로젝트 폴더를 준비한다.
@@ -26,14 +27,4 @@ src/
     resources/  
       단위 테스트 설정 파일을 두는 폴더  
 
-```
-
-``` java
-package step01;
-
-public class Exam01 {
-    public static void main(String[] args) {
-        System.out.println("src/step01/Exam01");
-    }
-}
 ```
