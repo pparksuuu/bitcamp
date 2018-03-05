@@ -13,7 +13,8 @@ public class Exam02_1 {
         System.out.print("팀명?");        
 
         // nextLine()  (0d -> Carrage Return / 0a -> Line Feed)
-        // - Scanner 도구를 사용하여 키보드로부터 한 줄의 문자열을 가져올 때 사용하는 명령.
+        // - Scanner 도구를 사용하여 키보드로부터 한 줄의 문자열을 
+        // 가져올 때 사용하는 명령.
         // - 동작은?
         // 사용자가 한 줄 입력할 때까지, 즉 입력 데이터에 줄바꿈을 의미하는
         // 0d0a 2바이트가 들어올 때까지 대기.
