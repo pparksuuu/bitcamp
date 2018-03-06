@@ -1,0 +1,113 @@
+package step02.assignment;
+
+public class test02 {
+    public static void main(String[] args) {
+        java.io.InputStream keyboard = System.in;
+        java.util.Scanner KeyScan = new java.util.Scanner(keyboard);
+
+
+        // String[] name = new String[5];
+        // int[] kor = new int[5];
+        // int[] eng = new int[5];
+        // int[] math = new int[5];
+
+        // for(int i = 0;i<5;i++)
+        // {
+        //     System.out.print("입력? ");
+        //     name[i++] = KeyScan.next();
+        //     kor[i++] = KeyScan.nextInt();
+        //     eng[i++] = KeyScan.nextInt();
+        //     math[i++] = KeyScan.nextInt();
+        // }
+
+        // System.out.println(name[3]);
+
+        System.out.print("입력? ");
+        String name1 = KeyScan.next(); //next()는 공백을 만나면 리턴
+        int kor1 = KeyScan.nextInt();
+        int eng1 = KeyScan.nextInt();
+        int math1 = KeyScan.nextInt();
+        
+        int sum1 = kor1 + eng1 + math1;
+        float average1 = sum1 / 3;
+
+        System.out.print("입력? ");        
+        String name2 = KeyScan.next();
+        int kor2 = KeyScan.nextInt();
+        int eng2 = KeyScan.nextInt();
+        int math2 = KeyScan.nextInt();
+        
+        int sum2 = kor2 + eng2 + math2;
+        float average2 = sum2 / 3;
+
+        System.out.print("입력? ");        
+        String name3 = KeyScan.next();
+        int kor3 = KeyScan.nextInt();
+        int eng3 = KeyScan.nextInt();
+        int math3 = KeyScan.nextInt();
+        
+        int sum3 = kor3 + eng3 + math3;
+        float average3 = sum3 / 3;
+
+        System.out.print("입력? ");        
+        String name4 = KeyScan.next();
+        int kor4 = KeyScan.nextInt();
+        int eng4 = KeyScan.nextInt();
+        int math4 = KeyScan.nextInt();
+        
+        int sum4 = kor4 + eng4 + math4;
+        float average4 = sum4 / 3;
+
+        System.out.print("입력? ");        
+        String name5 = KeyScan.next();
+        int kor5 = KeyScan.nextInt();
+        int eng5 = KeyScan.nextInt();
+        int math5 = KeyScan.nextInt();
+        
+        int sum5 = kor5 + eng5 + math5;
+        float average5 = sum5 / 3;
+
+        System.out.println("===============");
+
+        System.out.print(name1 + " ");
+        System.out.print(kor1 + " ");
+        System.out.print(eng1 + " ");
+        System.out.print(math1 + " ");
+        System.out.print(sum1 + " ");
+        System.out.println(average1);
+
+        System.out.print(name2 + " ");
+        System.out.print(kor2 + " ");
+        System.out.print(eng2 + " ");
+        System.out.print(math2 + " ");
+        System.out.print(sum2 + " ");
+        System.out.println(average2);
+
+        System.out.print(name3 + " ");
+        System.out.print(kor3 + " ");
+        System.out.print(eng3 + " ");
+        System.out.print(math3 + " ");
+        System.out.print(sum3 + " ");
+        System.out.println(average3);
+
+
+        System.out.print(name4 + " ");
+        System.out.print(kor4 + " ");
+        System.out.print(eng4 + " ");
+        System.out.print(math4 + " ");
+        System.out.print(sum4 + " ");
+        System.out.println(average4);
+
+
+        System.out.print(name5 + " ");
+        System.out.print(kor5 + " ");
+        System.out.print(eng5 + " ");
+        System.out.print(math5 + " ");
+        System.out.print(sum5 + " ");
+        System.out.println(average5);
+
+
+        
+
+    }
+}

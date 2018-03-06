@@ -30,11 +30,12 @@ public class test01 {
         System.out.print(eng + " ");
         System.out.print(math + " ");
 
-        int sum = kor + eng + math;
-        //float average = sum / 3;
+        //int sum = kor + eng + math;
+        float average = sum / 3;
 
         System.out.print(sum);
-        System.out.print(" " + (float)((sum)/3));
+        System.out.println(" " + avaerage);
+       // System.out.print(" " + (float)((sum)/3));
         //System.out.print(" " + (float)(sum)/3.0);
         
 
