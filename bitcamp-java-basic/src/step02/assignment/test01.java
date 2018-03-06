@@ -6,29 +6,32 @@ public class test01 {
         java.util.Scanner KeyScan = new java.util.Scanner(keyboard);
 
 
-        String name;
-        int s1 = 0, s2 = 0, s3 = 0, sum = 0;
+        //String name = null;
+        // int kor = 0, eng = 0, math = 0, sum = 0;
 
         System.out.print("이름? ");
-        name = KeyScan.nextLine();
+        String name = KeyScan.nextLine();
 
         System.out.print("국어? ");
-        s1 = KeyScan.nextInt();
+        int kor = KeyScan.nextInt();
 
         System.out.print("영어? ");
-        s2 = KeyScan.nextInt();
+        //이전에 국어 점수를 입력받을 때 들어온 줄바꿈 코드는 
+        //nextInt() 메서드에서 버린다.
+        int eng = KeyScan.nextInt();
 
         System.out.print("수학? ");
-        s3 = KeyScan.nextInt();
+        int math = KeyScan.nextInt();
 
         System.out.println("===============");
 
         System.out.print(name + " ");
-        System.out.print(s1 + " ");
-        System.out.print(s2 + " ");
-        System.out.print(s3 + " ");
+        System.out.print(kor + " ");
+        System.out.print(eng + " ");
+        System.out.print(math + " ");
 
-        sum = s1 + s2 + s3;
+        int sum = kor + eng + math;
+        //float average = sum / 3;
 
         System.out.print(sum);
         System.out.print(" " + (float)((sum)/3));

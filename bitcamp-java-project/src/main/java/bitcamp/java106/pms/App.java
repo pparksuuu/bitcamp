@@ -6,27 +6,41 @@ public class App {
         java.util.Scanner KeyScan = new java.util.Scanner(keyboard);
 
 
-        String team, des, s_date, f_date;
-        int MAX=0;
-        System.out.print("팀명? ");
-        team = KeyScan.nextLine();
-        System.out.print("설명? ");
-        des = KeyScan.nextLine();
-        System.out.print("최대인원? ");
-        MAX = KeyScan.nextInt();
+        //String teamName, description, startDate, endDate;
+        //int maxQty=0;
 
+        System.out.print("팀명? ");
+        String teamName = KeyScan.nextLine();
+
+        System.out.print("설명? ");
+        String description = KeyScan.nextLine();
+
+        System.out.print("최대인원? ");
+        int maxQty = KeyScan.nextInt();
+        KeyScan.nextLine(); //숫자 뒤에 줄바꿈 코드를 읽는다.
+                            //일고 난 뒤에 아무것도 안하기 때문
+                            //일종의 줄바꿈 코드를 제거하는 효과가 있다.
+        System.out.print("시작일? ");
+        String startDate = KeyScan.nextLine();        
+                    
+        System.out.print("종료일? ");
+        String endDate = KeyScan.nextLine();
+                    
+        
+        /*내 코드 next() 사용.
         //nextInt에 값을 넣고 친 엔터 키 값이 시작일의 nextLine()으로 들어가버림.
         //-> next()로 개행문자/공백을 무시하고 입력을 받는다.
         System.out.print("시작일? ");
-        s_date = KeyScan.next();             
-        System.out.print("종료일? ");
-        f_date = KeyScan.next();
+        String startDate = KeyScan.next();        
 
+        System.out.print("종료일? ");
+        String endDate = KeyScan.next();
+        */
         System.out.println("=====================");
-        System.out.println("팀명: " + team);
-        System.out.println("설명: " + des);
-        System.out.println("최대인원: " + String.valueOf(MAX) + "명");
-        System.out.println("일자: " + s_date + " ~ " + f_date);
+        System.out.println("팀명: " + teamName);
+        System.out.println("설명: \n" + description);
+        System.out.println("최대인원: " + String.valueOf(maxQty) + "명");
+        System.out.println("일자: " + startDate + " ~ " + endDate);
 
         
         
