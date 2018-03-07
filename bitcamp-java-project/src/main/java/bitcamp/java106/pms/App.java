@@ -12,6 +12,8 @@ public class App {
         projectTeam[] arr = new projectTeam[5];
 
         int count = 0;
+        String a;
+        
         while(count<5) {
 
             arr[count] = new projectTeam();
@@ -27,21 +29,28 @@ public class App {
             arr[count].startDate = keyScan.nextLine();
             System.out.print("종료일? ");
             arr[count].endDate = keyScan.nextLine();
-
-            if(count == 4)
-            {
-                count++;
+            count++;
+            //최대 인원 5명을 넘어가면 자동으로 종료
+            if(count == 4) {
                 break;
             }
 
-            System.out.print("계속 입력하시겠습니까?(Y/n) ");
-            String a = keyScan.next();
-            keyScan.nextLine();
-            count++;
-            
-            if(a.equals("Y")) {
+            while(true) {
+                System.out.print("계속 입력하시겠습니까?(Y/n) ");
+                a = keyScan.next();
+                keyScan.nextLine();
+                if(a.equals("Y")) {
+                    break;
+                }
+                else if(a.equals("n")) {
+                    break;
+                }
+                else {
+                    System.out.println("'Y'나 'n' 중 한 문자를 입력하세요.");
+                }
             }
-            else if(a.equals("n")) {
+
+            if(a.equals("n")) {
                 break;
             }
         }
