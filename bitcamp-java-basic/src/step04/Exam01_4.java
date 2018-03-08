@@ -18,12 +18,36 @@ public class Exam01_4 {
         r = (float)i / (float)j;
         System.out.println(r);
         
-        int x = 21_0000_0000;
-        int y = 21_0000_0000;
-        int r1 = x + y;
-        long r2 = x + y;
-        System.out.println(r1);
-        System.out.println(r2);
+        
+        // int x = 21_0000_0000;
+        // int y = 21_0000_0000;
+        
+        // int와 int의 연산 결과는 무조건 int이다.
+        // 다른 타입이 될 수 없다.
+        // 0111 1111 1111 1111 1111 1111 1111 1111 = Integer.MAX_VALUE
+        int x = Integer.MAX_VALUE; //0x7fffffff = 약 +21억
+        int y = Integer.MAX_VALUE; //0x7fffffff = 약 +21억
+        int r1 = x + y; //0x7fffffff + 0x7fffffff = 0xffffffe = -2
+        long r2 = x + y; //0x7fffffff + 0x7fffffff = 0xffffffe = -2
+        long r3 = 0x7fffffff + 0x7fffffff;
+        System.out.println(r1); //int(4byte) + int(4byte) = int(4byte)
+        System.out.println(r2); //int(4byte) + int(4byte) = int(4byte)        
+        System.out.println(r3); //int(4byte) + int(4byte) = int(4byte)        
+        
+        float f1 = 987.6543f; 
+        float f2 = 1.111111f;
+        float r4 = f1 + f2; //987.6543 + 1.111111 = 988.7654311
+                            //float과 float의 연산 결과는 float이다.
+                            //그래서 메모리 크기를 넘어가는 뒤의 11은 짤린다.
+        double r5 = f1 + f2;
+        System.out.println(r4);//988.7654
+        System.out.println(r5);//988.765380859375
+
+        double d1 = 987.6543;
+        double d2 = 1.111111;
+        double r6 = d1 + d2; //988.765411
+        System.out.println(r6);
+
         }
     }
 
