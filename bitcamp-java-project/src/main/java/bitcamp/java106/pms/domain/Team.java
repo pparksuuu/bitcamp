@@ -1,6 +1,6 @@
-package bitcamp.java106.pms;
+package bitcamp.java106.pms.domain;
 
-public class projectTeam {
+public class Team {
     public String teamName;
     public String description;
     public int maxQty;
