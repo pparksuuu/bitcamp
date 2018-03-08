@@ -15,10 +15,19 @@ public class App {
         Team[] teams = new Team[100];
 
         int count = 0;
+<<<<<<< HEAD
         for(int i = 0; i < teams.length; i++) {
             count++;
             teams[i] = new Team();
         
+=======
+        String a;
+        
+        while(count<5) {
+
+            arr[count] = new projectTeam();
+
+>>>>>>> 41991c08d90b707739b593dcb5baa91bd1a9244e
             System.out.print("팀명? ");
             teams[i].teamName = keyScan.nextLine();
 
@@ -33,6 +42,7 @@ public class App {
             teams[i].startDate = keyScan.nextLine();
 
             System.out.print("종료일? ");
+<<<<<<< HEAD
             teams[i].endDate = keyScan.nextLine();
 
             if(count == teams.length) {
@@ -42,6 +52,31 @@ public class App {
             System.out.print("계속하시겠습니까?(Y/n)");
             String str = keyScan.nextLine();
             if(str.toLowerCase().equals("n")) {
+=======
+            arr[count].endDate = keyScan.nextLine();
+            count++;
+            //최대 인원 5명을 넘어가면 자동으로 종료
+            if(count == 4) {
+                break;
+            }
+
+            while(true) {
+                System.out.print("계속 입력하시겠습니까?(Y/n) ");
+                a = keyScan.next();
+                keyScan.nextLine();
+                if(a.equals("Y")) {
+                    break;
+                }
+                else if(a.equals("n")) {
+                    break;
+                }
+                else {
+                    System.out.println("'Y'나 'n' 중 한 문자를 입력하세요.");
+                }
+            }
+
+            if(a.equals("n")) {
+>>>>>>> 41991c08d90b707739b593dcb5baa91bd1a9244e
                 break;
             }
         }
