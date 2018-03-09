@@ -24,7 +24,8 @@ public class App {
             System.out.print("명령> ");
             String str = keyScan.nextLine();
             //명령어를 받아와서 공백으로 구분해서 배열로 반환.
-            String[] inputs = str.split("\\s");
+            String[] inputs = str.split(" ");
+            //String[] inputs = str.split("\\s");
 
                 if(inputs[0].equals("help")) {
                     System.out.println("팀 등록 명령 : team/add");
