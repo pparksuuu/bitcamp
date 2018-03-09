@@ -1,4 +1,4 @@
-// 증감 연산자 : 후위(post-fix) 증감 연산자 응용 1
+// 증감 연산자 : 후위(post-fix) 증감 연산자 응용 2
 package step04;
 
 public class Exam06_4 {
