@@ -9,6 +9,7 @@
 - 실행결과
 ```
 > java -classpath bin bitcamp.java106.pms.App
+명령>
 명령> help
 팀 등록 명령 : team/add
 팀 조회 명령 : team/list
