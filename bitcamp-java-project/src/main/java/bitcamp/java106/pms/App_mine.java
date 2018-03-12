@@ -20,7 +20,7 @@ public class App_mine {
         int tCount = 0;
         int mCount = 0;
         
-        while(true) {
+        while (true) {
 
             System.out.println();
             System.out.print("명령> ");
