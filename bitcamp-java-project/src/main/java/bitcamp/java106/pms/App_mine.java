@@ -113,14 +113,14 @@ public class App_mine {
                     System.out.print("이메일? ");
                     members[mCount].email = keyScan.nextLine();
                     System.out.print("암호? ");
-                    members[mCount].pwd = keyScan.nextLine();
+                    members[mCount].password = keyScan.nextLine();
                     mCount++;
                 }
 
                 else if(inputs[0].equals("member/list")) {
                     for(int i = 0; i < mCount; i++) {
                         System.out.printf("%s, %s, %s\n",
-                        members[i].id, members[i].email, members[i].pwd);
+                        members[i].id, members[i].email, members[i].password);
                     }
                 }
 
@@ -143,7 +143,7 @@ public class App_mine {
                         if(exist == true) {
                             System.out.printf("아이디: %s\n이메일: %s\n암호: %s\n",
                             members[t].id, members[t].email,
-                            members[t].pwd);
+                            members[t].password);
                         }
                         else {
                             System.out.println("해당 아이디의 회원이 없습니다.");

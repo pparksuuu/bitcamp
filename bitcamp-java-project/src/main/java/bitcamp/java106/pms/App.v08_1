@@ -21,7 +21,7 @@ public class App {
         Team[] teams = new Team[1000]; //team 객체의 "주소"를 1000개 받는 것.
         int teamIndex = 0;
 
-        while(true) {
+        while (true) {
             System.out.print("명령>");
             String[] arr = keyScan.nextLine().toLowerCase().split(" ");
             String input = arr[0];
