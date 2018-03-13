@@ -55,6 +55,8 @@ public class Exam04_5 {
 
         //lang2 - 0x00; //css = false
 
+        System.out.println(lang2);
 
+    }
 }
 
