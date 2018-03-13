@@ -55,5 +55,19 @@ public class Exam02_3 {
             default:
         }
 
+        //boolean 값을 switch와 case에 사용할 수 없다.
+        // boolean bool = "true";
+        // switch (bool) {
+        //     case true:
+        //     case false:
+        // }
+
+        //case에는 리터럴만 올 수 있다.
+        //즉 변수를 사용할 수 없다.
+        int x = 1, y = 300;
+        switch (x) {
+            case 1 * 300://OK!
+            case 1 * y://컴파일 오류
+        }
     }
 }
