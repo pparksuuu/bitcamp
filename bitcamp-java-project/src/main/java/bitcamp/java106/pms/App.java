@@ -157,13 +157,15 @@ public class App {
 
 
     public static void main(String[] args) {
-        
+
         while (true) {
             String[] arr = prompt();
 
             String menu = arr[0];
             if (arr.length == 2) {
                 option = arr[1];
+            } else {
+                option = null;
             }
 
             if (menu.equals("quit")) {
