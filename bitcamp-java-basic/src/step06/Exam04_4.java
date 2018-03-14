@@ -2,7 +2,7 @@
 package step06;
 
 
-public class Exam04_3 {
+public class Exam04_4 {
 
     static int m1(int value) {
         int r1 = m2(value);
