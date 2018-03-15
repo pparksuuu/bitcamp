@@ -4,8 +4,7 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.domain.Member;
 import java.util.Scanner;
 
-//ver 0.2 - 팀 삭제, 회원 삭제 기능 추가
-//ver 0.1 - 팀 변경, 회원 변경 기능 추가
+//ver 0.1 - 
 public class App {
     // 클래스 변수 = 스태틱 변수
     // => 클래스 안 어디에서나 사용할 수 있는 변수.
@@ -15,9 +14,37 @@ public class App {
     static Team[] teams = new Team[1000];
     static int teamIndex = 0;
     static String option = null; 
-
     static Member[] members = new Member[1000];
     static int memberIndex = 0;
+
+    static boolean confirm(String message) {
+        System.out.printf("%s (y,N)", message);
+        String input = keyScan.nextLine().toLowerCase();
+        if (input.equals("y")) 
+            return true;
+        else
+            return false;
+    }
+
+    static int getTeamIndex(String teamName) {
+        for (int i = 0; i < teamIndex; i++) {
+            if (teams[i] == null) continue;
+            if (teamName.equals(teams[i].teamName.toLowerCase())) {
+                    return i;
+            }
+        }
+        return -1; //-1이라는 인덱스는 없지만, 못찾았다는 의미로 -1을 넣어준 것.
+    }
+
+    static int getMemberIndex(String id) {
+        for (int i = 0; i < memberIndex; i++) {
+            if(members[i] == null) continue;            
+            if (id.equals(members[i].id.toLowerCase())) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     static String[] prompt() {
         System.out.print("명령>");
@@ -82,18 +109,13 @@ public class App {
             return; //값을 리턴하면 안되기 때문에 return 명령만 작성한다.
                     //의미? 즉시 메서드 실행을 멈추고 이전 위치로 돌아간다.
         }
-        Team team = null; //객체 없음.
-        for (int i = 0; i < teamIndex; i++) {
-            if (option.equals(teams[i].teamName.toLowerCase())) {
-                if (teams[i] == null) continue;
-                team = teams[i];
-                break;
-            }
-        }
 
-        if (team == null) {
+        int i = getTeamIndex(option);
+
+        if (i == -1) {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
+            Team team = teams[i];
             System.out.printf("팀명: %s\n", team.teamName);
             System.out.printf("설명: %s\n", team.description);
             System.out.printf("최대인원: %d\n", team.maxQty);
@@ -107,23 +129,18 @@ public class App {
         System.out.println("[팀 정보 변경]");
         if (option == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
-            System.out.println();
+
             return; //값을 리턴하면 안되기 때문에 return 명령만 작성한다.
                     //의미? 즉시 메서드 실행을 멈추고 이전 위치로 돌아간다.
         }
-        Team team = null; //객체 없음.
-        int i;
-        for (i = 0; i < teamIndex; i++) {
-            if (teams[i] == null) continue;
-            if (option.equals(teams[i].teamName.toLowerCase())) {
-                team = teams[i];
-                break;
-            }
-        }
 
-        if (team == null) {
+        int i = getTeamIndex(option);
+
+
+        if (i == -1) {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
+            Team team = teams[i];
             Team updateTeam = new Team();
             System.out.printf("팀명(%s)? ", team.teamName);
             updateTeam.teamName = keyScan.nextLine();
@@ -148,22 +165,14 @@ public class App {
             return; //값을 리턴하면 안되기 때문에 return 명령만 작성한다.
                     //의미? 즉시 메서드 실행을 멈추고 이전 위치로 돌아간다.
         }
-        Team team = null; //객체 없음.
-        int i;
-        for (i = 0; i < teamIndex; i++) {
-            if (teams[i] == null) continue;
-            if (option.equals(teams[i].teamName.toLowerCase())) {
-                team = teams[i];
-                break;
-            }
-        }
 
-        if (team == null) {
+        int i = getTeamIndex(option);
+
+        if (i == -1) {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
-           System.out.print("정말 삭제하시겠습니까?(y/N) ");
-           String input = keyScan.nextLine().toLowerCase();
-           if(input.equals("y")) {
+           
+           if(confirm("정말 삭제하시겠습니까?")) {
                teams[i] = null;
                System.out.println("삭제하였습니다.");
            }
@@ -205,18 +214,13 @@ public class App {
             System.out.println();
             return;
         }
-        Member member = null; //객체 없음.
-        for (int i = 0; i < memberIndex; i++) {
-            if(members[i] == null) continue;            
-            if (option.equals(members[i].id.toLowerCase())) {
-                member = members[i];
-                break;
-            }
-        }
 
-        if (member == null) {
+        int i = getMemberIndex(option);
+
+        if (i == -1) {
             System.out.println("해당 아이디의 회원이 없습니다.");
         } else {
+            Member member = members[i];
             System.out.printf("아이디: %s\n", member.id);
             System.out.printf("이메일: %s\n", member.email);
             System.out.printf("암호: %s\n", member.password);
@@ -230,19 +234,13 @@ public class App {
             System.out.println();
             return;
         }
-        Member member = null; //객체 없음.
-        int i;
-        for (i = 0; i < memberIndex; i++) {
-            if(members[i] == null) continue;            
-            if (option.equals(members[i].id.toLowerCase())) {
-                member = members[i];
-                break;
-            }
-        }
 
-        if (member == null) {
+        int i = getMemberIndex(option);
+
+        if (i == -1) {
             System.out.println("해당 아이디의 회원이 없습니다.");
         } else {
+            Member member = members[i];
             Member updateMember = new Member();
             System.out.printf("아이디(%s)? ", member.id);
             updateMember.id = keyScan.nextLine();
@@ -262,23 +260,13 @@ public class App {
             return; //값을 리턴하면 안되기 때문에 return 명령만 작성한다.
                     //의미? 즉시 메서드 실행을 멈추고 이전 위치로 돌아간다.
         }
-        Member member = null; //객체 없음.
-        int i;
-        for (i = 0; i < memberIndex; i++) {
-            if(members[i] == null) continue;
-            if (option.equals(members[i].id.toLowerCase())) {
-                if (members[i] == null) continue;
-                member = members[i];
-                break;
-            }
-        }
 
-        if (member == null) {
+        int i = getMemberIndex(option);
+
+        if (i == -1) {
             System.out.println("해당 이름의 아이디가 없습니다.");
         } else {
-           System.out.print("정말 삭제하시겠습니까?(y/N) ");
-           String input = keyScan.nextLine().toLowerCase();
-           if(input.equals("y")) {
+           if(confirm("정말 삭제하시겠습니까?")) {
                members[i] = null;
                System.out.println("삭제하였습니다.");
            }
