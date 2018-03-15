@@ -8,12 +8,7 @@ import bitcamp.java106.pms.util.Console;
 
 import java.util.Scanner;
 
-// ver 0.2 - 회원 관리 기능을 별도의 클래스로 옮긴다.
-//          => controller.MemberController 클래스 추가
-// ver 0.1 - 팀 관리 기능(메서드)를 별도 클래스로 옮긴다.
-//          => controller.TeamController 클래스 추가
-//          사용자 입력 기능을 별도의 클래스로 옮긴다.
-//          => util.Console 클래스 추가
+// ver 0.1 - team 메뉴를 처리하는 코드를 team controller를 처리하는 코드로 바꾼다.
 public class App {
     // 클래스 변수 = 스태틱 변수
     // => 클래스 안 어디에서나 사용할 수 있는 변수.
@@ -22,6 +17,7 @@ public class App {
     //클래스 변수는 이 클래스의 모든 메서드에서 사용할 수 있다.
 
     static String option = null; 
+
    
     static void onQuit() {
         System.out.println("안녕히 가세요!");
@@ -58,26 +54,11 @@ public class App {
                 break;
             } else if (menu.equals("help")) {
                 onHelp();
-            } else if (menu.equals("team/add")) {
-                TeamController.onTeamAdd();
-            } else if (menu.equals("team/list")) {
-                TeamController.onTeamList();
-            } else if (menu.equals("team/view")) {
-                TeamController.onTeamView(option);
-            } else if (menu.equals("team/update")) {
-                TeamController.onTeamUpdate(option);
-            } else if (menu.equals("team/delete")) {
-                TeamController.onTeamDelete(option);
-            } else if (menu.equals("member/add")) {
-                MemberController.onMemberAdd();
-            } else if (menu.equals("member/list")) {
-                MemberController.onMemberList();
-            } else if (menu.equals("member/view")) {
-                MemberController.onMemberView(option);
-            } else if (menu.equals("member/update")) {
-                MemberController.onMemberUpdate(option);
-            } else if (menu.equals("member/delete")) {
-                MemberController.onMemberDelete(option);
+            } else if (menu.startsWith("team/")) { 
+                //team으로 시작하는 명령어는 아래에 넘겨줘
+                TeamController.service(menu, option);
+            } else if (menu.startsWith("member/")) {
+                MemberController.service(menu, option);
             } else {
                 System.out.println("명령어가 올바르지 않습니다.");
             }

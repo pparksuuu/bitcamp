@@ -13,6 +13,22 @@ public class MemberController {
     static Member[] members = new Member[1000];
     static int memberIndex = 0;
 
+    public static void service(String menu, String option) {
+        if (menu.equals("member/add")) {
+            onMemberAdd();
+        } else if (menu.equals("member/list")) {
+            onMemberList();
+        } else if (menu.equals("member/view")) {
+            onMemberView(option);
+        } else if (menu.equals("member/update")) {
+            onMemberUpdate(option);
+        } else if (menu.equals("member/delete")) {
+            onMemberDelete(option);
+        } else {
+            System.out.println("명령어가 올바르지 않습니다.");
+        }
+    }
+
     static int getMemberIndex(String id) { //바깥에서 호출 x, public x
         for (int i = 0; i < memberIndex; i++) {
             if(members[i] == null) continue;            
@@ -23,7 +39,7 @@ public class MemberController {
         return -1;
     }
 
-    public static void onMemberAdd() {
+    static void onMemberAdd() {
         System.out.println("[회원 정보입력]");
         Member member = new Member();
 
@@ -39,7 +55,7 @@ public class MemberController {
         members[memberIndex++] = member;
     }
 
-    public static void onMemberList() {
+    static void onMemberList() {
         System.out.println("[회원 목록]");
         for (int i = 0; i < memberIndex; i ++) {
             if(members[i] == null) continue;            
@@ -50,7 +66,7 @@ public class MemberController {
 
     }
 
-    public static void onMemberView(String id) {
+    static void onMemberView(String id) {
         System.out.println("[회원 정보 조회]");
         if (id == null) {
             System.out.println("아이디를 입력하시기 바랍니다.");
@@ -70,7 +86,7 @@ public class MemberController {
         }
     }
 
-    public static void onMemberUpdate(String id) {
+    static void onMemberUpdate(String id) {
         System.out.println("[회원 정보 변경]");
         if (id == null) {
             System.out.println("아이디를 입력하시기 바랍니다.");
@@ -96,7 +112,7 @@ public class MemberController {
         }
     }
 
-    public static void onMemberDelete(String id) {
+    static void onMemberDelete(String id) {
         System.out.println("[회원 정보 삭제]");
         if (id == null) {
             System.out.println("아이디를 입력하시기 바랍니다.");

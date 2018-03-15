@@ -3,6 +3,7 @@ package bitcamp.java106.pms.controller;
 
 import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
+
 import java.util.Scanner;
 
 public class TeamController {
@@ -12,6 +13,23 @@ public class TeamController {
 
     static Team[] teams = new Team[1000];
     static int teamIndex = 0;
+
+    public static void service(String menu, String option) {
+        if (menu.equals("team/add")) {
+            onTeamAdd();
+        } else if (menu.equals("team/list")) {
+            onTeamList();
+        } else if (menu.equals("team/view")) {
+            onTeamView(option);
+        } else if (menu.equals("team/update")) {
+            onTeamUpdate(option);
+        } else if (menu.equals("team/delete")) {
+            onTeamDelete(option);
+        } else {
+            System.out.println("명령어가 올바르지 않습니다.");
+        }
+    }
+
 
     static int getTeamIndex(String teamName) { //Team 내부에서만 쓰기 때문에 공개X
         for (int i = 0; i < teamIndex; i++) {
@@ -23,7 +41,7 @@ public class TeamController {
         return -1; //-1이라는 인덱스는 없지만, 못찾았다는 의미로 -1을 넣어준 것.
     }
 
-    public static void onTeamAdd() { //당장 App에서 쓰기 때문에 공개하는 것
+    static void onTeamAdd() { //당장 App에서 쓰기 때문에 공개하는 것
         System.out.println("[팀 정보입력]");
         Team team = new Team();
 
@@ -47,7 +65,7 @@ public class TeamController {
 
     }
 
-    public static void onTeamList() {
+    static void onTeamList() {
         System.out.println("[팀 목록]");
         for (int i = 0; i < teamIndex; i ++) {
             if (teams[i] == null) continue;
@@ -57,7 +75,7 @@ public class TeamController {
         }
     }
     
-    public static void onTeamView(String teamName) {
+    static void onTeamView(String teamName) {
         System.out.println("[팀 정보 조회]");
         if (teamName == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
@@ -81,7 +99,7 @@ public class TeamController {
 
     }    
 
-    public static void onTeamUpdate(String teamName) {
+    static void onTeamUpdate(String teamName) {
         System.out.println("[팀 정보 변경]");
         if (teamName == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
@@ -114,7 +132,7 @@ public class TeamController {
         }
     }
 
-    public static void onTeamDelete(String teamName) {
+    static void onTeamDelete(String teamName) {
         System.out.println("[팀 정보 삭제]");
         if (teamName == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
