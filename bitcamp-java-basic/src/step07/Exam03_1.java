@@ -10,7 +10,7 @@ public class Exam03_1 {
         score.kor = 100;
         score.eng = 90;
         score.math = 85;
-        
+         
         //Score 값을 다루는 연산자가 없을 때
         /*
         score.sum = score.kor + score.eng + score.math;
