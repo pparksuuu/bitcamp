@@ -1,7 +1,7 @@
 //클래스 용도  - 소스 코드를 관리하기 쉽게 관련된 기능을 묶을 때 사용. 
 package step07;
 
-public class Exam01_1 {
+public class ExamX_1 {
     public static void main(String[] args) {
         //사용자 정의 데이터 타입 
         //=> new 명령 사용하여 메모리 준비

@@ -3,7 +3,7 @@ package step07;
 
 
 
-public class Exam02_2 {
+public class ExamY_2 {
     public static void main(String[] args) {
         //계산 겨로가를 보관할 변수는 더이상 필요가 없다.
         //Calculator2 내부에서 계산 결과를 관리한다.

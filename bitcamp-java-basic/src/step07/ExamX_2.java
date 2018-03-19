@@ -1,8 +1,8 @@
-//메서드 분류 - 변수의 활용
+//사용자 정의 데이터 타입 - 메서드 = 연산자
 package step07;
 
 
-public class Exam02_1 {
+public class ExamX_2 {
     public static void main(String[] args) {
         //사용자 정의 데이터 타입 의 값을 연산자를 사용하여 다뤄보자!
         Score2 score = new Score2();
@@ -17,9 +17,6 @@ public class Exam02_1 {
         score.average = score.sum / 3f; 
          */
         Score2.calculate(score); // 연산자(피연산자)
-        
-        int i = 10;
-        ++i;   //연산자(피연산자) 구조!
 
         System.out.printf("%s, %d, %d, %d, %d, %.1f\n" ,
                 score.name, score.kor, score.eng, score.math,
