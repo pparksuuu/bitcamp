@@ -26,7 +26,7 @@ public class Exam02_1 {
         obj1.m2(); // OK!! 인스턴스 메서드를 
         
         A obj2 = null;
-        obj2.m2(); //컴파일은 OK! 실행은 오류
+        obj2.m2(); //컴파일은 OK! 실행은 오류!
 
     }
 }
