@@ -4,11 +4,7 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.domain.Member;
 import java.util.Scanner;
 
-//ver 0.5 - member/add,list,view 명령어를 처리하는 코드를 메서드로 분리한다.
-//ver 0.4 - team/add,list,view 명령어를 처리하는 코드를 메서드로 분리한다.
-//ver 0.3 - help 명령어를 처리하는 코드를 메서드로 분리한다.
-//ver 0.2 - quit 명령어를 처리하는 코드를 메서드로 분리한다.
-//ver 0.1 - 명령어를 입력 받는 코드를 메서드로 분리한다.
+// ver 0.1 - 
 public class App {
     // 클래스 변수 = 스태틱 변수
     // => 클래스 안 어디에서나 사용할 수 있는 변수.
