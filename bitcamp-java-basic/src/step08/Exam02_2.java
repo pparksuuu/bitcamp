@@ -3,7 +3,7 @@ package step08;
 
 import java.util.Scanner;
 
-public class Exam02_1 {
+public class Exam02_2 {
     static class Math {
         //파라미터 값을 가지고 작업하는 경우에 보통 클래스 메서드로 정의
         public static int abs(int value) {
