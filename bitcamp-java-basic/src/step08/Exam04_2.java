@@ -1,4 +1,4 @@
-// 생성자 - 여러개의 생성자 정의하기 
+// 생성자 - 파라미터를 받는 생성자 
 package step08;
 
 public class Exam04_2 {
@@ -11,14 +11,6 @@ public class Exam04_2 {
         int sum;
         float average;
         
-        Score() {
-            System.out.println("Score()");
-        }
-        
-        Score(String name) {
-            System.out.println("Score(String)");
-            this.name = name;
-        }
         // 생성자가 한 개라도 있으면 컴파일러는 기본 생성자를 만들어주지 않는다.
         Score(String name, int kor, int eng, int math) {
             System.out.println("Score(String,int,int,int) 호출!");
