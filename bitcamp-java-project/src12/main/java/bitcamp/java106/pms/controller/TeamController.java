@@ -1,11 +1,9 @@
 // 팀 관련 기능을 모아 둔 클래스
 package bitcamp.java106.pms.controller;
 
-import java.sql.Date;
-import java.util.Scanner;
-
 import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
+import java.util.Scanner;
 
 public class TeamController {
     // 이 클래스를 사용하기 전에 App 클래스에서 준비한 Scanner 객체를
@@ -60,10 +58,10 @@ public class TeamController {
         this.keyScan.nextLine(); 
 
         System.out.print("시작일? ");
-        team.startDate = Date.valueOf(this.keyScan.nextLine());
+        team.startDate = this.keyScan.nextLine();
 
         System.out.print("종료일? ");
-        team.endDate = Date.valueOf(this.keyScan.nextLine());
+        team.endDate = this.keyScan.nextLine();
 
         // 팀 정보가 담겨있는 객체의 주소를 배열에 보관한다.
         this.teams[this.teamIndex++] = team;
@@ -123,9 +121,9 @@ public class TeamController {
             updateTeam.maxQty = keyScan.nextInt();
             keyScan.nextLine();
             System.out.printf("시작일(%s)? ", team.startDate);
-            updateTeam.startDate = Date.valueOf(this.keyScan.nextLine());
+            updateTeam.startDate = keyScan.nextLine();
             System.out.printf("종료일(%s)? ", team.endDate);
-            updateTeam.endDate = Date.valueOf(this.keyScan.nextLine());
+            updateTeam.endDate = keyScan.nextLine();
             this.teams[i] = updateTeam;
             System.out.println("변경하였습니다.");
         }

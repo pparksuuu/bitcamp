@@ -3,7 +3,6 @@
 // => 즉 생성자란, 객체를 사용하기 전에 유효한 값으로 설정하게 만드는 문법이다.
 package bitcamp.java106.pms.controller;
 
-import java.sql.Date;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.domain.Board;
@@ -17,14 +16,6 @@ public class BoardController {
     int boardIndex = 0;
     
     public BoardController(Scanner scanner) {
-        /*BoardController의 메서드를 이용하려면 반드시 설정해야 하는 값이 이따.
-         * Board[] 배열이나 boardIndex 처럼  내부에서 생성하는 값이 있고,
-         * Scanner처럼 외부에서 받아야 하는 값이 있다.
-         * 외부에서 반드시 받아야 하는 값은 생성자를 통해 입력 받도록 하면 된다.
-         * 이것이 생성자가 필요한 이유이다.
-         * 즉 객체가 작업하는데 필수적으로 요구되는 값을 준비시키는 역할을 수행하는 게 
-         * 바로 "생성자"이다
-         * */
         this.keyScan = scanner;
     }
 
@@ -55,7 +46,7 @@ public class BoardController {
         board.content = this.keyScan.nextLine();
 
         System.out.print("등록일? ");
-        board.createdDate = Date.valueOf(this.keyScan.nextLine());
+        board.createdDate = this.keyScan.nextLine();
 
         this.boards[this.boardIndex++] = board;
     }
@@ -132,5 +123,3 @@ public class BoardController {
     }
     
 }
-
-// ver 13 - 게시물 등록할 때 등록일의 문자열을 Date 객체로 만들어 저장한다.
