@@ -29,8 +29,8 @@ public class BoardDao {
         boards[board.no] = board;
     }
     
-    public void delete(Board board) {
-        boards[board.no] = null;
+    public void delete(int i) {
+        boards[i] = null;
     }
     
 }

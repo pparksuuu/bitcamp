@@ -122,14 +122,14 @@ public class BoardController {
             return; 
         }
         
-  
-        Board board = boardDao.get(Integer.parseInt(option));
+        int i = Integer.parseInt(option);
+        Board board = boardDao.get(i);
         
         if (board == null) {
             System.out.println("유효하지 않은 게시물 번호입니다.");
         } else {
             if (Console.confirm("정말 삭제하시겠습니까?")) {
-                boardDao.delete(board);
+                boardDao.delete(i);
                 System.out.println("삭제하였습니다.");
             }
         }
