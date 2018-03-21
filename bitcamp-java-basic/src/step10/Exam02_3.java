@@ -13,7 +13,7 @@ public class Exam02_3 {
         
         Integer obj3 = 100; //constant pool에 생성
         Integer obj4 = 100; //constant pool에 생성된 기존 주소 리턴
-        if (obj3 == obj4) 
+        if (obj3 == obj4)  //인스턴스의 주소가 같다.
             System.out.println("obj3 == obk4");
         else
             System.out.println("obj3 != obj4");

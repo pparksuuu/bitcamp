@@ -1,1 +1,3 @@
-애플리케이션 자바 소스를 두는 폴더
+# 변경 내역
+- Board.java 추가
+- BoarController.java 추가

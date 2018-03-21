@@ -1,7 +1,8 @@
 package bitcamp.java106.pms.controller;
 
+import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.util.Console;
-import bitcamp.java106.pms.board.Board;
+
 import java.util.Scanner;
 
 public class BoardController {
