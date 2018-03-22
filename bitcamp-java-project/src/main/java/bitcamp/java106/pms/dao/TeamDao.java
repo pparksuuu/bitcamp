@@ -3,14 +3,31 @@ package bitcamp.java106.pms.dao;
 import bitcamp.java106.pms.domain.Team;
 
 public class TeamDao {
+
     Team[] teams = new Team[1000];
     int teamIndex = 0;
-    
+
     public void insert(Team team) {
-        teams[teamIndex++] = team;
+        this.teams[this.teamIndex++] = team;
     }
     
-    public int getTeamIndex(String name) {
+    public Team[] list() {
+        Team[] arr = new Team[this.teamIndex];
+        for (int i = 0; i < this.teamIndex; i++) {
+            arr[i] = this.teams[i];
+        }
+        return arr;
+    }
+    
+    public Team get(String name) {
+        int i = this.getTeamIndex(name);
+        if (i == -1) {
+           return null; 
+        }
+        return teams[i];
+    }
+    
+    private int getTeamIndex(String name) {
         for (int i = 0; i < this.teamIndex; i++) {
             if (this.teams[i] == null) continue;
             if (name.equals(this.teams[i].name.toLowerCase())) {
@@ -20,31 +37,16 @@ public class TeamDao {
         return -1;
     }
     
-    public Team get(String name) {
-        for (int i = 0; i < this.teamIndex; i++) {
-            if (this.teams[i] == null) continue;
-            if (name.equals(this.teams[i].name.toLowerCase())) {
-                return teams[i];
-            }
-        }
-        return null;
+    public void update(Team team) {
+        int i = this.getTeamIndex(team.name);
+        if(i != -1)
+            teams[i] = team;
     }
     
-    public Team[] list() {
-        Team[] arr = new Team[teamIndex];
-        for (int i = 0; i < this.teamIndex; i ++) {
-            arr[i] = teams[i];
-        }
-        return arr;
+    public void delete(String name) {
+        int i = this.getTeamIndex(name);
+        if(i != -1)
+            teams[i] = null;
     }
-    
-    public void update(Team team, Team updateTeam) {
-        int i = getTeamIndex(team.name);
-        teams[i] = updateTeam;
-    }
-    
-    public void delete(Team team) {
-        int i = getTeamIndex(team.name);
-        teams[i] = null;
-    }
+
 }

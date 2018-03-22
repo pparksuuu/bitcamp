@@ -1,3 +1,4 @@
+// 팀 관련 기능을 모아 둔 클래스
 package bitcamp.java106.pms.controller;
 
 import java.sql.Date;
@@ -8,16 +9,18 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
 
 public class TeamController {
-    
+    // 이 클래스를 사용하기 전에 App 클래스에서 준비한 Scanner 객체를
+    // keyScan 변수에 저장하라!
     Scanner keyScan;
-    
+
     TeamDao teamDao = new TeamDao();
     
+    Team[] teams = new Team[1000];
+    int teamIndex = 0;
+
     public TeamController(Scanner scanner) {
         this.keyScan = scanner;
     }
-
-
     
     public void service(String menu, String option) {
         if (menu.equals("team/add")) {
@@ -34,7 +37,8 @@ public class TeamController {
             System.out.println("명령어가 올바르지 않습니다.");
         }
     }
-    
+
+
     void onTeamAdd() {
         System.out.println("[팀 정보 입력]");
         Team team = new Team();
@@ -54,6 +58,7 @@ public class TeamController {
 
         System.out.print("종료일? ");
         team.endDate = Date.valueOf(this.keyScan.nextLine());
+
         teamDao.insert(team);
     }
 
@@ -102,18 +107,19 @@ public class TeamController {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
             Team updateTeam = new Team();
-            System.out.printf("팀명(%s)? ", team.name);
-            updateTeam.name = keyScan.nextLine();
+            System.out.printf("팀명 : %s\n ", team.name);
+            updateTeam.name = team.name;
             System.out.printf("설명(%s)? ", team.description);
-            updateTeam.description = keyScan.nextLine();
+            updateTeam.description = this.keyScan.nextLine();
             System.out.printf("최대인원(%d)? ", team.maxQty);
-            updateTeam.maxQty = keyScan.nextInt();
-            keyScan.nextLine();
+            updateTeam.maxQty = this.keyScan.nextInt();
+            this.keyScan.nextLine();
             System.out.printf("시작일(%s)? ", team.startDate);
-            updateTeam.startDate = Date.valueOf(keyScan.nextLine());
+            updateTeam.startDate = Date.valueOf(this.keyScan.nextLine());
             System.out.printf("종료일(%s)? ", team.endDate);
-            updateTeam.endDate = Date.valueOf(keyScan.nextLine());
-            teamDao.update(team, updateTeam);
+            updateTeam.endDate = Date.valueOf(this.keyScan.nextLine());
+            
+            teamDao.update(updateTeam);
             System.out.println("변경하였습니다.");
         }
     }
@@ -124,17 +130,17 @@ public class TeamController {
             System.out.println("팀명을 입력하시기 바랍니다.");
             return; 
         }
-      
+        
         Team team = teamDao.get(name);
-
+        
         if (team == null) {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
             if (Console.confirm("정말 삭제하시겠습니까?")) {
-                teamDao.delete(team);
+                teamDao.delete(name);
                 System.out.println("삭제하였습니다.");
             }
         }
     }
-
+    
 }

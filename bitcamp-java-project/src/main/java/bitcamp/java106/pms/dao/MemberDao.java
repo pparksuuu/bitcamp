@@ -6,7 +6,27 @@ public class MemberDao {
     Member[] members = new Member[1000];
     int memberIndex = 0;
     
-    public int getMemberIndex(String id) {
+    public void insert(Member member) {
+        this.members[this.memberIndex++] = member;
+    }
+    
+    public Member[] list() {
+        Member[] arr = new Member[memberIndex];
+        for (int i = 0; i < memberIndex; i++) {
+            arr[i] = members[i];
+        }
+        return arr;
+    }
+    
+    public Member get(String id) {
+        int i = this.getMemberIndex(id);
+        if(i == -1) 
+            return null;
+        return this.members[i];
+    }
+    
+    //다음 메서드는 내부에서만 사용할 것이기 때문에 공개하지 않는다.
+    private int getMemberIndex(String id) {
         for (int i = 0; i < this.memberIndex; i++) {
             if (this.members[i] == null) continue;
             if (id.equals(this.members[i].id.toLowerCase())) {
@@ -15,37 +35,18 @@ public class MemberDao {
         }
         return -1;
     }
+
     
-    public void insert(Member member) {
-        members[memberIndex++] = member;
+    public void update(Member member) {
+        int i = this.getMemberIndex(member.id);
+        if(i != -1) 
+            this.members[i] = member;
     }
-    
-    public Member[] list() {
-        Member[] arr = new Member[memberIndex];
-        for (int i = 0; i < this.memberIndex; i ++) {
-            arr[i] = members[i];
-        }
-        return arr;
-    }
-    
-    public Member get(String id) {
-        for (int i = 0; i < this.memberIndex; i++) {
-            if (this.members[i] == null) continue;
-            if (id.equals(this.members[i].id.toLowerCase())) {
-                return members[i];
-            }
-        }
-        return null;
-    }
-    
-    public void update(Member member, Member updateMember) {
-        int i = getMemberIndex(member.id);
-        members[i] = updateMember;
-    }
-    
+        
     public void delete(Member member) {
-        int i = getMemberIndex(member.id);
-        members[i] = null;
-    }
-    
+        int i = this.getMemberIndex(member.id);
+        if(i != -1) 
+            this.members[i] = null;
+            }
+   
 }

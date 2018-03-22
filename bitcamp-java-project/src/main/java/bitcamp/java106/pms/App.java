@@ -7,6 +7,8 @@ import bitcamp.java106.pms.controller.MemberController;
 import bitcamp.java106.pms.controller.TeamController;
 import bitcamp.java106.pms.util.Console;
 
+// ver 0.2 - member 메뉴를 처리하는 코드를 관련 클래스인 MemberController로 옮긴다.
+// ver 0.1 - team 메뉴를 처리하는 코드를 TeamController로 옮긴다.
 public class App {
     static Scanner keyScan = new Scanner(System.in);
     public static String option = null; 
@@ -23,11 +25,6 @@ public class App {
         System.out.println("회원 등록 명령 : member/add");
         System.out.println("회원 조회 명령 : member/list");
         System.out.println("회원 상세조회 명령 : member/view 아이디");
-        System.out.println("게시글 등록 : board/add");
-        System.out.println("게시글 목록 : board/list");
-        System.out.println("게시글 조회 : board/view 게시글번호");
-        System.out.println("게시글 변경 : board/update 게시글번호");
-        System.out.println("게시글 삭제 : board/delete 게시글번호");
         System.out.println("종료 : quit");
     }
 
@@ -61,8 +58,8 @@ public class App {
             } else if (menu.startsWith("member/")) {
                 memberController.service(menu, option);
             } else if (menu.startsWith("board/")) {
-                boardController.service(menu, option); 
-            } else {
+                boardController.service(menu, option);
+            }else {
                 System.out.println("명령어가 올바르지 않습니다.");
             }
 

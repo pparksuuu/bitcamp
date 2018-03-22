@@ -7,36 +7,34 @@ public class BoardDao {
     int boardIndex = 0;
     
     public void insert(Board board) {
-        board.number = boardIndex;
+        board.no = boardIndex;
         this.boards[this.boardIndex++] = board;
     }
     
     public Board[] list() {
         Board[] arr = new Board[boardIndex];
-        for(int i = 0; i < this.boardIndex; i ++) {
-           // if (this.boards[i] == null) continue;
+        for (int i = 0; i < boardIndex; i ++) {
             arr[i] = boards[i];
         }
         return arr;
     }
     
-    
-    public Board get(int number) {
-        for (int i = 0; i < this.boardIndex; i++) {
-            if (this.boards[i] == null) continue;
-            if (this.boards[i].number == number) {
-                return boards[i];
-            }
-        }
-        return null;
+    public Board get(int i) {
+        if (i < 0 || i >= boardIndex)
+            return null;
+        return boards[i];
     }
     
     public void update(Board board) {
-        boards[board.number] = board;
+        boards[board.no] = board;
     }
     
-    public void delete(Board board) {
-        boards[board.number] = null;
+    public void delete(int i) {
+        boards[i] = null;
     }
     
 }
+
+
+
+// ver 14 - BoardController로부터 데이터 관리 기능을 분리하여 BoardDao 생성.
