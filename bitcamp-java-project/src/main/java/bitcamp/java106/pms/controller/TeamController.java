@@ -13,14 +13,11 @@ public class TeamController {
     // keyScan 변수에 저장하라!
     Scanner keyScan;
     TeamDao teamDao;
-    
-    
-    Team[] teams = new Team[1000];
-    int teamIndex = 0;
+
 
     public TeamController(Scanner scanner, TeamDao teamDao) {
-        this.teamDao = teamDao;
         this.keyScan = scanner;
+        this.teamDao = teamDao;
     }
     
     public void service(String menu, String option) {
@@ -35,7 +32,7 @@ public class TeamController {
         } else if (menu.equals("team/delete")) {
             this.onTeamDelete(option);
         } else {
-            System.out.println("명령어가 올바르지 않습니다.22");
+            System.out.println("명령어가 올바르지 않습니다.");
         }
     }
 

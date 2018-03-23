@@ -35,11 +35,12 @@ public class App {
         // 클래스를 사용하기 전에 필수 값을 설정한다.
         TeamDao teamDao = new TeamDao();
         MemberDao memberDao = new MemberDao();
+        
         TeamController teamController = new TeamController(keyScan, teamDao);
         MemberController memberController = new MemberController(keyScan, memberDao);
         TeamMemberController teamMemberController = new TeamMemberController(keyScan, teamDao, memberDao);
         BoardController boardController = new BoardController(keyScan);
-        
+
         Console.keyScan = keyScan;
 
         while (true) {

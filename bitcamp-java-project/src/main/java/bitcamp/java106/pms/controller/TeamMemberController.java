@@ -1,6 +1,7 @@
-// 팀 멤버 관리 기능을 모아 둔 클래스
+// 팀 관련 기능을 모아 둔 클래스
 package bitcamp.java106.pms.controller;
 
+import java.sql.Date;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.dao.MemberDao;
@@ -10,14 +11,11 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
 
 public class TeamMemberController {
-    
     Scanner keyScan;
+
     TeamDao teamDao;
     MemberDao memberDao;
     
-    Team[] teams = new Team[1000];
-    int teamIndex = 0;
-
     public TeamMemberController(Scanner scanner, TeamDao teamDao, MemberDao memberDao) {
         this.keyScan = scanner;
         this.teamDao = teamDao;
@@ -36,82 +34,91 @@ public class TeamMemberController {
         }
     }
 
-
     void onTeamMemberAdd(String teamName) {
+        System.out.println("[팀원 등록]");
         if (teamName == null) {
-            System.out.println("팀명을 입력하시기 바랍니다.");
-            return; 
+            System.out.printf("팀명을 입력하시기 바랍니다.");
+            return;
         }
         
         Team team = teamDao.get(teamName);
-        if (team == null) { 
+
+        if (team == null) {
             System.out.printf("%s 팀은 존재하지 않습니다.", teamName);
             return;
-        }
+        } 
         
-        System.out.println("[팀 멤버 추가]");
-        System.out.println("추가할 멤버의 아이디는? ");
-        String memberId = keyScan.nextLine();
+        System.out.printf("추가할 멤버의 아이디는? ");
+        String id = keyScan.nextLine();
         
-        Member member = memberDao.get(memberId);
+        Member member = memberDao.get(id);
+        
         if (member == null) {
-            System.out.printf("%s 회원은 없습니다", memberId);
+            System.out.printf("%s 회원은 없습니다.", id);
             return;
-        }
+        } 
         
-        if (team.isExist(memberId)) {
+        if (team.isExist(id)) {
             System.out.println("이미 등록된 회원입니다.");
             return;
         }
-
-        team.addMember(member);
+        
+        if(team.memberAdd(member) > 0) {
+            System.out.println("추가되었습니다.");
+        } else {
+            System.out.println("더 이상 회원을 추가할 수 없습니다.");
+        }
     }
 
     void onTeamMemberList(String teamName) {
+        System.out.println("[팀원 리스트]");
+
         if (teamName == null) {
-            System.out.println("팀명을 입력하시기 바랍니다.");
-            return; 
-        }
-        
-        Team team = teamDao.get(teamName);
-        if (team == null) { 
-            System.out.printf("%s 팀은 존재하지 않습니다.", teamName);
+            System.out.printf("팀명을 입력하시기 바랍니다.");
             return;
         }
         
-        System.out.println("[팀 멤버 목록]");
-        System.out.print("회원들 : ");
+        Team team = teamDao.get(teamName);
+
+        if (team == null) {
+            System.out.printf("%s 팀은 존재하지 않습니다.", teamName);
+            return;
+        } 
+        
+        System.out.print("회원들: ");
         for (int i = 0; i < team.members.length; i++) {
             if (team.members[i] == null) continue;
             System.out.printf("%s, ", team.members[i].id);
-            System.out.println();
         }
     }
 
     void onTeamMemberDelete(String teamName) {
+        System.out.println("[팀원 삭제]");
+        
         if (teamName == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
             return; 
         }
         
         Team team = teamDao.get(teamName);
-        if (team == null) { 
+        
+        if (team == null) {
             System.out.printf("%s 팀은 존재하지 않습니다.", teamName);
             return;
-        }
+        } 
         
         System.out.print("삭제할 팀원은? ");
-        String memberId = keyScan.nextLine();
+        String id = keyScan.nextLine();
         
-        if (!team.isExist(memberId)) {
+        Member member = memberDao.get(id);
+        
+        if (team.memberDelete(member) > 0) {
+            System.out.println("삭제하였습니다.");
+        } else {
             System.out.println("이 팀의 회원이 아닙니다.");
-            return;
         }
         
-        team.deleteMember(memberId);
-        
-        System.out.println("[팀 멤버 삭제]");
-        System.out.println("삭제하였습니다.");
         
     }
+    
 }
