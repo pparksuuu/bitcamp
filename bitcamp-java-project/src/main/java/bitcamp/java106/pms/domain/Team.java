@@ -8,4 +8,7 @@ public class Team {
     public int maxQty;
     public Date startDate;
     public Date endDate;
+    public Member[] members = new Member[10];
 }
+
+// ver 15 - 멤버를 저장할 인스턴스 변수를 추가한다.
