@@ -9,17 +9,15 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
 
 public class TeamController {
-    // 이 클래스를 사용하기 전에 App 클래스에서 준비한 Scanner 객체를
-    // keyScan 변수에 저장하라!
+
     Scanner keyScan;
     TeamDao teamDao;
-
-
+    
     public TeamController(Scanner scanner, TeamDao teamDao) {
         this.keyScan = scanner;
         this.teamDao = teamDao;
     }
-    
+
     public void service(String menu, String option) {
         if (menu.equals("team/add")) {
             this.onTeamAdd();
@@ -35,7 +33,6 @@ public class TeamController {
             System.out.println("명령어가 올바르지 않습니다.");
         }
     }
-
 
     void onTeamAdd() {
         System.out.println("[팀 정보 입력]");
@@ -105,7 +102,7 @@ public class TeamController {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
             Team updateTeam = new Team();
-            System.out.printf("팀명 : %s\n ", team.name);
+            System.out.printf("팀명 : %s\n", team.name);
             updateTeam.name = team.name;
             System.out.printf("설명(%s)? ", team.description);
             updateTeam.description = this.keyScan.nextLine();
@@ -130,15 +127,19 @@ public class TeamController {
         }
         
         Team team = teamDao.get(name);
-        
+
         if (team == null) {
             System.out.println("해당 이름의 팀이 없습니다.");
         } else {
             if (Console.confirm("정말 삭제하시겠습니까?")) {
-                teamDao.delete(name);
+                teamDao.delete(team.name);
                 System.out.println("삭제하였습니다.");
             }
         }
     }
     
 }
+
+// ver 15 - TeamDao를 생성자에서 주입 받도록 변경.
+// ver 14 - TeamDao를 사용하여 팀 데이터를 관리한다.
+// ver 13 - 시작일, 종료일을 문자열로 입력 받아 Date 객체로 변환하여 저장.

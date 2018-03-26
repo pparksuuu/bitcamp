@@ -1,6 +1,3 @@
-// 컨트롤러가 작업하는데 필요한 객체를 반드시 준비하도록 생성자를 추가한다.
-// => 생성자를 통해 필수 입력 값을 반드시 설정하도록 강제시킬 수 있다.
-// => 즉 생성자란, 객체를 사용하기 전에 유효한 값으로 설정하게 만드는 문법이다.
 package bitcamp.java106.pms.controller;
 
 import java.sql.Date;
@@ -11,25 +8,14 @@ import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.util.Console;
 
 public class BoardController {
-    
     Scanner keyScan;
 
-    BoardDao boardDao = new BoardDao(); //설계도에 따라 배열과 인덱스를 만들었다.
-    
-    
+    BoardDao boardDao = new BoardDao();
     
     public BoardController(Scanner scanner) {
-        /*BoardController의 메서드를 이용하려면 반드시 설정해야 하는 값이 이따.
-         * Board[] 배열이나 boardIndex 처럼  내부에서 생성하는 값이 있고,
-         * Scanner처럼 외부에서 받아야 하는 값이 있다.
-         * 외부에서 반드시 받아야 하는 값은 생성자를 통해 입력 받도록 하면 된다.
-         * 이것이 생성자가 필요한 이유이다.
-         * 즉 객체가 작업하는데 필수적으로 요구되는 값을 준비시키는 역할을 수행하는 게 
-         * 바로 "생성자"이다
-         * */
         this.keyScan = scanner;
     }
-
+    
     public void service(String menu, String option) {
         if (menu.equals("board/add")) {
             this.onBoardAdd();
@@ -51,16 +37,15 @@ public class BoardController {
         Board board = new Board();
 
         System.out.print("제목? ");
-        board.title = this.keyScan.nextLine();
+        board.setTitle(this.keyScan.nextLine());
 
         System.out.print("내용? ");
-        board.content = this.keyScan.nextLine();
+        board.setContent(this.keyScan.nextLine());
 
         System.out.print("등록일? ");
-        board.createdDate = Date.valueOf(this.keyScan.nextLine());
+        board.setCreatedDate(Date.valueOf(this.keyScan.nextLine()));
 
         boardDao.insert(board);
-        
     }
 
     void onBoardList() {
@@ -69,7 +54,7 @@ public class BoardController {
         for (int i = 0; i < list.length; i++) {
             if (list[i] == null) continue;
             System.out.printf("%d, %s, %s\n",
-                i, list[i].title, list[i].createdDate);
+                i, list[i].getTitle(), list[i].getCreatedDate());
         }
     }
 
@@ -85,9 +70,9 @@ public class BoardController {
         if (board == null) {
             System.out.println("유효하지 않은 게시물 번호입니다.");
         } else {
-            System.out.printf("팀명: %s\n", board.title);
-            System.out.printf("설명: %s\n", board.content);
-            System.out.printf("등록일: %s\n", board.createdDate);
+            System.out.printf("팀명: %s\n", board.getTitle());
+            System.out.printf("설명: %s\n", board.getContent());
+            System.out.printf("등록일: %s\n", board.getCreatedDate());
         }
     }
 
@@ -104,18 +89,18 @@ public class BoardController {
             System.out.println("유효하지 않은 게시물 번호입니다.");
         } else {
             Board updateBoard = new Board();
-            System.out.printf("제목(%s)? ", board.title);
-            updateBoard.title = this.keyScan.nextLine();
-            System.out.printf("설명(%s)? ", board.content);
-            updateBoard.content = this.keyScan.nextLine();
-            updateBoard.createdDate = board.createdDate;
-            updateBoard.no = board.no;
+            System.out.printf("제목(%s)? ", board.getTitle());
+            updateBoard.setTitle(this.keyScan.nextLine());
+            System.out.printf("설명(%s)? ", board.getContent());
+            updateBoard.setContent(this.keyScan.nextLine());
+            updateBoard.setCreatedDate(board.getCreatedDate());
+            updateBoard.setNo(board.getNo());
             boardDao.update(updateBoard);
             System.out.println("변경하였습니다.");
         }
     }
 
-     void onBoardDelete(String option) {
+    void onBoardDelete(String option) {
         System.out.println("[게시물 삭제]");
         if (option == null) {
             System.out.println("번호를 입력하시기 바랍니다.");
@@ -137,4 +122,5 @@ public class BoardController {
     
 }
 
-// ver 13 - 게시물 등록할 때 등록일의 문자열을 Date 객체로 만들어 저장한다.
+// ver 14 - BoardDao를 사용하여 게시물 데이터를 관리한다.
+// ver 13 - 게시물 등록할 때 등록일의 문자열을 Date 객체로 만들어 저장.
