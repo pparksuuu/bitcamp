@@ -1,7 +1,7 @@
 // 오버라이딩(overriding) - 응용 예 
-package step11.ex11;
+package step11.ex12;
 
-public class Exam09_3 {
+public class Exam03_3 {
     
     int i ;
     
