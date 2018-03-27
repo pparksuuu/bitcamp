@@ -49,8 +49,8 @@ public class TaskDao {
         tasks[task.getNo()] = task;
     }
     
-    public void delete(int i) {
-        tasks[i] = null;
+    public void delete(int taskNo) {
+        tasks[taskNo] = null;
     }
 }
 
