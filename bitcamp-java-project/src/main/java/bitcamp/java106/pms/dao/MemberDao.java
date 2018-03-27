@@ -1,5 +1,7 @@
 package bitcamp.java106.pms.dao;
 
+import java.util.Arrays;
+
 import bitcamp.java106.pms.domain.Member;
 
 public class MemberDao {
@@ -48,9 +50,9 @@ public class MemberDao {
         return -1;
     }
     
-    
 }
 
+//ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
 //ver 14 - MemberController로부터 데이터 관리 기능을 분리하여 MemberDao 생성.
 
 
