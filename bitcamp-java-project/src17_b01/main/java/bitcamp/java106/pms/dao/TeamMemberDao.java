@@ -7,13 +7,17 @@ public class TeamMemberDao {
     private ArrayList teamCollection = new ArrayList();
     private ArrayList memberCollection = new ArrayList();
     
+    private Object[][] teamMembers = new Object[1000][2];
+    private int rowIndex;
     
     private int getIndex(String teamName, String memberId) {
         String ptn = teamName.toLowerCase();
         String pmi = memberId.toLowerCase();
-        for (int i = 0; i < this.teamCollection.size(); i++) {
-            String tn = ((String)this.teamCollection.get(i)).toLowerCase();
-            String mi = ((String)this.memberCollection.get(i)).toLowerCase();
+        for (int i = 0; i < this.rowIndex; i++) {
+            if (this.teamMembers[i][0] == null) continue;
+            
+            String tn = ((String)this.teamMembers[i][0]).toLowerCase();
+            String mi = ((String)this.teamMembers[i][1]).toLowerCase();
             if (tn.equals(ptn) && mi.equals(pmi)) {
                 return i;
             }
@@ -25,8 +29,9 @@ public class TeamMemberDao {
         if (this.isExist(teamName, memberId)) { 
             return 0;
         }
-        this.teamCollection.add(teamName);
-        this.memberCollection.add(memberId);
+        this.teamMembers[rowIndex][0] = teamName;
+        this.teamMembers[rowIndex][1] = memberId;
+        rowIndex++;
         return 1;
     }
     
@@ -36,8 +41,8 @@ public class TeamMemberDao {
             return 0;
         }
         
-        teamCollection.remove(index);
-        memberCollection.remove(index);
+        this.teamMembers[index][0] = null;
+        this.teamMembers[index][1] = null;
         return 1;
     }
     
@@ -52,8 +57,9 @@ public class TeamMemberDao {
     private int getMemberCount(String teamName) {
         int cnt = 0;
         String ptn = teamName.toLowerCase();
-        for (int i = 0; i < this.teamCollection.size(); i++) {
-            String tn = ((String)this.teamCollection.get(i)).toLowerCase();
+        for (int i = 0; i < this.rowIndex; i++) {
+            if (this.teamMembers[i][0] == null) continue;
+            String tn = ((String)this.teamMembers[i][0]).toLowerCase();
             if (tn.equals(ptn)) {
                 cnt++;
             }
@@ -65,10 +71,11 @@ public class TeamMemberDao {
         String ptn = teamName.toLowerCase();
         String[] members = new String[this.getMemberCount(teamName)];
         
-        for (int i = 0, x = 0; i < this.teamCollection.size(); i++) {
-            String tn = ((String)this.teamCollection.get(i)).toLowerCase();
+        for (int i = 0, x = 0; i < this.rowIndex; i++) {
+            if (this.teamMembers[i][0] == null) continue;
+            String tn = ((String)this.teamMembers[i][0]).toLowerCase();
             if (tn.equals(ptn)) {
-                members[x++] = (String)this.memberCollection.get(i);
+                members[x++] = (String)this.teamMembers[i][1];
             }
         }
         return members;
