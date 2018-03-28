@@ -1,75 +1,52 @@
 package bitcamp.java106.pms.dao;
 
 import bitcamp.java106.pms.domain.Task;
-import bitcamp.java106.pms.util.ArrayList;
+import bitcamp.java106.pms.domain.Team;
 
 public class TaskDao {
-    private ArrayList collection = new ArrayList();
+    Task[] tasks = new Task[1000];
+    int taskIndex = 0;
     
-    public void insert(Task task) {
-        this.collection.add(task);
-    }
-    
-    private int count(String teamName) {
-        int cnt = 0;
-        for (int i = 0; i < collection.size(); i++) {
-            Task task = (Task) collection.get(i);
-            if (task.getTeam().getName().toLowerCase().equals(
-                    teamName.toLowerCase())) {
-                cnt++;
-            }
-        }
-        return cnt;
-    }
-    
-    public Task[] list(String teamName) {
-        Task[] arr = new Task[this.count(teamName)];
-        for (int i = 0, x = 0; i < collection.size(); i++) {
-            Task task = (Task) collection.get(i);
-            if (task.getTeam().getName().toLowerCase().equals(
-                    teamName.toLowerCase())) {
-                arr[x++] = task;
-            }
-        }
-        return arr;
-    }
-    
-    public Task get(int taskNo) {
-        int index = this.getTaskIndex(taskNo);
-        if (index < 0)
-            return null;
-        return (Task) collection.get(index);
-    }
-    
-    public void update(Task task) {
-        int index = this.getTaskIndex(task.getNo());
-        if (index < 0)
-            return;
-        collection.set(index, task);
-    }
-    
-    public void delete(int taskNo) {
-        int index = this.getTaskIndex(taskNo);
-        if (index < 0)
-            return;
-        collection.remove(index);
-    }
-    
-    private int getTaskIndex(int taskNo) {
-        for (int i = 0; i < collection.size(); i++) {
-            Task task = (Task) collection.get(i);
-            if (task.getNo() == taskNo) {
-                return i;
-            }
-        }
-        return -1;
-    }
+
+//    public void insert(Team team) {
+//        // 팀 정보가 담겨있는 객체의 주소를 배열에 보관한다.
+//        this.teams[this.teamIndex++] = team;
+//    }
+//    
+//    public Team[] list() {
+//        Team[] arr = new Team[this.teamIndex];
+//        for (int i = 0; i < this.teamIndex; i++) 
+//            arr[i] = this.teams[i];
+//        return arr;
+//    }
+//    
+//    public Team get(String name) {
+//        int i = this.getTeamIndex(name);
+//        if (i == -1)
+//            return null;
+//        return teams[i];
+//    }
+//    
+//    public void update(Team team) {
+//        int i = this.getTeamIndex(team.getName());
+//        if (i != -1)
+//            teams[i] = team;
+//    }
+//    
+//    public void delete(String name) {
+//        int i = this.getTeamIndex(name);
+//        if (i != -1) 
+//            teams[i] = null;
+//    }
+//    
+//    private int getTeamIndex(String name) {
+//        for (int i = 0; i < this.teamIndex; i++) {
+//            if (this.teams[i] == null) continue;
+//            if (name.equals(this.teams[i].getName().toLowerCase())) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
+
 }
-
-//ver 18 - ArrayList 클래스를 적용하여 객체(의 주소) 목록을 관리한다.
-// ver 17 - 클래스 생성
-
-
-
-
-

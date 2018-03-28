@@ -45,7 +45,8 @@ public class TeamController {
         team.setDescription(this.keyScan.nextLine());
 
         System.out.print("최대인원? ");
-        team.setMaxQty(Integer.parseInt(this.keyScan.nextLine()));
+        team.setMaxQty(this.keyScan.nextInt());
+        this.keyScan.nextLine(); 
 
         System.out.print("시작일? ");
         team.setStartDate(Date.valueOf(this.keyScan.nextLine()));
@@ -59,11 +60,10 @@ public class TeamController {
     void onTeamList() {
         System.out.println("[팀 목록]");
         Team[] list = teamDao.list();
-        for (int i = 0; i < list.length; i++) {
-            if (list[i] == null) continue;
+        for (Team team : list) {
             System.out.printf("%s, %d, %s ~ %s\n", 
-                    list[i].getName(), list[i].getMaxQty(), 
-                    list[i].getStartDate(), list[i].getEndDate());
+                    team.getName(), team.getMaxQty(), 
+                    team.getStartDate(), team.getEndDate());
         }
     }
 
@@ -106,11 +106,12 @@ public class TeamController {
             System.out.printf("설명(%s)? ", team.getDescription());
             updateTeam.setDescription(this.keyScan.nextLine());
             System.out.printf("최대인원(%d)? ", team.getMaxQty());
-            updateTeam.setMaxQty(Integer.parseInt(this.keyScan.nextLine()));
+            updateTeam.setMaxQty(this.keyScan.nextInt());
+            this.keyScan.nextLine();
             System.out.printf("시작일(%s)? ", team.getStartDate());
             updateTeam.setStartDate(Date.valueOf(this.keyScan.nextLine()));
             System.out.printf("종료일(%s)? ", team.getEndDate());
-            updateTeam.setEndDate(Date.valueOf(keyScan.nextLine()));
+            updateTeam.setEndDate(Date.valueOf(this.keyScan.nextLine()));
             
             teamDao.update(updateTeam);
             System.out.println("변경하였습니다.");
@@ -138,6 +139,7 @@ public class TeamController {
     
 }
 
+//ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
 // ver 15 - TeamDao를 생성자에서 주입 받도록 변경.
 // ver 14 - TeamDao를 사용하여 팀 데이터를 관리한다.
 // ver 13 - 시작일, 종료일을 문자열로 입력 받아 Date 객체로 변환하여 저장.
