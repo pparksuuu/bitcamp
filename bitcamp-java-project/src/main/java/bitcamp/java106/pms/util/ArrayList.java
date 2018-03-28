@@ -1,4 +1,4 @@
-package step12.ex01;
+package bitcamp.java106.pms.util;
 
 public class ArrayList {
     protected static final int DEFAULT_CAPACITY = 5;

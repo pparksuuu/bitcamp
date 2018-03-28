@@ -53,7 +53,6 @@ public class MemberController {
         System.out.println("[회원 목록]");
         Member[] list = memberDao.list();
         for (int i = 0; i < list.length; i++) {
-            if (list[i] == null) continue;
             System.out.printf("%s, %s, %s\n", 
                 list[i].getId(), list[i].getEmail(), list[i].getPassword());
         }
@@ -61,6 +60,9 @@ public class MemberController {
 
     void onMemberView(String id) {
         System.out.println("[회원 정보 조회]");
+        
+        
+        
         if (id == null) {
             System.out.println("아이디를 입력하시기 바랍니다.");
             return;

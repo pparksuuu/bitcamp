@@ -1,10 +1,19 @@
 package bitcamp.java106.pms.domain;
 
 public class Member {
+    private int no;
     private String id;
     private String email;
     private String password;
     
+    public int getNo() {
+        return no;
+    }
+
+    public void setNo(int no) {
+        this.no = no;
+    }
+
     public String getId() {
         return id;
     }

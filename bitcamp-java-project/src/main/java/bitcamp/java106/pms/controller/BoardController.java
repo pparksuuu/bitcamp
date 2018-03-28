@@ -51,10 +51,9 @@ public class BoardController {
     void onBoardList() {
         System.out.println("[게시물 목록]");
         Board[] list = boardDao.list();
-        for (int i = 0; i < list.length; i++) {
-            if (list[i] == null) continue;
+        for (Board board : list) {
             System.out.printf("%d, %s, %s\n",
-                i, list[i].getTitle(), list[i].getCreatedDate());
+                board.getNo(), board.getTitle(), board.getCreatedDate());
         }
     }
 
@@ -89,6 +88,7 @@ public class BoardController {
             System.out.println("유효하지 않은 게시물 번호입니다.");
         } else {
             Board updateBoard = new Board();
+            
             System.out.printf("제목(%s)? ", board.getTitle());
             updateBoard.setTitle(this.keyScan.nextLine());
             System.out.printf("설명(%s)? ", board.getContent());
