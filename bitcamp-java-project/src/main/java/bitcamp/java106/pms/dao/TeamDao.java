@@ -46,8 +46,7 @@ public class TeamDao {
         }
         return -1;
     }
-    
-    
+
 }
 
 //ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
