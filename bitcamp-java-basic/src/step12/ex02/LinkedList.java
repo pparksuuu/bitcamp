@@ -20,13 +20,102 @@ public class LinkedList {
     
     public LinkedList() {
         head = new Bucket();
+        tail = head;
     }
 
-    public void add(String s1) {
-        // TODO Auto-generated method stub
+    public void add(Object value) {
+        //맨 끝 객차에 짐을 싣는다.
+        tail.value = value;
         
+        //새 객차를 만들어 맨 뒤에 뭍인다.
+        Bucket bucket = new Bucket();
+        tail.next = bucket;
+        
+        // 새 객차에 이번 객차의 주소를 저장한다.
+        bucket.prev = tail;
+        
+        // 새로 붙인 객차를 맨 끝 객차로 처리.
+        tail = bucket;
     }
     
-    // 리스트에서 맨 앞 객차의 주소를 저장하는 변수.
+    public Object get(int i) {
+        Bucket cursor = head;
+        int count = 0;
+        
+        while (cursor != tail) {
+            if (count == i)
+                return cursor.value;
+            count++;
+            cursor = cursor.next;
+        }
+        return null;
+    }
     
+    public int size() {
+        Bucket cursor = head;
+        int count = 0;
+        
+        while (cursor != tail) {
+            count++;
+            cursor = cursor.next;
+        }
+        
+        return count;
+    }
+    
+    public Object remove(int i) {
+        Bucket cursor = head;
+        
+        if (i == 0) {
+            if (head == tail)
+                return null;
+            else {
+                head = head.next;
+                head.prev = null;
+                return cursor.value;
+            }
+        }
+        
+        int count = 0;
+        
+        while (cursor != tail) {
+            if (count == i) {
+                cursor.prev.next = cursor.next;
+                cursor.next.prev = cursor.prev;
+                cursor.next = null;
+                cursor.prev = null;
+                return cursor.value;
+            }
+            count++;
+            cursor = cursor.next;
+        }
+        return null;
+    }
+    
+    public void add(int i, Object value) {
+        Bucket cursor = head;
+        int count = 0;
+        
+        while (cursor != tail) {
+            if (count == i) {
+                Bucket bucket = new Bucket();
+                bucket.value = value;
+                bucket.prev = cursor.prev;
+                cursor.prev = bucket;
+                bucket.next = cursor;
+                if (bucket.prev != null) {
+                    bucket.prev.next = bucket;
+                } else { //이전에 다른 객차가 없다면 이 객차를 헤드로 만든다.
+                    head = bucket;
+                }
+                return;
+            }
+            count++;
+            cursor = cursor.next;
+        }
+        
+        if (count == i) {
+            add(value); //맨 끝에 추가하는 것이다.
+        }
+    }
 }
