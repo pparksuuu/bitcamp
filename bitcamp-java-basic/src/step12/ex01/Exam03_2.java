@@ -1,8 +1,9 @@
 // indexOf의 사용
 package step12.ex01;
 
+import java.util.ArrayList;
 
-public class Exam03_1 {
+public class Exam03_2 {
     //hashCode()와 equals()를 오버라이딩 한다면?
     static class Member {
         String name;

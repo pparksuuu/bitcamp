@@ -1,9 +1,10 @@
-// indexOf의 사용
+// indexOf()에서 객체를 찾을 때 equals()를 비교햐소ㅓ 첮눈더,
 package step12.ex01;
 
+import java.util.ArrayList;
 
-public class Exam03_1 {
-    //hashCode()와 equals()를 오버라이딩 한다면?
+public class Exam03_3 {
+    //hashCode()와 equals()를 오버라이딩하지  않았다.
     static class Member {
         String name;
         int age;
@@ -17,28 +18,6 @@ public class Exam03_1 {
         public String toString() {
             return String.format("[%s, %d]", this.name, this.age);
         }
-
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            Member other = (Member) obj;
-            if (age != other.age)
-                return false;
-            if (name == null) {
-                if (other.name != null)
-                    return false;
-            } else if (!name.equals(other.name))
-                return false;
-            return true;
-        }
-        
-        
     }
     public static void main(String[] args) {
         Member s1 = new Member("홍길동", 20);
