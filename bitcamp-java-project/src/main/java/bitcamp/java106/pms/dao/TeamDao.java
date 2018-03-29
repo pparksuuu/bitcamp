@@ -1,64 +1,52 @@
 package bitcamp.java106.pms.dao;
 
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.util.ArrayList;
 
 public class TeamDao {
-    private ArrayList collection = new ArrayList();
+    Team[] teams = new Team[1000];
+    int teamIndex = 0;
     
     public void insert(Team team) {
-        collection.add(team);
+        // 팀 정보가 담겨있는 객체의 주소를 배열에 보관한다.
+        this.teams[this.teamIndex++] = team;
     }
     
     public Team[] list() {
-        Team[] arr = new Team[this.collection.size()];
-        for (int i = 0; i < this.collection.size(); i++) 
-            arr[i] = (Team) collection.get(i);
+        Team[] arr = new Team[this.teamIndex];
+        for (int i = 0; i < this.teamIndex; i++) 
+            arr[i] = this.teams[i];
         return arr;
     }
     
     public Team get(String name) {
-        
-        //int i;
-        //if ((i = this.getTeamIndex(name)) != -1)
-        //    return (Team) collection.get(i);
-        //return null;
-        
-        int index = this.getTeamIndex(name);
-        if (index < 0) {
+        int i = this.getTeamIndex(name);
+        if (i == -1)
             return null;
-        }
-        return (Team) collection.get(index);
+        return teams[i];
     }
     
     public void update(Team team) {
-        int index = getTeamIndex(team.getName());
-        if (index < 0)
-            return;
-        collection.set(index, team);
+        int i = this.getTeamIndex(team.getName());
+        if (i != -1)
+            teams[i] = team;
     }
     
     public void delete(String name) {
-        
-        //int i;
-        //if ((i = this.getTeamIndex(name)) != -1)
-        //    collection.remove(i);
-        
-        int index = this.getTeamIndex(name);
-        if (index < 0)
-            return;
-        collection.remove(index);
+        int i = this.getTeamIndex(name);
+        if (i != -1) 
+            teams[i] = null;
     }
     
     private int getTeamIndex(String name) {
-        for (int i = 0; i < collection.size(); i++) {
-            if (name.toLowerCase().equals(
-                    ((Team) collection.get(i)).getName().toLowerCase())) {
+        for (int i = 0; i < this.teamIndex; i++) {
+            if (this.teams[i] == null) continue;
+            if (name.equals(this.teams[i].getName().toLowerCase())) {
                 return i;
             }
         }
         return -1;
     }
+
 }
 
 //ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
