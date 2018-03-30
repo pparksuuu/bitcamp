@@ -1,7 +1,7 @@
 // java.util.Queue 구현과 사용
 package step12.ex04;
 
-import java.util.concurrent.ArrayBlockingQueue;;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class Exam01_2 {
     public static void main(String[] args) {
