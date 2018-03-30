@@ -1,11 +1,12 @@
 package bitcamp.java106.pms.dao;
 
+import java.util.LinkedList;
+
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.util.ArrayList;
 
 public class TeamDao {
     
-    ArrayList collection = new ArrayList();
+    LinkedList<Team> collection = new LinkedList<>();
     
     public void insert(Team team) {
         collection.add(team);
@@ -14,14 +15,14 @@ public class TeamDao {
     public Team[] list() {
         Team[] arr = new Team[collection.size()];
         for (int i = 0; i < collection.size(); i++) 
-            arr[i] = (Team) collection.get(i);
+            arr[i] = collection.get(i);
         return arr;
     }
     
     public Team get(String name) {
         int i;
         if ((i = this.getTeamIndex(name)) != -1)
-            return (Team) collection.get(i);
+            return collection.get(i);
         return null;
     }
     
@@ -40,7 +41,7 @@ public class TeamDao {
     private int getTeamIndex(String name) {
         for (int i = 0; i < collection.size(); i++) {
             if (name.toLowerCase().equals(
-                    ((Team) collection.get(i)).getName().toLowerCase())) {
+                    collection.get(i).getName().toLowerCase())) {
                 return i;
             }
         }
