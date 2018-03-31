@@ -85,7 +85,7 @@ public class TeamMemberController {
         Iterator<String> iterator = teamMemberDao.getMembers(teamName);
         if (iterator != null) {
             while (iterator.hasNext()) {
-                System.out.printf("%s, ", iterator.next());
+                System.out.printf("%s, ", iterator.next());            
             }
         }
         System.out.println();
