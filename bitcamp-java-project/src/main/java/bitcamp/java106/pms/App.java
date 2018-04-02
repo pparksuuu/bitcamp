@@ -11,7 +11,6 @@ import bitcamp.java106.pms.controller.MemberController;
 import bitcamp.java106.pms.controller.TaskController;
 import bitcamp.java106.pms.controller.TeamController;
 import bitcamp.java106.pms.controller.TeamMemberController;
-import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
@@ -45,7 +44,7 @@ public class App {
         MemberDao memberDao = new MemberDao();
         TaskDao taskDao = new TaskDao();
         TeamMemberDao teamMemberDao = new TeamMemberDao();
-        ClassroomDao classroomDao = new ClassroomDao();
+        
         // 테스트용 데이터를 준비한다. 
         prepareMemberData(memberDao);
         prepareTeamData(teamDao, teamMemberDao);
@@ -58,7 +57,8 @@ public class App {
         BoardController boardController = new BoardController(keyScan);
         TaskController taskController = new TaskController(
                 keyScan, teamDao, taskDao, teamMemberDao, memberDao);
-        ClassroomController classroomController = new ClassroomController(keyScan, classroomDao);
+        ClassroomController classroomController = new ClassroomController(
+                keyScan);
         
         HashMap<String, Controller> controllerMap = new HashMap<>();
         
@@ -68,6 +68,7 @@ public class App {
         controllerMap.put("task", taskController);
         controllerMap.put("team", teamController);
         controllerMap.put("team/member", teamMemberController);
+        
         
         Console.keyScan = keyScan;
 
@@ -86,15 +87,14 @@ public class App {
                 break;
             } else if (menu.equals("help")) {
                 onHelp();
-            }  else {
+            } else {
                 int slashIndex = menu.lastIndexOf("/");
-                String controllerKey = menu.substring(0, slashIndex);
-                Controller controller = controllerMap.get(controllerKey);
+                String controllerkey = menu.substring(0, slashIndex);
+                Controller controller = controllerMap.get(controllerkey);
                 if (controller != null) {
                     controller.service(menu, option);
                 } else {
                     System.out.println("명령어가 올바르지 않습니다.");
-
                 }
             }
 
