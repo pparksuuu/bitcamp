@@ -22,7 +22,7 @@ public class Exam11_3
   public static void m2() {
     //static이 붙은 메서드(스태틱 메서드=클래스 메서드)에서는
     //그 블록 바깥 쪽에 있는 스태틱 변수(클래스 변수)를 사용할 수 있다.
-    b = 20;
+    B = 20;
     
     int a;
     int b;
@@ -34,13 +34,13 @@ public class Exam11_3
   public void m3() {
     //static이 붙지 않은 블록(인스턴스 블록)에서는
     //그 블록 바깥 쪽에 선언된 변수를 모두 접근할 수 있다.
-    b = 20;
+    B = 20;
     a = 100;//OK
   }
 
   public void m4() {
 
-    b = 20;//ok
+    B = 20;//ok
     a = 100;//Oka
   }
 }
