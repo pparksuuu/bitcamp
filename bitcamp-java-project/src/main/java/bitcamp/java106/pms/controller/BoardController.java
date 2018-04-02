@@ -7,7 +7,9 @@ import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.util.Console;
 
-public class BoardController {
+//BoardController는 Controller 규칙을 이행한다.
+// => Controller 규칙을 따른다.
+public class BoardController implements Controller {
     Scanner keyScan;
 
     BoardDao boardDao = new BoardDao();
