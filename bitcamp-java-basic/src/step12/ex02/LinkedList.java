@@ -118,4 +118,5 @@ public class LinkedList {
             add(value); //맨 끝에 추가하는 것이다.
         }
     }
+    
 }
