@@ -60,7 +60,7 @@ public class App {
                 keyScan, teamDao, taskDao, teamMemberDao, memberDao);
         ClassroomController classroomController = new ClassroomController(keyScan, classroomDao);
         
-        HashMap<String, Controller> controllerMap = new HashMap<>();
+        HashMap<String,Controller> controllerMap = new HashMap<>();
         
         controllerMap.put("board", boardController);
         controllerMap.put("classroom", classroomController);
@@ -68,6 +68,7 @@ public class App {
         controllerMap.put("task", taskController);
         controllerMap.put("team", teamController);
         controllerMap.put("team/member", teamMemberController);
+        
         
         Console.keyScan = keyScan;
 
@@ -81,24 +82,26 @@ public class App {
                 option = null;
             }
 
+           
+            
             if (menu.equals("quit")) {
                 onQuit();
                 break;
             } else if (menu.equals("help")) {
                 onHelp();
-            }  else {
+            } else {
                 int slashIndex = menu.lastIndexOf("/");
                 String controllerKey = menu.substring(0, slashIndex);
-                Controller controller = controllerMap.get(controllerKey);
+                //controller 는 다형적 변수
+                Controller controller= controllerMap.get(controllerKey); 
                 if (controller != null) {
                     controller.service(menu, option);
                 } else {
-                    System.out.println("명령어가 올바르지 않습니다.");
-
+                System.out.println("명령어가 올바르지 않습니다.");
                 }
-            }
 
-            System.out.println(); 
+                System.out.println(); 
+            }
         }
     }
     static void prepareMemberData(MemberDao memberDao) {
