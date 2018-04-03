@@ -60,15 +60,15 @@ public class App {
         ClassroomController classroomController = new ClassroomController(
                 keyScan);
         
-        HashMap<String, Controller> controllerMap = new HashMap<>();
-        
+        HashMap<String,Controller> controllerMap = 
+                new HashMap<>();
+
         controllerMap.put("board", boardController);
         controllerMap.put("classroom", classroomController);
         controllerMap.put("member", memberController);
         controllerMap.put("task", taskController);
         controllerMap.put("team", teamController);
         controllerMap.put("team/member", teamMemberController);
-        
         
         Console.keyScan = keyScan;
 
@@ -81,7 +81,7 @@ public class App {
             } else {
                 option = null;
             }
-
+            
             if (menu.equals("quit")) {
                 onQuit();
                 break;
@@ -89,8 +89,9 @@ public class App {
                 onHelp();
             } else {
                 int slashIndex = menu.lastIndexOf("/");
-                String controllerkey = menu.substring(0, slashIndex);
-                Controller controller = controllerMap.get(controllerkey);
+                String controllerKey = menu.substring(0, slashIndex);
+                Controller controller = controllerMap.get(controllerKey);
+                
                 if (controller != null) {
                     controller.service(menu, option);
                 } else {

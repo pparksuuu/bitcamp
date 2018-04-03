@@ -1,6 +1,6 @@
 package step11.ex17;
 
-public class Car {
+public abstract class Car {
 
     public Car() {
         super();

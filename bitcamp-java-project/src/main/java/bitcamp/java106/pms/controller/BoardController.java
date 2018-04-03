@@ -1,16 +1,20 @@
+// Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller;
 
 import java.sql.Date;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.util.Console;
 
+// BoardController는 Controller 규칙을 이행한다.
+// => Controller 규칙에 따라 메서드를 만든다.
 public class BoardController implements Controller {
     Scanner keyScan;
 
-    BoardDao boardDao = new BoardDao();
+    BoardDao<Board> boardDao = new BoardDao<>();
     
     public BoardController(Scanner scanner) {
         this.keyScan = scanner;
@@ -50,8 +54,9 @@ public class BoardController implements Controller {
 
     void onBoardList() {
         System.out.println("[게시물 목록]");
-        Board[] list = boardDao.list();
-        for (Board board : list) {
+        Iterator<Board> iterator = boardDao.list();
+        while (iterator.hasNext()) {
+            Board board = iterator.next(); //iterator이므로 type Casting X.
             System.out.printf("%d, %s, %s\n",
                 board.getNo(), board.getTitle(), board.getCreatedDate());
         }
@@ -94,7 +99,9 @@ public class BoardController implements Controller {
             System.out.printf("설명(%s)? ", board.getContent());
             updateBoard.setContent(this.keyScan.nextLine());
             updateBoard.setCreatedDate(board.getCreatedDate());
-            boardDao.update(updateBoard);
+            
+            int index = boardDao.indexOf(board.getNo());
+            boardDao.update(index, updateBoard);
             System.out.println("변경하였습니다.");
         }
     }

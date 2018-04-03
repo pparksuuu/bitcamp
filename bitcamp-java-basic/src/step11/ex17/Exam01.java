@@ -1,17 +1,18 @@
-// 상속 - Generalization 수행 후
+// 상속 - 추상 메서드
 package step11.ex17;
 
-// Sedan과 Truck의 공통 기능인
-// start(), shutdown(), run() 메서드를 추출하여
-// Car 클래스를 만들고
-// Sedan과 Truck은 이 클래스의 서브클래스가 된다.
-//
-// start()와 shutdown()은
-// Sedan이나 Truck 모두 같은 작업을 수행하기 때문에 상속 받은 것을 그대로 사용하면 되지만,
-// run()은 Sedan과 Truck이  서로 다르게 작업하기 때문에 오버라이딩 해야 한다.
-// 
+// Car 클래스는 Sedan과 Truck의 공통 기능을 관리하기 위해 만든 클래스이다.
+// 즉 Car 클래스는 직접 인스턴스를 만들어 사용하기 위해서 정의한 클래스가 아니라,
+// Sedan과 Truck에서 겹치는 코드를 공통 관리하기 위해 만든 클래스이다.
+// 가능한 직접 Car 클래스를 사용하는 것을 피해야 한다.
+
 public class Exam01 {
     public static void main(String[] args) {
+        Car c = new Car();
         
+        // => 이런 경우를 방지하기 위해. 
+        //    즉 Car 클래스의 경우처럼 서브클래스에 공통 기능을 상속해주는 용도로 만든 클래스를
+        //    직접 사용하지 못하도록 막기위해 만든 문법이
+        //    "추상클래스(abstract)"이다.
     }
 }
