@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import bitcamp.java106.pms.domain.Board;
 
-public class BoardDao<E> extends AbstractDao<E> {
+public class BoardDao extends AbstractDao<Board> {
 
     public int indexOf(Object key) {
         int no = (Integer) key; //Integer ==> int : auto-unboxing

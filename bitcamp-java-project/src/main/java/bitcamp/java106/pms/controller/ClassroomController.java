@@ -14,7 +14,7 @@ import bitcamp.java106.pms.util.Console;
 public class ClassroomController implements Controller {
     Scanner keyScan;
 
-    ClassroomDao<Classroom> classroomDao = new ClassroomDao<>();
+    ClassroomDao classroomDao = new ClassroomDao();
     
     public ClassroomController(Scanner scanner) {
         this.keyScan = scanner;

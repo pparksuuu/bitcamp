@@ -14,7 +14,7 @@ import bitcamp.java106.pms.util.Console;
 public class BoardController implements Controller {
     Scanner keyScan;
 
-    BoardDao<Board> boardDao = new BoardDao<>();
+    BoardDao boardDao = new BoardDao();
     
     public BoardController(Scanner scanner) {
         this.keyScan = scanner;

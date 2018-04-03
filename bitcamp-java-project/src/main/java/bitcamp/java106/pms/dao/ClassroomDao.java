@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 import bitcamp.java106.pms.domain.Classroom;
 
-public class ClassroomDao<E> extends AbstractDao<E> {
+public class ClassroomDao extends AbstractDao<Classroom> {
 
     public int indexOf(Object key) {
         int no = (Integer) key;
