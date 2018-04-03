@@ -5,16 +5,14 @@ import java.util.Iterator;
 
 import bitcamp.java106.pms.domain.Task;
 
-public class TaskDao extends AbstractDao<Task> {
-
-    // 기존의 list() 메서드로는 작업을 처리할 수 없기 때문에
-    // 팀명으로 작업 목록을 리턴해 주는 메서드를 추가한다.
-    // => 오버로딩
+public class TaskDao extends AbstractDao<Task>{
+    
+    //오버로딩.
     public Iterator<Task> list(String teamName) {
-        ArrayList<Task> tasks = new ArrayList<>(); //작으니까 ArrayList 사용.(LinkedList가 아닌)
+        ArrayList<Task> tasks = new ArrayList<>();
         
         for (Task task : collection) {
-            if (task.getTeam().getName().equalsIgnoreCase(teamName)) {
+            if(task.getTeam().getName().equalsIgnoreCase(teamName)) {
                 tasks.add(task);
             }
         }

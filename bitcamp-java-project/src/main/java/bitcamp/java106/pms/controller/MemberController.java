@@ -1,4 +1,4 @@
-// Controller 규칙에 따라 메서드 작성
+// 이 클래스는 회원 관련 기능을 모두 둔 클래스이다.
 package bitcamp.java106.pms.controller;
 
 import java.util.Iterator;
@@ -8,8 +8,6 @@ import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.util.Console;
 
-//MemberController는 Controller 규칙을 이행한다.
-//=> Controller 규칙에 따라 메서드를 만든다.
 public class MemberController implements Controller {
     Scanner keyScan;
 
@@ -54,12 +52,11 @@ public class MemberController implements Controller {
 
     void onMemberList() {
         System.out.println("[회원 목록]");
-        
         Iterator<Member> iterator = memberDao.list();
         while (iterator.hasNext()) {
             Member member = iterator.next();
             System.out.printf("%s, %s, %s\n", 
-                member.getId(), member.getEmail(), member.getPassword());
+                    member.getId(), member.getEmail(), member.getPassword());
         }
     }
 

@@ -11,11 +11,11 @@ public abstract class AbstractDao<E> {
     }
     
     public Iterator<E> list() {
-        return collection.iterator();
+        return collection.iterator(); 
     }
     
     public E get(Object key) {
-        int index = this.indexOf(key);
+        int index = this.indexOf(key); //boardDao의 indexOf 클래스를 호출하는 것이다.
         if (index == -1)
             return null;
         return collection.get(index);
@@ -32,6 +32,5 @@ public abstract class AbstractDao<E> {
         collection.remove(index);
     }
     
-    //서브 클래스를 만들 때 반드시 다음 메서드를 정의할 것을 강제한다.
     public abstract int indexOf(Object key);
 }
