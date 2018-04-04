@@ -3,7 +3,7 @@ package step16;
 
 import java.io.File;
 
-public class Exam03 {
+public class Exam03_1 {
     public static void main(String[] args) throws Exception {
         //생성할 디렉토리 경로 설정
         File dir = new File("temp");
