@@ -1,5 +1,5 @@
 // 특정 폴더를 생성하고 거기에 파일을 든다
-package step16;
+package step16.ex01;
 
 import java.io.File;
 
