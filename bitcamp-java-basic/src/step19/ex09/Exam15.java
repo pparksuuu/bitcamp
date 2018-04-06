@@ -10,11 +10,11 @@ import step19.ex05.ApplicationContext6;
 
 public class Exam15 {
     public Exam15() {
-        System.out.println("====> Exam14()");
+        System.out.println("====> Exam15()");
     }
     public static void main(String[] args) throws Exception {
-        ApplicationContext10 iocContainer = new ApplicationContext10("step19.ex08");
-        Car car = (Car) iocContainer.getBean("step19.ex08.Car2");
+        ApplicationContext10 iocContainer = new ApplicationContext10("step19.ex09");
+        Car car = (Car) iocContainer.getBean("car");
         car.move();
     }
 }
