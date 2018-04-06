@@ -1,5 +1,5 @@
-// 응용 - 파일 정보 대신 클래스 정보를 목록에 저장한다
-package step18.ex06;
+// 응용 - 특정 패키지 및 그 하위  패키지의 .class 파일의 목록을 알아내기
+package step18.ex07;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -7,20 +7,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Exam05 {
+// 1)클래스를 찾는 코드를 별도의 메서드로 분리한다.
+public class Exam04 {
     
     public static void main(String[] args) throws Exception{
         ClassLoader classLoader = ClassLoader.getSystemClassLoader(); //Factory Method Design Patterns
         URL url = classLoader.getResource("step18");
 
-        List<Class> classes = findClasses(new File(url.getPath()), "step18");
+        List<File> files = findClasses(new File(url.getPath()));
         
-        for (Class clazz : classes) {
-            System.out.println(clazz.getName());
+        for (File f : files) {
+            System.out.println(f.getCanonicalPath());
         }
     }
     
-    static List<Class> findClasses(File dir, String packagename) throws Exception {
+    static List<File> findClasses(File dir) throws Exception {
         File[] files = dir.listFiles(new FileFilter() {
             
             public boolean accept(File file) {
@@ -32,14 +33,12 @@ public class Exam05 {
             }
         });
         
-        ArrayList<Class> list = new ArrayList<>();
+        ArrayList<File> list = new ArrayList<>();
         for (File f : files) {
             if (f.isDirectory()) {
-                list.addAll(findClasses(f, packagename + "." + f.getName()));
+                list.addAll(findClasses(f));
             } else {
-                String classname = packagename + "." + f.getName();
-                list.add(Class.forName(
-                        classname.substring(0, classname.length() - 6)));
+                list.add(f);
             }
         }
         return list;
