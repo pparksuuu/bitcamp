@@ -1,0 +1,27 @@
+// IoC 컨테이너 만들기 - 의존 객체를 스스로 만들기
+package step19.ex08;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
+
+import step19.ex05.ApplicationContext6;
+
+
+// 의존 객체(dependancy object)
+// => 작업을 수행하기 위해 사용해야만 하는 객체
+// => Car 클래스의 경우 Engine 클래스가 Car의 의존 객체이다.
+// => car의 move()를 실행하려면 Engine 객체가 있어야 한다.
+//
+// 의존 객체 준비
+// => 일반적으로 의존 객체는 그 객체를 사용하는 측에서 생성한다.
+// => 즉 Car 클래스에서 Engine 클래스를 사용하니까,
+//    Car의 생성자에서 Engine 객체를 생성하였다.
+
+public class Exam11 {
+    public static void main(String[] args) {
+        Car car = new Car();
+        car.move();
+    }
+}
