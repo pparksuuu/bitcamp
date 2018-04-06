@@ -9,6 +9,9 @@ import java.util.List;
 import step19.ex05.ApplicationContext6;
 
 public class Exam13 {
+    public Exam13() {
+        System.out.println("====> Exam13()");
+    }
     public static void main(String[] args) {
         // 새 Engine을 준비한다.
         UltraEngine engine = new UltraEngine();

@@ -1,11 +1,12 @@
 // 의존 객체 Engine을 자체적으로 만들지 않고 외부에서 주입 받는다.
-package step19.ex08;
+package step19.ex09;
 
-public class Car2 {
+@Component(value="car")
+public class Car {
     Engine engine;
 
-    public Car2(Engine engine) {
-        System.out.println("===> Car2(Engine)");
+    public Car(Engine engine) {
+        System.out.println("===> Car(Engine)");
         this.engine = engine;
     }
     

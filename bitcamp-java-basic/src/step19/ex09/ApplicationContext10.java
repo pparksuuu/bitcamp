@@ -1,5 +1,5 @@
 // 객체 생성할 때 의존 객체가 필요하다면 의존 객체를 생성하여 자동 주입시킨다.
-package step19.ex08;
+package step19.ex09;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -8,11 +8,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ApplicationContext9 {
+public class ApplicationContext10 {
     //클래스 이름으로 객체를 저장할 수 있도로 Map을 사용한다.
     private HashMap<String, Object> objPool = new HashMap<>();
 
-    public ApplicationContext9(String packageName) throws Exception {
+    public ApplicationContext10(String packageName) throws Exception {
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
 
         File dir = new File(classLoader.getResource(

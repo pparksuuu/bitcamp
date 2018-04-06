@@ -20,6 +20,9 @@ import step19.ex05.ApplicationContext6;
 //    Car의 생성자에서 Engine 객체를 생성하였다.
 
 public class Exam11 {
+    public Exam11() {
+        System.out.println("====> Exam11()");
+    }
     public static void main(String[] args) {
         Car car = new Car();
         car.move();
