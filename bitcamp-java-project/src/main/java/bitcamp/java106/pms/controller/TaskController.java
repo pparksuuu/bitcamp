@@ -1,10 +1,11 @@
-// 팀 작업 관리 기능을 모아 둔 클래스
+// Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller;
 
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
@@ -13,7 +14,10 @@ import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
 
-public class TaskController implements Controller  {
+//TaskController는 Controller 규칙을 이행한다.
+//=> Controller 규칙에 따라 메서드를 만든다.
+@Component("task")
+public class TaskController implements Controller {
     
     Scanner keyScan;
     TeamDao teamDao;
@@ -108,9 +112,10 @@ public class TaskController implements Controller  {
     private void onTaskList(final Team team) {
         System.out.println("[팀 작업 목록]");
         
-        Iterator<Task> tasks = taskDao.list(team.getName());
-        while (tasks.hasNext()) {
-            Task task = tasks.next();
+        Iterator<Task> iterator = taskDao.list(team.getName());
+        
+        while (iterator.hasNext()) {
+            Task task = iterator.next();
             System.out.printf("%d,%s,%s,%s,%s\n", 
                     task.getNo(), task.getTitle(), 
                     task.getStartDate(), task.getEndDate(),
@@ -272,5 +277,6 @@ public class TaskController implements Controller  {
     }
 }
 
+//ver 22 - TaskDao 변경 사항에 맞춰 이 클래스를 변경한다.
 //ver 18 - ArrayList가 적용된 TaskDao를 사용한다.
 //ver 17 - 클래스 생성

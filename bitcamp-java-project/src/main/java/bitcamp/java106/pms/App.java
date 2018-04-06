@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import bitcamp.java106.pms.context.ApplicationContext;
 import bitcamp.java106.pms.controller.BoardController;
 import bitcamp.java106.pms.controller.ClassroomController;
 import bitcamp.java106.pms.controller.Controller;
@@ -11,6 +12,7 @@ import bitcamp.java106.pms.controller.MemberController;
 import bitcamp.java106.pms.controller.TaskController;
 import bitcamp.java106.pms.controller.TeamController;
 import bitcamp.java106.pms.controller.TeamMemberController;
+import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TaskDao;
@@ -21,9 +23,12 @@ import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.util.Console;
 
 public class App {
+
+    static ApplicationContext iocContainer;
+
     static Scanner keyScan = new Scanner(System.in);
     public static String option = null; 
-    
+
     static void onQuit() {
         System.out.println("안녕히 가세요!");
     }
@@ -39,37 +44,20 @@ public class App {
         System.out.println("종료 : quit");
     }
 
-    public static void main(String[] args) {
-        
-        TeamDao teamDao = new TeamDao();
-        MemberDao memberDao = new MemberDao();
-        TaskDao taskDao = new TaskDao();
-        TeamMemberDao teamMemberDao = new TeamMemberDao();
-        ClassroomDao classroomDao = new ClassroomDao();
+    public static void main(String[] args) throws Exception{
+
+        // 기본 객체 준비
+        HashMap<String,Object> defaultBeans = new HashMap<>();
+        defaultBeans.put("java.util.Scanner", keyScan);
+
+        // 기본 객체와 함께 @Component가 붙은 클래스의 객체를 준비한다.
+        iocContainer = new ApplicationContext(
+                "bitcamp.java106.pms", defaultBeans);
+
         // 테스트용 데이터를 준비한다. 
-        prepareMemberData(memberDao);
-        prepareTeamData(teamDao, teamMemberDao);
-        
-        TeamController teamController = new TeamController(keyScan, teamDao);
-        TeamMemberController teamMemberController = new TeamMemberController(
-                keyScan, teamDao, memberDao, teamMemberDao);
-        MemberController memberController = new MemberController(
-                keyScan, memberDao);
-        BoardController boardController = new BoardController(keyScan);
-        TaskController taskController = new TaskController(
-                keyScan, teamDao, taskDao, teamMemberDao, memberDao);
-        ClassroomController classroomController = new ClassroomController(keyScan, classroomDao);
-        
-        HashMap<String,Controller> controllerMap = new HashMap<>();
-        
-        controllerMap.put("board", boardController);
-        controllerMap.put("classroom", classroomController);
-        controllerMap.put("member", memberController);
-        controllerMap.put("task", taskController);
-        controllerMap.put("team", teamController);
-        controllerMap.put("team/member", teamMemberController);
-        
-        
+        prepareMemberData();
+        prepareTeamData();
+
         Console.keyScan = keyScan;
 
         while (true) {
@@ -82,8 +70,6 @@ public class App {
                 option = null;
             }
 
-           
-            
             if (menu.equals("quit")) {
                 onQuit();
                 break;
@@ -92,58 +78,65 @@ public class App {
             } else {
                 int slashIndex = menu.lastIndexOf("/");
                 String controllerKey = menu.substring(0, slashIndex);
-                //controller 는 다형적 변수
-                Controller controller= controllerMap.get(controllerKey); 
+                Controller controller = (Controller) iocContainer.getBean(controllerKey);
+
                 if (controller != null) {
                     controller.service(menu, option);
                 } else {
-                System.out.println("명령어가 올바르지 않습니다.");
+                    System.out.println("명령어가 올바르지 않습니다.");
                 }
-
-                System.out.println(); 
             }
+
+            System.out.println(); 
         }
     }
-    static void prepareMemberData(MemberDao memberDao) {
+    static void prepareMemberData() {
+        MemberDao memberDao = (MemberDao) iocContainer.getBean(
+                "bitcamp.java106.pms.dao.MemberDao");
         Member member = new Member();
         member.setId("aaa");
         member.setEmail("aaa@test.com");
         member.setPassword("1111");
-        
+
         memberDao.insert(member);
-        
+
         member = new Member();
         member.setId("bbb");
         member.setEmail("bbb@test.com");
         member.setPassword("1111");
-        
+
         memberDao.insert(member);
-        
+
         member = new Member();
         member.setId("ccc");
         member.setEmail("ccc@test.com");
         member.setPassword("1111");
-        
+
         memberDao.insert(member);
-        
+
         member = new Member();
         member.setId("ddd");
         member.setEmail("ddd@test.com");
         member.setPassword("1111");
-        
+
         memberDao.insert(member);
-        
+
         member = new Member();
         member.setId("eee");
         member.setEmail("eee@test.com");
         member.setPassword("1111");
-        
+
         memberDao.insert(member);
     }
-    
-    static void prepareTeamData(
-            TeamDao teamDao, 
-            TeamMemberDao teamMemberDao) {
+
+    static void prepareTeamData() {
+        
+        TeamDao teamDao = (TeamDao) iocContainer.getBean(
+                "bitcamp.java106.pms.dao.TeamDao");
+        
+        TeamMemberDao teamMemberDao = (TeamMemberDao) iocContainer.getBean(
+                "bitcamp.java106.pms.dao.TeamMemberDao"); 
+
         Team team = new Team();
         team.setName("t1");
         team.setMaxQty(5);
@@ -153,7 +146,7 @@ public class App {
         teamMemberDao.addMember("t1", "aaa");
         teamMemberDao.addMember("t1", "bbb");
         teamMemberDao.addMember("t1", "ccc");
-        
+
         team = new Team();
         team.setName("t2");
         team.setMaxQty(5);
@@ -163,7 +156,7 @@ public class App {
         teamMemberDao.addMember("t2", "ccc");
         teamMemberDao.addMember("t2", "ddd");
         teamMemberDao.addMember("t2", "eee");
-        
+
     }
 }
 

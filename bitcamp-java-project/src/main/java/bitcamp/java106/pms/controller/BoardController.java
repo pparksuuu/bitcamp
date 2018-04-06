@@ -1,22 +1,26 @@
+// Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller;
 
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.util.Console;
 
-//BoardController는 Controller 규칙을 이행한다.
-// => Controller 규칙을 따른다.
+// BoardController는 Controller 규칙을 이행한다.
+// => Controller 규칙에 따라 메서드를 만든다.
+@Component("board")
 public class BoardController implements Controller {
     Scanner keyScan;
 
-    BoardDao boardDao = new BoardDao();
+    BoardDao boardDao;
     
-    public BoardController(Scanner scanner) {
+    public BoardController(Scanner scanner, BoardDao boardDao) {
         this.keyScan = scanner;
+        this.boardDao = boardDao;
     }
     
     public void service(String menu, String option) {
@@ -127,6 +131,7 @@ public class BoardController implements Controller {
     
 }
 
+//ver 22 - BoardDao 변경 사항에 맞춰 이 클래스를 변경한다.
 // ver 18 - BoardDao 변경 사항에 맞춰 이 클래스를 변경한다.
 // ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.
 // ver 14 - BoardDao를 사용하여 게시물 데이터를 관리한다.
