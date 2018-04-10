@@ -105,7 +105,6 @@ public class App {
                 } catch (Exception e) {
                     if (keyScan.hasNextLine()) { // 키보드 입력으로 남은 잔여 데이터가 있다면,
                         keyScan.nextLine(); //읽어서 버린다.
-                        
                     }
                     System.out.println("작업 실행 중에 오류가 발생하였습니다");
                     System.out.println("명령을 다시 실행해주세요!");
