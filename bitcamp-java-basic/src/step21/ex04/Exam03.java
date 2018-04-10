@@ -40,6 +40,8 @@ public class Exam03 {
             System.out.println(e.getMessage());
         }
         
+        // 중간에 끼어있는 메서드를 만들 때 throws 문장을 선언하지 않아서 편하다!
+        // => 스텔스처럼 조용히 예외를 전달한다.
         
     }
 }

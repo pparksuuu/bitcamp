@@ -5,13 +5,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.context.ApplicationContext;
-import bitcamp.java106.pms.controller.BoardController;
-import bitcamp.java106.pms.controller.ClassroomController;
 import bitcamp.java106.pms.controller.Controller;
-import bitcamp.java106.pms.controller.MemberController;
-import bitcamp.java106.pms.controller.TaskController;
-import bitcamp.java106.pms.controller.TeamController;
-import bitcamp.java106.pms.controller.TeamMemberController;
 import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.dao.MemberDao;
@@ -31,23 +25,33 @@ public class App {
 
     static void onQuit() {
         System.out.println("안녕히 가세요!");
-        
+
         BoardDao boardDao = (BoardDao) iocContainer.getBean(BoardDao.class);
         ClassroomDao classroomDao = (ClassroomDao) iocContainer.getBean(ClassroomDao.class);
         MemberDao memberDao = (MemberDao) iocContainer.getBean(MemberDao.class);
         TeamDao teamDao = (TeamDao) iocContainer.getBean(TeamDao.class);
         TaskDao taskDao = (TaskDao) iocContainer.getBean(TaskDao.class);
         TeamMemberDao teamMemberDao = (TeamMemberDao) iocContainer.getBean(TeamMemberDao.class);
-        try {
-            teamMemberDao.save();
-            boardDao.save();
-            classroomDao.save();
-            memberDao.save();
-            teamDao.save();
-            taskDao.save();
-        } catch (Exception e) {
-            System.out.println("데이터 저장 중 오류 발생 !");
-        }
+        
+        // 각각의 데이터에 대해 예외 처리를 분리해야 한다.
+        // 그래야만 예외가 발생하더라도 다른 데이터 저장은 정상적으로 수행할 것이다.
+        try {teamMemberDao.save();} 
+        catch (Exception e) {System.out.println("팀멤버 데이터 저장 중 오류 발생");}
+        
+        try {boardDao.save();} 
+        catch (Exception e) {System.out.println("게시물 데이터 저장 중 오류 발생!");}
+        
+        try {classroomDao.save();} 
+        catch (Exception e) {System.out.println("수업 데이터 저장 중 오류 발생!");}
+        
+        try {memberDao.save();} 
+        catch (Exception e) {System.out.println("회원 데이터 저장 중 오류 발생!");}
+        
+        try {teamDao.save();} 
+        catch (Exception e) {System.out.println("팀 데이터 저장 중 오류 발생!");}
+        
+        try {taskDao.save();} 
+        catch (Exception e) {System.out.println("작업 데이터 저장 중 오류 발생!");}
     }
 
     static void onHelp() {
@@ -90,21 +94,28 @@ public class App {
             } else if (menu.equals("help")) {
                 onHelp();
             } else {
-                int slashIndex = menu.lastIndexOf("/");
-                String controllerKey = menu.substring(0, slashIndex);
-                Controller controller = (Controller) iocContainer.getBean(controllerKey);
+                try {
+                    Controller controller = (Controller) iocContainer.getBean(menu);
 
-                if (controller != null) {
-                    controller.service(menu, option);
-                } else {
-                    System.out.println("명령어가 올바르지 않습니다.");
+                    if (controller != null) {
+                        controller.service(menu, option);
+                    } else {
+                        System.out.println("명령어가 올바르지 않습니다.");
+                    }
+                } catch (Exception e) {
+                    if (keyScan.hasNextLine()) { // 키보드 입력으로 남은 잔여 데이터가 있다면,
+                        keyScan.nextLine(); //읽어서 버린다.
+                        
+                    }
+                    System.out.println("작업 실행 중에 오류가 발생하였습니다");
+                    System.out.println("명령을 다시 실행해주세요!");
                 }
             }
 
             System.out.println(); 
         }
     }
-  
+
 }
 
 //ver 17 - Task 관리 기능 추가

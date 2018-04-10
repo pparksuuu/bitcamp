@@ -26,7 +26,7 @@ public class Classroom {
     }
     public void setNo(int no) {
         if (no >= count) {
-            count = no;
+            count = no + 1;
         }
         this.no = no;
     }
