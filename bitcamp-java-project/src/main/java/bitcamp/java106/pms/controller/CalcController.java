@@ -9,17 +9,13 @@ import bitcamp.java106.pms.annotation.Component;
 public class CalcController implements Controller {
     Scanner keyScan;
 
-
-
     public CalcController(Scanner scanner) {
         keyScan = scanner;
     }
 
-    public void service(String menu, String option) throws InputMismatchException{
+    public void service(String menu, String option) {
 
         System.out.print("식을 입력하세요?");
-        
-        
         String[] arr = keyScan.nextLine().split(" ");
         try {
         int a = Integer.parseInt(arr[0]);
