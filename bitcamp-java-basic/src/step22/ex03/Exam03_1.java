@@ -3,7 +3,7 @@ package step22.ex03;
 
 import java.io.FileOutputStream;
 
-public class Exam01_3 {
+public class Exam03_1 {
     public static void main(String[] args) throws Exception {
         FileOutputStream out = new FileOutputStream("temp/test3.data");
 

@@ -1,21 +1,19 @@
-// 데이터 출력 - int 값 출력
+// 데이터 읽기 - int 값 읽기.
 package step22.ex03;
 
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.FileReader;
 
 public class Exam01_2 {
     public static void main(String[] args) throws Exception {
-        FileOutputStream out = new FileOutputStream("temp/test3.data");
+        FileInputStream in = new FileInputStream("temp/test3.data");
 
-        int money = 1_3456_7890; // 0x080557D2
-
-        out.write(money >> 24); // 00000008|0557d2
-        out.write(money >> 16); // 00000805|57d2 
-        out.write(money >> 8);  // 00080557|d2 
-        out.write(money);       // 080557d2|
+        // Exam02_1을 실행하여 출력한 데이터를 read()로 읽는다.
+        // read()는 1바이트를 읽어 int 값으로 만든 후 리턴한다.
+        int value = in.read(); // 실제 리턴한 값은 0x08이다. 
         
-        out.close();
-
-        System.out.println("데이터 출력 완료!");
+        in.close();
+        
+        System.out.printf("%x\n", value);
     }
 }
