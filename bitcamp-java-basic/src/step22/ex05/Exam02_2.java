@@ -16,7 +16,7 @@ public class Exam02_2 {
         long startTime = System.currentTimeMillis(); //밀리초
         
         while ((count = in.read(buf)) != -1) {
-            out.write(buf);
+            out.write(buf, 0, count);
         }; // 파일을 끝까지 읽는다.
         
         long endTime = System.currentTimeMillis();
@@ -24,5 +24,6 @@ public class Exam02_2 {
         System.out.println(endTime - startTime);
         
         in.close();
+        out.close();
     }
 }

@@ -1,13 +1,12 @@
-// 버퍼 사용 전 - 파일 복사 및 시간 측정
+// BufferedInputStream과 BufferedOutputStream을 사용하여 파일 복사 및 시간 측정.
 package step22.ex05;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 
-public class Exam02_1 {
+public class Exam03_2 {
     public static void main(String[] args) throws Exception {
-        FileInputStream in = new FileInputStream("temp/jls8.pdf");
-        FileOutputStream out = new FileOutputStream("temp/jls8_2.pdf"); // 파일 복사하는 프로그램 만들기
+        
+        BufferedInputStream in = new BufferedInputStream("temp/jls8.pdf");
+        BufferedOutputStream out = new BufferedOutputStream("temp/jls8_4.pdf");
         
         int b;
         
