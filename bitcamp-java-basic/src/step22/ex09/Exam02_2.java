@@ -5,8 +5,6 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-import step22.ex07.Member;
-
 public class Exam02_2 {
     public static void main(String[] args) throws Exception {
         FileOutputStream fileOut = new FileOutputStream("temp/test9_3.data");
