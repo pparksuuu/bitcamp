@@ -2,17 +2,13 @@
 package bitcamp.java106.pms.controller.team;
 
 import java.sql.Date;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.util.Console;
 
-//TeamController는 Controller 규칙을 이행한다.
-//=> Controller 규칙에 따라 메서드를 만든다.
 @Component("team/add")
 public class TeamAddController implements Controller {
 
@@ -46,9 +42,10 @@ public class TeamAddController implements Controller {
 
         teamDao.insert(team);
     }
-    
 }
 
+//ver 26 - TeamController에서 add() 메서드를 추출하여 클래스로 정의.
+//ver 23 - @Component 애노테이션을 붙인다.
 //ver 22 - TaskDao 변경 사항에 맞춰 이 클래스를 변경한다.
 //ver 18 - ArrayList가 적용된 TeamDao를 사용한다.
 //ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.

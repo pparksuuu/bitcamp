@@ -1,6 +1,9 @@
 package bitcamp.java106.pms.domain;
 
-public class Member {
+public class Member implements java.io.Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
     private String id;
     private String email;
     private String password;
@@ -38,5 +41,6 @@ public class Member {
     
 }
 
+//ver 24 - 생성자 추가
 //ver 17 - toString() 재정의.
 //ver 16 - 캡슐화 적용. 겟터, 셋터 추가.

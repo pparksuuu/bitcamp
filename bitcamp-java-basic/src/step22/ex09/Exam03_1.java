@@ -9,11 +9,11 @@ import step22.ex07.Member;
 
 public class Exam03_1 {
     public static void main(String[] args) throws Exception {
-        FileOutputStream fileOut = new FileOutputStream("temp/test9_3.data");
+        FileOutputStream fileOut = new FileOutputStream("temp/test9_4.data");
         BufferedOutputStream bufOut = new BufferedOutputStream(fileOut);
         ObjectOutputStream out = new ObjectOutputStream(bufOut);
 
-        Member2 member = new Member2();
+        Member3 member = new Member3();
         member.name = "AB가각간";
         member.age = 27;
         member.gender = true;

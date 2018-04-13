@@ -6,46 +6,41 @@ import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
-import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.dao.TeamMemberDao;
-import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Team;
 
-//TeamMemberController는 Controller 규칙을 이행한다.
-//=> Controller 규칙에 따라 메서드를 만든다.
 @Component("team/member/list")
 public class TeamMemberListController implements Controller {
     
     Scanner keyScan;
     TeamDao teamDao;
-    MemberDao memberDao;
     TeamMemberDao teamMemberDao;
     
-    public TeamMemberListController(Scanner scanner, TeamDao teamDao, 
-            MemberDao memberDao, TeamMemberDao teamMemberDao) {
+    public TeamMemberListController(Scanner scanner, 
+            TeamDao teamDao, 
+            TeamMemberDao teamMemberDao) {
         this.keyScan = scanner;
         this.teamDao = teamDao;
-        this.memberDao = memberDao;
         this.teamMemberDao = teamMemberDao;
     }
     
-    public void service(String menu, String option) {
-        if (option == null) {
+    public void service(String menu, String teamName) {
+        if (teamName == null) {
             System.out.println("팀명을 입력하시기 바랍니다.");
             return; 
         }
         
-        Team team = teamDao.get(option);
+        Team team = teamDao.get(teamName);
         if (team == null) {
-            System.out.printf("%s 팀은 존재하지 않습니다.", option);
+            System.out.printf("%s 팀은 존재하지 않습니다.", teamName);
             return;
         }
 
         System.out.println("[팀 멤버 목록]");
         System.out.print("회원들: ");
         
-        Iterator<String> iterator = teamMemberDao.getMembers(option);
+        Iterator<String> iterator = teamMemberDao.getMembers(teamName);
         if (iterator != null) {
             while (iterator.hasNext()) {
                 System.out.printf("%s, ", iterator.next());
@@ -55,6 +50,8 @@ public class TeamMemberListController implements Controller {
     }
 }
 
+//ver 26 - TeamMemberController에서 list() 메서드를 추출하여 클래스로 정의.
+//ver 23 - @Component 애노테이션을 붙인다.
 //ver 18 - ArrayList가 적용된 TeamMemberDao를 사용한다.
 //ver 17 - TeamMemberDao 클래스를 사용하여 팀 멤버의 아이디를 관리한다.
 //ver 16 - 인스턴스 변수를 직접 사용하는 대신 겟터, 셋터 사용.

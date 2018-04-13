@@ -1,7 +1,6 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.member;
 
-import java.util.Iterator;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
@@ -10,8 +9,6 @@ import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.util.Console;
 
-//MemberController는 Controller 규칙을 이행한다.
-//=> Controller 규칙에 따라 메서드를 만든다.
 @Component("member/delete")
 public class MemberDeleteController implements Controller {
     Scanner keyScan;
@@ -41,8 +38,11 @@ public class MemberDeleteController implements Controller {
             }
         }
     }
+    
 }
 
+//ver 26 - MemberController에서 delete() 메서드를 추출하여 클래스로 정의.
+//ver 23 - @Component 애노테이션을 붙인다.
 //ver 22 - MemberDao 변경 사항에 맞춰 이 클래스를 변경한다.
 //ver 18 - ArrayList가 적용된 MemberDao를 사용한다.
 //         onMemberList()에서 배열의 각 항목에 대해 null 값을 검사하는 부분을 제거한다.

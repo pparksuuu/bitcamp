@@ -6,13 +6,16 @@ import java.sql.Date;
 // => 팀 정보를 저장할 수 있는 메모리를 구조를 설계한 클래스이다.
 // => 즉 팀 정보를 위해 사용자(자바 언어 사용자. 즉 개발자)가 새로 정의한 데이터 타입이다.
 //
-public class Team {
+public class Team implements java.io.Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
     private String name;
     private String description;
     private int maxQty;
     private Date startDate;
     private Date endDate;
-    
+
     public Team() {}
     
     public Team(String name) {
@@ -65,6 +68,7 @@ public class Team {
     }
 }
 
+//ver 24 - 생성자 추가
 //ver 17 - toString() 오버라이딩.
 //         팀 멤버 관련 메서드를 TeamMemberDao 클래스로 옮긴다.
 //ver 16 - 캡슐화 적용. 겟터, 셋터 추가.

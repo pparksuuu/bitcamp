@@ -2,7 +2,10 @@ package bitcamp.java106.pms.domain;
 
 import java.sql.Date;
 
-public class Task {
+public class Task implements java.io.Serializable {
+    
+    private static final long serialVersionUID = 1L;
+    
     public static final int READY = 0;
     public static final int WORKING = 1;
     public static final int COMPLETE = 9;
@@ -16,7 +19,6 @@ public class Task {
     private int state;
     private Member worker;
     private Team team;
-    
     
     public Task(Team team) {
         this.no = count++;
@@ -35,8 +37,10 @@ public class Task {
         return no;
     }
     public void setNo(int no) {
-        if (no >= count)
+        // 외부에서 입력 받은 번호가 count 보다 클 때는 count의 값을 증가시켜야 한다.
+        if (no >= count) {
             count = no + 1;
+        }
         this.no = no;
     }
     public int getState() {
@@ -83,6 +87,7 @@ public class Task {
     }
 }
 
+//ver 24 - setNo() 변경
 //ver 17 - 사용자 정의 데이터 타입 생성
 
 

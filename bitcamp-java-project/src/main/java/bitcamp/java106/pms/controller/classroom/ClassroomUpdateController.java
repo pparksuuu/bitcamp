@@ -2,7 +2,6 @@
 package bitcamp.java106.pms.controller.classroom;
 
 import java.sql.Date;
-import java.util.Iterator;
 import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
@@ -11,17 +10,14 @@ import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.domain.Classroom;
 import bitcamp.java106.pms.util.Console;
 
-//ClassroomController는 Controller 규칙을 이행한다.
-//=> Controller 규칙에 따라 메서드를 만든다.
 @Component("classroom/update")
 public class ClassroomUpdateController implements Controller {
     Scanner keyScan;
-
     ClassroomDao classroomDao;
     
     public ClassroomUpdateController(Scanner scanner, ClassroomDao classroomDao) {
-        this.classroomDao = classroomDao;
         this.keyScan = scanner;
+        this.classroomDao = classroomDao;
     }
     
     public void service(String menu, String option) {
@@ -83,5 +79,4 @@ public class ClassroomUpdateController implements Controller {
 
 }
 
-//ver 22 - ClassroomDao 변경 사항에 맞춰 이 클래스를 변경한다.
-//ver 20 - 클래스 추가
+//ver 26 - ClassroomController에서 update() 메서드를 추출하여 클래스로 정의.
