@@ -1,16 +1,25 @@
-// DataInputStream을 FileInputStream이나 ByteArrayInputStream에 붙일 수 있도록
-// 기능을 변경한다. 죽  DataInputStream을 장신구(decorator)로 만든다.
+// InputStream에 붙이는 플러그인(decorator)을 다른 플러그인에 붙이려면,
+// 플러그인(decorator) 클래스도 InputStream의 가족이 되어야 한다.
+
 package step22.ex08;
 
 
+import java.io.IOException;
 import java.io.InputStream;
 
-public class DataInputStream {
+//=> 이 상속은 기능을 상속 받기 위한 것이 아니다.
+// 같은 그룹으로 묶이기 위함이다.
+public class DataInputStream extends InputStream {
 
     InputStream in;
     
     public DataInputStream(InputStream in) throws Exception {
         this.in = in;
+    }
+    
+    @Override
+    public int read() throws IOException {
+        return in.read();
     }
     
     public String readUTF() throws Exception {
@@ -50,7 +59,8 @@ public class DataInputStream {
         
     }
     
-    public void close() throws Exception {
+    @Override
+    public void close() throws IOException {
         in.close();
     }
 }

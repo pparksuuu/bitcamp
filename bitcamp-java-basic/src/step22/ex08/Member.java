@@ -1,9 +1,9 @@
-package step22.ex07;
+package step22.ex08;
 
 public class Member {
-    public String name;
-    public int age;
-    public boolean gender; //true(여자), false(남자)
+    String name;
+    int age;
+    boolean gender; //true(여자), false(남자)
     
     @Override
     public String toString() {
