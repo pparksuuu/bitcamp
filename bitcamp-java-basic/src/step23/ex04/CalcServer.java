@@ -1,4 +1,4 @@
-// 응용 - 계산기 서버 만들기
+// 응용 - 계산기 서버 만들기 - connectionless(=stateless)방식
 package step23.ex04;
 
 import java.io.DataInputStream;
