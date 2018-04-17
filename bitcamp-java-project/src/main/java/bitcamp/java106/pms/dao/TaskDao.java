@@ -4,21 +4,13 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
-import bitcamp.java106.pms.domain.Board;
-import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Task;
-import bitcamp.java106.pms.domain.Team;
 
 @Component
 public class TaskDao extends AbstractDao<Task> {
@@ -30,12 +22,11 @@ public class TaskDao extends AbstractDao<Task> {
     public void load() throws Exception {
         try (
                 ObjectInputStream in = new ObjectInputStream(
-                        new BufferedInputStream(
-                                new FileInputStream("data/task.data")));
-                ) {
-
+                               new BufferedInputStream(
+                               new FileInputStream("data/task.data")));
+            ) {
+        
             while (true) {
-
                 try {
                     this.insert((Task) in.readObject());
                 } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
@@ -43,23 +34,21 @@ public class TaskDao extends AbstractDao<Task> {
                     break; // 반복문을 나간다.
                 }
             }
-        } 
+        }
     }
     
     public void save() throws Exception {
         try (
                 ObjectOutputStream out = new ObjectOutputStream(
-                        new BufferedOutputStream(
+                                new BufferedOutputStream(
                                 new FileOutputStream("data/task.data")));
-                ) {
-
+            ) {
             Iterator<Task> tasks = this.list();
-
+            
             while (tasks.hasNext()) {
                 out.writeObject(tasks.next());
             }
         } 
-
     }
         
     // 기존의 list() 메서드로는 작업을 처리할 수 없기 때문에 

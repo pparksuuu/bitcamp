@@ -1,21 +1,8 @@
 # 변경 내역
-- BoardController.java 삭제
-- board 패키지 생성
-    - BoardAddController.java 추가
-    - BoardListController.java 추가
-    - BoardViewController.java 추가
-    - BoardUpdateController.java 추가
-    - BoardDeleteController.java 추가
-- classroom 패키지 생성
-    - ClassroomXxxController.java 추가
-- member 패키지 생성
-    - MemberXxxController.java 추가
-- task 패키지 생성
-    - TaskXxxController.java 추가
-- team 패키지 생성
-    - TeamXxxController.java 추가
-- teammember 패키지 생성
-    - TeamMemberXxxController.java 추가
-- App.java 변경
-- CalcController.java 추가
-- HiController.java 변경
+- AppServer.java 추가
+- ServerRequest.java 추가
+- ServerResponse.java 추가
+- Controller.java 변경
+- BoardAddController.java 변경
+- AppClient.java 추가
+- BoardListController.java 변경

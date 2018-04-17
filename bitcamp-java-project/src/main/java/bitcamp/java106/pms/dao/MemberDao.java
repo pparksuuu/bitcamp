@@ -4,17 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
-import bitcamp.java106.pms.domain.Board;
-import bitcamp.java106.pms.domain.Classroom;
 import bitcamp.java106.pms.domain.Member;
 
 @Component
@@ -26,12 +20,11 @@ public class MemberDao extends AbstractDao<Member> {
     public void load() throws Exception {
         try (
                 ObjectInputStream in = new ObjectInputStream(
-                        new BufferedInputStream(
-                                new FileInputStream("data/member.data")));
-                ) {
-
+                               new BufferedInputStream(
+                               new FileInputStream("data/member.data")));
+            ) {
+        
             while (true) {
-
                 try {
                     this.insert((Member) in.readObject());
                 } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
@@ -39,18 +32,17 @@ public class MemberDao extends AbstractDao<Member> {
                     break; // 반복문을 나간다.
                 }
             }
-        } 
+        }
     }
     
     public void save() throws Exception {
         try (
                 ObjectOutputStream out = new ObjectOutputStream(
-                        new BufferedOutputStream(
+                                new BufferedOutputStream(
                                 new FileOutputStream("data/member.data")));
-                ) {
-
+            ) {
             Iterator<Member> members = this.list();
-
+            
             while (members.hasNext()) {
                 out.writeObject(members.next());
             }

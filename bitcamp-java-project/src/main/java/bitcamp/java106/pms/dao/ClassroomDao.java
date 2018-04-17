@@ -4,33 +4,28 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.sql.Date;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
-import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.domain.Classroom;
 
 @Component
 public class ClassroomDao extends AbstractDao<Classroom> {
     
-    public ClassroomDao() throws Exception{
+    public ClassroomDao() throws Exception {
         load();
     }
     
     public void load() throws Exception {
         try (
                 ObjectInputStream in = new ObjectInputStream(
-                        new BufferedInputStream(
-                                new FileInputStream("data/classroom.data")));
-                ) {
-
+                               new BufferedInputStream(
+                               new FileInputStream("data/classroom.data")));
+            ) {
+        
             while (true) {
-
                 try {
                     this.insert((Classroom) in.readObject());
                 } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
@@ -38,18 +33,17 @@ public class ClassroomDao extends AbstractDao<Classroom> {
                     break; // 반복문을 나간다.
                 }
             }
-        } 
+        }
     }
     
     public void save() throws Exception {
         try (
                 ObjectOutputStream out = new ObjectOutputStream(
-                        new BufferedOutputStream(
+                                new BufferedOutputStream(
                                 new FileOutputStream("data/classroom.data")));
-                ) {
-
+            ) {
             Iterator<Classroom> classrooms = this.list();
-
+            
             while (classrooms.hasNext()) {
                 out.writeObject(classrooms.next());
             }

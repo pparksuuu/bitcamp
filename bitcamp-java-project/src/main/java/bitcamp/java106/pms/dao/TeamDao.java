@@ -4,20 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.sql.Date;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
-import bitcamp.java106.pms.domain.Board;
-import bitcamp.java106.pms.domain.Classroom;
-import bitcamp.java106.pms.domain.Member;
-import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
 
 @Component
@@ -30,12 +21,11 @@ public class TeamDao extends AbstractDao<Team> {
     public void load() throws Exception {
         try (
                 ObjectInputStream in = new ObjectInputStream(
-                        new BufferedInputStream(
-                                new FileInputStream("data/team.data")));
-                ) {
-
+                               new BufferedInputStream(
+                               new FileInputStream("data/team.data")));
+            ) {
+        
             while (true) {
-
                 try {
                     this.insert((Team) in.readObject());
                 } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
@@ -43,24 +33,22 @@ public class TeamDao extends AbstractDao<Team> {
                     break; // 반복문을 나간다.
                 }
             }
-        } 
+        }
     }
     
     public void save() throws Exception {
         try (
                 ObjectOutputStream out = new ObjectOutputStream(
-                        new BufferedOutputStream(
+                                new BufferedOutputStream(
                                 new FileOutputStream("data/team.data")));
-                ) {
-
+            ) {
             Iterator<Team> teams = this.list();
-
+            
             while (teams.hasNext()) {
                 out.writeObject(teams.next());
             }
         } 
     }
-    
         
     public int indexOf(Object key) {
         String name = (String) key;

@@ -25,28 +25,29 @@ public class TeamMemberDao {
     public void load() throws Exception {
         try (
                 ObjectInputStream in = new ObjectInputStream(
-                        new BufferedInputStream(
-                                new FileInputStream("data/teammember.data")));
-                ) {
+                               new BufferedInputStream(
+                               new FileInputStream("data/teammember.data")));
+            ) {
+        
             try {
-            collection = (HashMap<String,ArrayList<String>>) in.readObject();
+                collection = (HashMap<String,ArrayList<String>>) in.readObject();
             } catch (Exception e) {
+                // 데이터를 읽다가 오류가 발생하면 빈 해시맵 객체를 만든다.
                 collection = new HashMap<>();
             }
-        } 
+        }
     }
     
     public void save() throws Exception {
         try (
                 ObjectOutputStream out = new ObjectOutputStream(
-                        new BufferedOutputStream(
+                                new BufferedOutputStream(
                                 new FileOutputStream("data/teammember.data")));
-                ) {
-
-                out.writeObject(collection);
+            ) {
+            
+            out.writeObject(collection);
         } 
     }
-    
     
     
     public int addMember(String teamName, String memberId) {

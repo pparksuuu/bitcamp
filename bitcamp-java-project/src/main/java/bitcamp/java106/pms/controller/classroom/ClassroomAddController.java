@@ -1,41 +1,36 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.classroom;
 
+import java.io.PrintWriter;
 import java.sql.Date;
-import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.domain.Classroom;
+import bitcamp.java106.pms.server.ServerRequest;
+import bitcamp.java106.pms.server.ServerResponse;
 
-@Component("classroom/add")
+@Component("/classroom/add")
 public class ClassroomAddController implements Controller {
-    Scanner keyScan;
-    ClassroomDao classroomDao;
+    ClassroomDao classroomDao; 
     
-    public ClassroomAddController(Scanner scanner, ClassroomDao classroomDao) {
-        this.keyScan = scanner;
+    public ClassroomAddController(ClassroomDao classroomDao) {
         this.classroomDao = classroomDao;
     }
     
-    public void service(String menu, String option) {
-        System.out.println("[수업 등록]");
-        Classroom classroom = new Classroom();
-
-        System.out.print("수업명? ");
-        classroom.setTitle(this.keyScan.nextLine());
-
-        System.out.print("시작일? ");
-        classroom.setStartDate(Date.valueOf(this.keyScan.nextLine()));
-
-        System.out.print("종료일? ");
-        classroom.setEndDate(Date.valueOf(this.keyScan.nextLine()));
-
-        System.out.print("교실명? ");
-        classroom.setRoom(this.keyScan.nextLine());
+    @Override
+    public void service(ServerRequest request, ServerResponse response) {
         
+        Classroom classroom = new Classroom();
+        classroom.setTitle(request.getParameter("title"));
+        classroom.setStartDate(new Date(System.currentTimeMillis()));
+        classroom.setEndDate(new Date(System.currentTimeMillis()));
+        classroom.setRoom(request.getParameter("room"));
         classroomDao.insert(classroom);
+        
+        PrintWriter out = response.getWriter();
+        out.println("등록 성공!");
     }
 }
 
