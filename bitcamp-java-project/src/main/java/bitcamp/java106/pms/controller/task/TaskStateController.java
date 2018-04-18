@@ -1,7 +1,7 @@
 // Controller 규칙에 따라 메서드 작성
 package bitcamp.java106.pms.controller.task;
 
-import java.io.PrintWriter;
+import java.util.Scanner;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
@@ -9,44 +9,58 @@ import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.server.ServerRequest;
-import bitcamp.java106.pms.server.ServerResponse;
 
-@Component("/task/state")
+@Component("task/state")
 public class TaskStateController implements Controller {
     
+    Scanner keyScan;
     TeamDao teamDao;
     TaskDao taskDao;
     
-    public TaskStateController(TeamDao teamDao, TaskDao taskDao) {
+    public TaskStateController(Scanner scanner, 
+            TeamDao teamDao, 
+            TaskDao taskDao) {
+        this.keyScan = scanner;
         this.teamDao = teamDao;
         this.taskDao = taskDao;
     }
     
-    @Override
-    public void service(ServerRequest request, ServerResponse response) {
-        PrintWriter out = response.getWriter();
-        String teamName = request.getParameter("teamName");
-        Team team = teamDao.get(teamName);
+    public void service(String menu, String option) {
+        if (option == null) {
+            System.out.println("팀명을 입력하시기 바랍니다.");
+            return; 
+        }
+        
+        Team team = teamDao.get(option);
         if (team == null) {
-            out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
+            System.out.printf("'%s' 팀은 존재하지 않습니다.", option);
             return;
         }
-        int taskNo = Integer.parseInt(request.getParameter("no"));
+        
+        System.out.println("[작업 진행 상태]");
+        System.out.print("상태를 변경할 작업의 번호? ");
+        int taskNo = Integer.parseInt(keyScan.nextLine());
+        
         Task task = taskDao.get(taskNo);
         if (task == null) {
-            out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
-                    teamName, taskNo);
+            System.out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
+                    team.getName(), taskNo);
             return;
         }
-        int state = Integer.parseInt(request.getParameter("state"));
+        
+        System.out.printf("'%s' 작업의 상태: %s\n", 
+                task.getTitle(), getStateLabel(task.getState()));
+        
+        System.out.print("변경할 상태?(0:작업대기, 1:작업중, 9:작업완료) ");
+        int state = Integer.parseInt(keyScan.nextLine());
+        
         if (state == Task.READY || state == Task.WORKING || 
                 state == Task.COMPLETE) {
             task.setState(state);
-            out.printf("작업 상태를 '%s'로 변경하였습니다.\n", 
+            System.out.printf("작업 상태를 '%s'로 변경하였습니다.\n", 
                     getStateLabel(state));
         } else {
-            out.println("올바르지 않은 값입니다. 이전 상태를 유지합니다!");
+            System.out.println("올바르지 않은 값입니다. 이전 상태를 유지합니다!");
         }
     }
     
@@ -63,7 +77,6 @@ public class TaskStateController implements Controller {
     }
 }
 
-//ver 28 - 네트워크 버전으로 변경
 //ver 26 - TaskController에서 state() 메서드를 추출하여 클래스로 정의.
 //ver 23 - @Component 애노테이션을 붙인다.
 //ver 22 - TaskDao 변경 사항에 맞춰 이 클래스를 변경한다.

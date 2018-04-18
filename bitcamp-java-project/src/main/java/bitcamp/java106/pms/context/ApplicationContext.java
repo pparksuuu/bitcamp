@@ -15,6 +15,7 @@ public class ApplicationContext {
 
     private HashMap<String,Object> objPool = new HashMap<>();
     
+    
     public ApplicationContext(String packageName) throws Exception {
         this(packageName, null);
     }
@@ -174,7 +175,6 @@ public class ApplicationContext {
     }
 }
 
-//ver 28 - default 생성자 추가
 //ver 24 - 타입으로 객체를 찾는 getBean() 메서드 추가
 //ver 23 - 클래스 정의
 

@@ -1,7 +1,6 @@
 package bitcamp.java106.pms.controller.board;
 
 import java.io.PrintWriter;
-import java.sql.Date;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
@@ -22,23 +21,26 @@ public class BoardUpdateController implements Controller {
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
         
-        Board updateBoard = new Board();
-        updateBoard.setNo(Integer.parseInt(request.getParameter("no")));
-        updateBoard.setTitle(request.getParameter("title"));
-        updateBoard.setContent(request.getParameter("content"));
-        updateBoard.setCreatedDate(new Date(System.currentTimeMillis()));
+        Board updateBoard
         
-        Board board = boardDao.get(updateBoard.getNo());
+        Board board = boardDao.get(Integer.parseInt(option));
         
         if (board == null) {
-            out.println("유효하지 않은 게시물 번호입니다.");
+            System.out.println("유효하지 않은 게시물 번호입니다.");
         } else {
-            int index = boardDao.indexOf(updateBoard.getNo());
+            Board updateBoard = new Board();
+            updateBoard.setNo(board.getNo());
+            System.out.printf("제목(%s)? ", board.getTitle());
+            updateBoard.setTitle(this.keyScan.nextLine());
+            System.out.printf("설명(%s)? ", board.getContent());
+            updateBoard.setContent(this.keyScan.nextLine());
+            updateBoard.setCreatedDate(board.getCreatedDate());
+            
+            int index = boardDao.indexOf(board.getNo());
             boardDao.update(index, updateBoard);
-            out.println("변경하였습니다.");
+            System.out.println("변경하였습니다.");
         }
     }
 }
 
-//ver 28 - 네트워크 버전으로 변경
 //ver 26 - BoardController에서 update() 메서드를 추출하여 클래스로 정의.
