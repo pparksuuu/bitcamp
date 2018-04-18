@@ -10,12 +10,12 @@ import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
 
 public class DefaultApplicationContainer implements ApplicationContainer {
+    
     ApplicationContext iocContainer;
     
     public DefaultApplicationContainer() throws Exception {
-        // => 컨트롤러, DAO 등 클라이언트 요청을 처리하는 객체를 자동생성한다.
+        //=> 컨트롤러, DAO 등 클라이언트 요청을 처리하는 객체를 자동 생성한다.
         iocContainer = new ApplicationContext("bitcamp.java106.pms");
-        
     }
     
     @Override
@@ -26,8 +26,9 @@ public class DefaultApplicationContainer implements ApplicationContainer {
         // 클라이언트 응답과 관련된 객체를 준비한다.
         StringWriter memoryWriter = new StringWriter();
         PrintWriter out = new PrintWriter(memoryWriter);
+        
         ServerResponse response = new ServerResponse(out);
-     
+        
         // 클라이언트가 보낸 명령어를 처리할 컨트롤러를 찾는다.
         String path = request.getServerPath();
         Controller controller = (Controller) iocContainer.getBean(path);
@@ -37,8 +38,8 @@ public class DefaultApplicationContainer implements ApplicationContainer {
         } else {
             out.println("해당 명령을 처리할 수 없습니다.");
         }
-        
         return memoryWriter.toString();
     }
-
 }
+
+//ver 29 - 클래스 추가
