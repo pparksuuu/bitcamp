@@ -1,8 +1,9 @@
+// Runnable 인터페이스 구현 + Thread
 package step24.ex03;
 
-public class Exam01 {
+public class Exam02 {
     public static void main(String[] args) {
-        class MyThread extends Thread {
+        class MyRunnable implements Runnable {
             
             @Override
             public void run() {
@@ -12,7 +13,7 @@ public class Exam01 {
             }
         }
         
-        MyThread t = new MyThread();
+        Thread t = new Thread(new MyRunnable());
         t.start(); 
         
         // "main" 스레드는 MyThread와 상관없이 병행하여 실행한다.
