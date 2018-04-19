@@ -1,12 +1,6 @@
 # 변경 내역
-- Board.java 변경
-- Classroom.java 변경
-- Member.java 변경
-- Task.java 변경
-- Team.java 변경
-- BoardDao.java 변경
-- ClassroomDao.java 변경
-- MemberDao.java 변경
-- TaskDao.java 변경
-- TeamDao.java 변경
-- TeamMemberDao.java 변경
+- HTTPServer.java 추가
+- ApplicationContainer.java 추가
+- DefaultApplicationContainer.java 추가
+- AppServer.java 변경
+- AppClient.java 제거

@@ -21,6 +21,7 @@ public class BoardListController implements Controller {
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
+        
         Iterator<Board> iterator = boardDao.list();
         while (iterator.hasNext()) {
             Board board = iterator.next();
@@ -30,4 +31,5 @@ public class BoardListController implements Controller {
     }
 }
 
+//ver 28 - 네트워크 버전으로 변경
 //ver 26 - BoardController에서 list() 메서드를 추출하여 클래스로 정의. 

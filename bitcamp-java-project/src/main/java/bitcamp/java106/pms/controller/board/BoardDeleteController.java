@@ -8,7 +8,6 @@ import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
 import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
-import bitcamp.java106.pms.util.Console;
 
 @Component("/board/delete")
 public class BoardDeleteController implements Controller {
@@ -28,13 +27,12 @@ public class BoardDeleteController implements Controller {
         if (board == null) {
             out.println("유효하지 않은 게시물 번호입니다.");
         } else {
-            if (Console.confirm("정말 삭제하시겠습니까?")) {
-                boardDao.delete(no);
-                out.println("삭제하였습니다.");
-            }
+            boardDao.delete(no);
+            out.println("삭제하였습니다.");
         }
     }
     
 }
 
+//ver 28 - 네트워크 버전으로 변경
 //ver 26 - BoardController에서 delete() 메서드를 추출하여 클래스로 정의. 

@@ -11,4 +11,5 @@ public interface Controller {
     void service(ServerRequest request, ServerResponse response);
 }
 
+//ver 28 - service() 의 규칙 변경
 //ver 21 - 인터페이스 추가

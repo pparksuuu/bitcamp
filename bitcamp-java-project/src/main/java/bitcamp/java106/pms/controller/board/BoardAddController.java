@@ -17,14 +17,18 @@ public class BoardAddController implements Controller {
     public BoardAddController(BoardDao boardDao) {
         this.boardDao = boardDao;
     }
-    
-    @Override
+     
     public void service(ServerRequest request, ServerResponse response) {
         Board board = new Board();
         board.setTitle(request.getParameter("title"));
         board.setContent(request.getParameter("content"));
         board.setCreatedDate(new Date(System.currentTimeMillis()));
-
+       
+//      스레드 테스트용 코드
+//        for (int i = 0; i < 300000000; i++) {
+//            double d = Math.asin(34.8);
+//        }
+        
         boardDao.insert(board);
         
         PrintWriter out = response.getWriter();
@@ -33,4 +37,5 @@ public class BoardAddController implements Controller {
 
 }
 
+//ver 28 - 네트워크 버전으로 변경
 //ver 26 - BoardController에서 add() 메서드를 추출하여 클래스로 정의. 

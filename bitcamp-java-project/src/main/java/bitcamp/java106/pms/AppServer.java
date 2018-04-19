@@ -1,5 +1,7 @@
+// App을 서버로 만들기
 package bitcamp.java106.pms;
 
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -17,19 +19,30 @@ import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
 
 public class AppServer {
-
-    static ApplicationContext iocContainer;
-
-    AppServer() throws Exception {
-        init();
+    
+    HTTPServer httpServer;
+    ApplicationContainer applicationContainer;
+    
+    public AppServer(int port) throws Exception {
+        // 서버에서 작업하는데 필요한 객체를 준비한다.
+        // => 클라이언트 요청을 처리할 객체를 준비한다.
+        applicationContainer = new DefaultApplicationContainer();
+        
+        // => 웹 서버를 준비한다.
+        httpServer = new HTTPServer(port, applicationContainer);
     }
-
-    void init() throws Exception {
-        iocContainer = new ApplicationContext("bitcamp.java106.pms");
+    
+    void service() throws Exception {
+        httpServer.execute();
     }
-
-
-    static void onQuit() {
+                            
+    public static void main(String[] args) throws Exception {
+        AppServer appServer = new AppServer(8888);
+        appServer.service();
+    }
+    
+    /*
+    void onQuit() {
         System.out.println("안녕히 가세요!");
         BoardDao boardDao = (BoardDao) iocContainer.getBean(BoardDao.class);
         ClassroomDao classroomDao = (ClassroomDao) iocContainer.getBean(ClassroomDao.class);
@@ -37,91 +50,36 @@ public class AppServer {
         TaskDao taskDao = (TaskDao) iocContainer.getBean(TaskDao.class);
         TeamDao teamDao = (TeamDao) iocContainer.getBean(TeamDao.class);
         TeamMemberDao teamMemberDao = (TeamMemberDao) iocContainer.getBean(TeamMemberDao.class);
-
+        
         // 각각의 데이터 저장에 대해 예외 처리를 분리해야 한다.
         // 그래야만 예외가 발생하더라도 다른 데이터 저장은 정상적으로 수행할 것이다.
         try {boardDao.save();} 
         catch (Exception e) { System.out.println("게시물 데이터 저장 중 오류 발생!");}
-
+        
         try {classroomDao.save();} 
         catch (Exception e) { System.out.println("수업 데이터 저장 중 오류 발생!");}
-
+        
         try {memberDao.save();} 
         catch (Exception e) { System.out.println("회원 데이터 저장 중 오류 발생!");}
-
+        
         try {taskDao.save();} 
         catch (Exception e) { System.out.println("작업 데이터 저장 중 오류 발생!");}
-
+            
         try {teamDao.save();} 
         catch (Exception e) { System.out.println("팀 데이터 저장 중 오류 발생!");}    
-
+        
         try {teamMemberDao.save();} 
         catch (Exception e) { System.out.println("팀멤버 데이터 저장 중 오류 발생!");}
     }
-
-    static void onHelp() {
-        System.out.println("[도움말]");
-        System.out.println("팀 등록 명령 : team/add");
-        System.out.println("팀 조회 명령 : team/list");
-        System.out.println("팀 상세조회 명령 : team/view 팀명");
-        System.out.println("회원 등록 명령 : member/add");
-        System.out.println("회원 조회 명령 : member/list");
-        System.out.println("회원 상세조회 명령 : member/view 아이디");
-        System.out.println("종료 : quit");
-    }
-
-    void service() throws Exception {
-        ServerSocket serverSocket = new ServerSocket(8888);
-        System.out.println("서버 실행 했음!");
-
-        while (true) {
-            // 대기열에서 기다리고 있는 클라이언트 중에서 먼저 연결된 클라이언트를 꺼낸다.
-            Socket socket = serverSocket.accept();
-
-            // 클라이언트 요청을 처리한다.
-            processRequest(socket);
-        }
-    }
-
-    void processRequest(Socket socket) {
-        PrintWriter out = null;
-        Scanner in = null;
-
-        try {
-            out = new PrintWriter(socket.getOutputStream());
-            in = new Scanner(socket.getInputStream());
-
-            //클라이언트가 보낸 데이터에서 명령어와 데이터를 분리하여 객체를 준비한다.
-            ServerRequest request = new ServerRequest(in.nextLine());
-
-            //클라이언트 응답과 관련된 객체를 준비한다.
-            ServerResponse response = new ServerResponse(out);
-
-            //클라이언트가 보낸 명령어를 처리할 컨트롤러를 찾는다
-            String path = request.getServerPath();
-            Controller controller = (Controller) iocContainer.getBean(path);
-
-            if (controller != null) {
-                controller.service(request, response);
-            } else {
-                out.println("해당 명령을 처리할 수 없습니다.");
-            }
-            out.println();
-
-        } catch (Exception e) {
-            out.println("서버 오류!");
-            out.println();
-        } finally {
-            out.close();
-            in.close();
-            try {socket.close();} catch (Exception e) {}
-        }
-    }
-
-
-    public static void main(String[] args) throws Exception {
-        AppServer appServer = new AppServer();
-        appServer.service();
-    }
+     */
 
 }
+
+//ver 29 - 웹서버와 애플리케이션 실행 기능을 별도의 클래스로 분리한다.
+//ver 28 - 서버 만들기
+
+
+
+
+
+
