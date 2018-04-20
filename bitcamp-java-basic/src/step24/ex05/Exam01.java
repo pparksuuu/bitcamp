@@ -1,9 +1,9 @@
-// 동기화 처리 전
+// 비동기 방식으로 인한 문제 해결책
 package step24.ex05;
 
 public class Exam01 {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Account account = new Account("111-11-1111-111", 100_0000);
         
         ATM 강남 = new ATM("강남", account);
@@ -18,6 +18,9 @@ public class Exam01 {
         대전.start();
         광주.start();
         
+        
+        // 강남, 서초 등 여러 개의 스레드가 같은 객체의 같은 메서드를 동시에 호출할 때
+        // 서로 그 메모리의 값을 덮어쓰는 문제가 발생한다.
         
     }
 
