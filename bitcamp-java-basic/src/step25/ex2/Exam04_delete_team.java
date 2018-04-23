@@ -1,5 +1,31 @@
 package step25.ex2;
 
-public class Exam04_delete_team {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
 
+public class Exam04_delete_team {
+    public static void main(String[] args) throws Exception {
+        Scanner keyScan = new Scanner(System.in);
+        System.out.print("삭제할 팀 이름?");
+        String name = keyScan.nextLine();
+        
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+        
+        PreparedStatement stmt = con.prepareStatement(
+                "delete from ex_team where nm=?");
+        
+        stmt.setString(1, name);
+        
+        int count = stmt.executeUpdate();
+        
+        System.out.printf("%d 개 삭제 성공!", count);
+        
+        stmt.close();
+        con.close();
+        keyScan.close();
+    }
 }

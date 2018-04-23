@@ -1,5 +1,31 @@
 package step25.ex2;
 
-public class Exam07_delete_classrooom {
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.util.Scanner;
 
+public class Exam07_delete_classrooom {
+    public static void main(String[] args) throws Exception {
+        Scanner keyScan = new Scanner(System.in);
+        System.out.print("삭제할 작업 번호?");
+        String no = keyScan.nextLine();
+        
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+        
+        PreparedStatement stmt = con.prepareStatement(
+                "delete from ex_classroom where cno=?");
+        
+        stmt.setString(1, no);
+        
+        int count = stmt.executeUpdate();
+        
+        System.out.printf("%d 개 삭제 성공!", count);
+
+        stmt.close();
+        con.close();
+        keyScan.close();
+    }
 }

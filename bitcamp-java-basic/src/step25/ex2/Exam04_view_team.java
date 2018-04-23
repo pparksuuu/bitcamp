@@ -3,34 +3,32 @@ package step25.ex2;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Scanner;
 
-public class Exam06_delete_teammember {
+public class Exam04_view_team {
     public static void main(String[] args) throws Exception {
         Scanner keyScan = new Scanner(System.in);
-        
-        System.out.print("삭제할 팀?");
+        System.out.print("조회할 팀 이름?");
         String teamName = keyScan.nextLine();
-        
-        System.out.print("삭제할 멤버 ? ");
-        String memberId = keyScan.nextLine();
         
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
                 "java106", "1111");
         
         PreparedStatement stmt = con.prepareStatement(
-                "delete from ex_teammember where tnm=? and mid=?");
-        
+                "select nm,dsc,mqt,sdt,edt from ex_team where nm=?");
         stmt.setString(1, teamName);
-        stmt.setString(2, memberId);
+        ResultSet rs = stmt.executeQuery();
         
-        int count = stmt.executeUpdate();
+        if (rs.next()) {
+            System.out.printf("팀이름: %s\n", rs.getString("nm"));
+            System.out.printf("내용: %s\n", rs.getString("dsc"));
+            System.out.printf("최대인원: %s\n", rs.getString("mqt"));
+            System.out.printf("시작날짜: %s\n", rs.getString("sdt"));
+            System.out.printf("종료날짜: %s\n", rs.getString("edt"));
+        }
         
-        System.out.printf("%d개 삭제 성공!",count);
-        
-        
-        stmt.close();
         con.close();
         keyScan.close();
     }
