@@ -2,7 +2,7 @@
 package bitcamp.java106.pms.controller.task;
 
 import java.io.PrintWriter;
-import java.util.Iterator;
+import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
@@ -15,37 +15,44 @@ import bitcamp.java106.pms.server.ServerResponse;
 
 @Component("/task/list")
 public class TaskListController implements Controller {
-    
+
     TeamDao teamDao;
     TaskDao taskDao;
-    
+
     public TaskListController(TeamDao teamDao, TaskDao taskDao) {
         this.teamDao = teamDao;
         this.taskDao = taskDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
         String teamName = request.getParameter("teamName");
-        
-        Team team = teamDao.get(teamName);
-        if (team == null) {
-            out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
-            return;
+
+
+        try {
+            Team team = teamDao.selectOne(teamName);
+            if (team == null) {
+                out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
+                return;
+            }
+
+            List<Task> list = taskDao.selectList(teamName);
+
+            for (Task task : list) {
+                out.printf("%d,%s,%s,%d,%s,%s,%s\n", 
+                        task.getNo(), task.getTitle(), 
+                        task.getStartDate(), task.getEndDate(),
+                        task.getState(),
+                        (task.getWorker() == null) ? 
+                                "-" : task.getWorker().getId()
+                        ,(task.getTeam() == null) ? 
+                                "-" : task.getTeam().getName());
+            }
+        } catch (Exception e) {
+            out.println("삭제 실패!");
+            e.printStackTrace(out);
         }
-        
-        Iterator<Task> iterator = taskDao.list(team.getName());
-        
-        while (iterator.hasNext()) {
-            Task task = iterator.next();
-            out.printf("%d,%s,%s,%s,%s\n", 
-                    task.getNo(), task.getTitle(), 
-                    task.getStartDate(), task.getEndDate(),
-                    (task.getWorker() == null) ? 
-                            "-" : task.getWorker().getId());
-        }
-        
     }
 
 }

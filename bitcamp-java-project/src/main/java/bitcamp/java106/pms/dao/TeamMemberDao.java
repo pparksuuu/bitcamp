@@ -1,106 +1,109 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
+import bitcamp.java106.pms.domain.Board;
+import bitcamp.java106.pms.domain.Member;
 
 @Component
 public class TeamMemberDao {
-    
-    private HashMap<String, ArrayList<String>> collection;
- 
-    public TeamMemberDao() throws Exception {
-        load();
-    }
-    
-    @SuppressWarnings("unchecked")
-    public void load() throws Exception {
+    public int delete(String teamName,String memberId) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-                ObjectInputStream in = new ObjectInputStream(
-                               new BufferedInputStream(
-                               new FileInputStream("data/teammember.data")));
-            ) {
-        
-            try {
-                collection = (HashMap<String,ArrayList<String>>) in.readObject();
-            } catch (Exception e) {
-                // 데이터를 읽다가 오류가 발생하면 빈 해시맵 객체를 만든다.
-                collection = new HashMap<>();
-            }
-        }
-    }
-    
-    public void save() throws Exception {
-        try (
-                ObjectOutputStream out = new ObjectOutputStream(
-                                new BufferedOutputStream(
-                                new FileOutputStream("data/teammember.data")));
-            ) {
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "delete from pms_team_member where tnm=? and mid =?");) {
             
-            out.writeObject(collection);
+            stmt.setString(1, teamName);
+            stmt.setString(2, memberId);
+            return stmt.executeUpdate();
         } 
     }
     
-    
-    public int addMember(String teamName, String memberId) {
-        String teamNameLC = teamName.toLowerCase();
-        String memberIdLC = memberId.toLowerCase();
-        
-        // 팀 이름으로 멤버 아이디가 들어 있는 ArrayList를 가져온다.
-        ArrayList<String> members = collection.get(teamNameLC);
-        if (members == null) { // 해당 팀의 멤버가 추가된 적이 없다면,
-            members = new ArrayList<>();
-            members.add(memberIdLC);
-            collection.put(teamNameLC, members);
-            return 1;
+    public List<String> selectList(String tnm) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select mid from pms_team_member where tnm=?");
+            ResultSet rs = stmt.executeQuery();) {
+            
+            stmt.setString(1, tnm);
+            
+            ArrayList<String> arr = new ArrayList<>();
+            while (rs.next()) {
+                String mId = rs.getString("mid");
+                arr.add(mId);
+            }
+            return arr;
         }
-        
-        // ArrayList에 해당 아이디를 가진 멤버가 들어 있다면,
-        if (members.contains(memberIdLC)) {
-            return 0;
-        }
-        
-        members.add(memberIdLC);
-        return 1;
     }
-    
-    public int deleteMember(String teamName, String memberId) {
-        String teamNameLC = teamName.toLowerCase();
-        String memberIdLC = memberId.toLowerCase();
-        
-        ArrayList<String> members = collection.get(teamNameLC);
-        if (members == null || !members.contains(memberIdLC)) 
-            return 0;
 
-        members.remove(memberIdLC);
-        return 1;
-    }
-    
-    public Iterator<String> getMembers(String teamName) {
-        ArrayList<String> members = collection.get(teamName.toLowerCase());
-        if (members == null)
-            return null;
-        return members.iterator();
-    }
-    
-    public boolean isExist(String teamName, String memberId) {
-        String teamNameLC = teamName.toLowerCase();
-        String memberIdLC = memberId.toLowerCase();
+    public int insert(Board board) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "insert into pms_team_member(titl,cont,cdt) values(?,?,now())");) {
+            
+            stmt.setString(1, board.getTitle());
+            stmt.setString(2, board.getContent());
         
-        // 팀 이름으로 멤버 아이디가 들어 있는 ArrayList를 가져온다.
-        ArrayList<String> members = collection.get(teamNameLC);
-        if (members == null || !members.contains(memberIdLC)) 
-            return false;
-        
-        return true;
+            return stmt.executeUpdate();
+        }
+    }
+
+    public int update(Board board) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "update pms_team_member set titl=?, cont=?, cdt=now() where bno=?");) {
+            
+            stmt.setString(1, board.getTitle());
+            stmt.setString(2, board.getContent());
+            stmt.setInt(3, board.getNo());
+            return stmt.executeUpdate();
+        }
+    }
+
+    public Board selectOne(int no) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select bno,titl,cont,cdt from pms_team_member where bno=?");) {
+            
+            stmt.setInt(1, no);
+            
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (!rs.next()) 
+                    return null;
+                
+                Board board = new Board();
+                board.setNo(rs.getInt("bno"));
+                board.setTitle(rs.getString("titl"));
+                board.setContent(rs.getString("cont"));
+                board.setCreatedDate(rs.getDate("cdt"));
+                return board;
+            }
+        }  
     }
 }
 

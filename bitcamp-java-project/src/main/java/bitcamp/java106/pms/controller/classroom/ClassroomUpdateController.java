@@ -14,34 +14,37 @@ import bitcamp.java106.pms.server.ServerResponse;
 @Component("/classroom/update")
 public class ClassroomUpdateController implements Controller {
     ClassroomDao classroomDao;
-    
+
     public ClassroomUpdateController(ClassroomDao classroomDao) {
         this.classroomDao = classroomDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
         int no = Integer.parseInt(request.getParameter("no"));
-        
-        Classroom classroom = classroomDao.get(no);
-        
-        if (classroom == null) {
-            out.println("유효하지 않은 수업 번호입니다.");
-            return;
-        } 
-        
-        Classroom updateClassroom = new Classroom();
-        updateClassroom.setNo(no);
-        updateClassroom.setTitle(request.getParameter("title"));
-        updateClassroom.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        updateClassroom.setEndDate(Date.valueOf(request.getParameter("endDate")));
-        updateClassroom.setRoom(request.getParameter("room"));
-        
-        int index = classroomDao.indexOf(no);
-        classroomDao.update(index, updateClassroom);
-        
-        out.println("변경하였습니다.");
+
+        Classroom classroom = new Classroom();
+        classroom.setNo(no);
+        classroom.setTitle(request.getParameter("title"));
+        classroom.setStartDate(Date.valueOf(request.getParameter("startDate")));
+        classroom.setEndDate(Date.valueOf(request.getParameter("endDate")));
+        classroom.setRoom(request.getParameter("room"));
+
+        try {
+
+            int count = classroomDao.update(classroom);
+            if (count == 0) {
+                out.println("해당 게시물이 존재하지 않습니다.");
+            } else {
+                out.println("변경하였습니다.");
+
+            }
+        } catch (Exception e) {
+            out.println("변경  실패!");
+            e.printStackTrace(out);
+        }
+
     }
 
 }

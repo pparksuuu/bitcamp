@@ -7,41 +7,38 @@ import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
-import bitcamp.java106.pms.domain.Task;
-import bitcamp.java106.pms.domain.Team;
 import bitcamp.java106.pms.server.ServerRequest;
 import bitcamp.java106.pms.server.ServerResponse;
 
 @Component("/task/delete")
 public class TaskDeleteController implements Controller {
-    
+
     TeamDao teamDao;
     TaskDao taskDao;
-    
+
     public TaskDeleteController(TeamDao teamDao, TaskDao taskDao) {
         this.teamDao = teamDao;
         this.taskDao = taskDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
-        String teamName = request.getParameter("teamName");
-        Team team = teamDao.get(teamName);
-        if (team == null) {
-            out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
-            return;
+        int no = Integer.parseInt(request.getParameter("no"));
+
+        try {
+            int count = taskDao.delete(no);
+            if (count == 0) {
+                out.println("해당 작업이 없습니다.");
+            } else {
+                taskDao.delete(no);
+                out.println("삭제하였습니다.");
+            }
+        } catch (Exception e) {
+            out.println("삭제 실패!");
+            e.printStackTrace(out);
         }
-        int taskNo = Integer.parseInt(request.getParameter("no"));
-        Task task = taskDao.get(taskNo);
-        if (task == null) {
-            out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
-                    teamName, taskNo);
-            return;
-        }
-        taskDao.delete(taskNo);
-        out.println("삭제하였습니다.");
-    }
+    } 
 }
 
 //ver 28 - 네트워크 버전으로 변경

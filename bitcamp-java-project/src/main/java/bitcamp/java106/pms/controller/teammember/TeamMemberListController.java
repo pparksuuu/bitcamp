@@ -2,7 +2,7 @@
 package bitcamp.java106.pms.controller.teammember;
 
 import java.io.PrintWriter;
-import java.util.Iterator;
+import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
@@ -14,36 +14,41 @@ import bitcamp.java106.pms.server.ServerResponse;
 
 @Component("/team/member/list")
 public class TeamMemberListController implements Controller {
-    
+
     TeamDao teamDao;
     TeamMemberDao teamMemberDao;
-    
+
     public TeamMemberListController(
             TeamDao teamDao, 
             TeamMemberDao teamMemberDao) {
         this.teamDao = teamDao;
         this.teamMemberDao = teamMemberDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
         String teamName = request.getParameter("teamName");
-        Team team = teamDao.get(teamName);
-        if (team == null) {
-            out.printf("%s 팀은 존재하지 않습니다.\n", teamName);
-            return;
-        }
 
-        out.print("회원들: ");
-        
-        Iterator<String> iterator = teamMemberDao.getMembers(teamName);
-        if (iterator != null) {
-            while (iterator.hasNext()) {
-                out.printf("%s, ", iterator.next());
+        try {
+            Team team = teamDao.selectOne(teamName);
+            if (team == null) {
+                out.printf("%s 팀은 존재하지 않습니다.\n", teamName);
+                return;
             }
+
+            out.print("회원들: ");
+
+            List<String> list = teamMemberDao.selectList(teamName);
+            if (list != null) {
+                for (String name : list)
+                    out.printf("%s, ", name);
+            }
+            out.println();
+        } catch (Exception e) {
+            out.println("조회 실패");
+            e.printStackTrace(out);
         }
-        out.println();
     }
 }
 

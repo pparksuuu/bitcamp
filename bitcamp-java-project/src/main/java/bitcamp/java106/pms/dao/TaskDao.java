@@ -1,86 +1,120 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Task;
 
 @Component
-public class TaskDao extends AbstractDao<Task> {
-    
-    public TaskDao() throws Exception {
-        load();
-    }
-    
-    public void load() throws Exception {
+public class TaskDao {
+    public int delete(int taskNo) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-                ObjectInputStream in = new ObjectInputStream(
-                               new BufferedInputStream(
-                               new FileInputStream("data/task.data")));
-            ) {
-        
-            while (true) {
-                try {
-                    // 작업 데이터를 읽을 때 작업 번호가 가장 큰 것으로 
-                    // 카운트 값을 설정한다.
-                    Task task = (Task) in.readObject();
-                    if (task.getNo() >= Task.count)
-                        Task.count = task.getNo() + 1; 
-                        // 다음에 새로 추가할 작업의 번호는 현재 읽은 작업 번호 보다 
-                        // 1 큰 값이 되게 한다.
-                    this.insert(task);
-                } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
-                    //e.printStackTrace();
-                    break; // 반복문을 나간다.
-                }
-            }
-        }
-    }
-    
-    public void save() throws Exception {
-        try (
-                ObjectOutputStream out = new ObjectOutputStream(
-                                new BufferedOutputStream(
-                                new FileOutputStream("data/task.data")));
-            ) {
-            Iterator<Task> tasks = this.list();
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "delete from pms_task where tano=?");) {
             
-            while (tasks.hasNext()) {
-                out.writeObject(tasks.next());
-            }
+            stmt.setInt(1, taskNo);
+            return stmt.executeUpdate();
         } 
     }
-        
-    // 기존의 list() 메서드로는 작업을 처리할 수 없기 때문에 
-    // 팀명으로 작업을 목록을 리턴해주는 메서드를 추가한다. 
-    // => 오버로딩
-    public Iterator<Task> list(String teamName) {
-        ArrayList<Task> tasks = new ArrayList<>();
-        for (Task task : collection) {
-            if (task.getTeam().getName().equalsIgnoreCase(teamName)) {
-                tasks.add(task);
-            }
-        }
-        return tasks.iterator();
-    }
     
-    public int indexOf(Object key) {
-        int taskNo = (Integer) key;
-        for (int i = 0; i < collection.size(); i++) {
-            Task task = collection.get(i);
-            if (task.getNo() == taskNo) {
-                return i;
+    public List<Task> selectList(String teamName) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select titl,sdt,edt,stat,mid,tnm from pms_task where tnm=?");
+            ResultSet rs = stmt.executeQuery();) {
+            
+            stmt.setString(1, teamName);
+            
+            ArrayList<Task> arr = new ArrayList<>();
+            while (rs.next()) {
+                Task task = new Task(teamName);
+                task.setTitle(rs.getString("titl"));
+                task.setStartDate(rs.getDate("sdt"));
+                task.setEndDate(rs.getDate("edt"));
+                task.setWorkerName(rs.getString("mid"));
+                task.setTeamName(rs.getString("tnm"));
+                arr.add(task);
             }
+            return arr;
         }
-        return -1;
     }
+
+    public int insert(Task task) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "insert into pms_task(titl,sdt,edt,stat,mid,tnm) values(?,?,?,?,?,?)");) {
+            
+            stmt.setString(1, task.getTitle());
+            stmt.setDate(2, task.getStartDate());
+            stmt.setDate(3, task.getEndDate());
+            stmt.setInt(4, task.getState());
+            stmt.setString(5, task.getWorker().getId());
+            stmt.setString(6, task.getTeam().getName());
+            return stmt.executeUpdate();
+        }
+    }
+
+    public int update(Task task) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "update pms_task set titl=?, sdt=?, edt=?, stat=? where tano=?");) {
+            
+            stmt.setString(1, task.getTitle());
+            stmt.setDate(2, task.getStartDate());
+            stmt.setDate(3, task.getEndDate());
+            stmt.setInt(4, task.getState());
+            stmt.setInt(5, task.getNo());
+            return stmt.executeUpdate();
+        }
+    }
+
+    public Task selectOne(int no) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select titl, sdt, edt, stat, mid, tnm from pms_task where tano=?");) {
+            
+            stmt.setInt(1, no);
+            
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (!rs.next()) 
+                    return null;
+                
+                Task task = new Task(rs.getString("tnm"));
+                task.setTitle(rs.getString("name"));
+                task.setStartDate(rs.getDate("sdt"));
+                task.setEndDate(rs.getDate("edt"));
+                task.setState(rs.getInt("stat"));
+                task.setWorkerName(rs.getString("mid"));
+                task.setTeamName(rs.getString("tnm"));
+                return task;
+            }
+        }  
+    } 
 }
 
 //ver 24 - File I/O 적용

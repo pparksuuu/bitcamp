@@ -2,7 +2,7 @@
 package bitcamp.java106.pms.controller.team;
 
 import java.io.PrintWriter;
-import java.util.Iterator;
+import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.controller.Controller;
@@ -15,7 +15,7 @@ import bitcamp.java106.pms.server.ServerResponse;
 public class TeamListController implements Controller {
 
     TeamDao teamDao;
-    
+
     public TeamListController(TeamDao teamDao) {
         this.teamDao = teamDao;
     }
@@ -23,12 +23,17 @@ public class TeamListController implements Controller {
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
-        Iterator<Team> iterator = teamDao.list();
-        while (iterator.hasNext()) {
-            Team team = iterator.next();
-            out.printf("%s, %d, %s ~ %s\n", 
-                    team.getName(), team.getMaxQty(), 
-                    team.getStartDate(), team.getEndDate());
+
+        try {
+            List<Team> list = teamDao.selectList();
+            for (Team team : list) {
+                out.printf("%s, %d, %s ~ %s\n", 
+                        team.getName(), team.getMaxQty(), 
+                        team.getStartDate(), team.getEndDate());
+            }
+        }  catch (Exception e) {
+            out.println("조회 실패!");
+            e.printStackTrace(out);
         }
     }
 }

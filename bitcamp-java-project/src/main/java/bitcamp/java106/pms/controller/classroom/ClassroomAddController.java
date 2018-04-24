@@ -14,22 +14,27 @@ import bitcamp.java106.pms.server.ServerResponse;
 @Component("/classroom/add")
 public class ClassroomAddController implements Controller {
     ClassroomDao classroomDao;
-    
+
     public ClassroomAddController(ClassroomDao classroomDao) {
         this.classroomDao = classroomDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
+        PrintWriter out = response.getWriter();
         Classroom classroom = new Classroom();
         classroom.setTitle(request.getParameter("title"));
         classroom.setStartDate(Date.valueOf(request.getParameter("startDate")));
         classroom.setEndDate(Date.valueOf(request.getParameter("endDate")));
         classroom.setRoom(request.getParameter("room"));
-        classroomDao.insert(classroom);
-        
-        PrintWriter out = response.getWriter();
-        out.println("등록 성공!");
+
+        try {
+            classroomDao.insert(classroom);
+            out.println("등록 성공!");
+        } catch (Exception e) {
+            out.println("등록 실패!");
+            e.printStackTrace(out);
+        }
     }
 }
 

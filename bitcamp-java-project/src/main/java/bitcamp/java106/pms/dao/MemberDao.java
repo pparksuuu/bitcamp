@@ -1,68 +1,110 @@
 package bitcamp.java106.pms.dao;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Iterator;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Member;
 
 @Component
-public class MemberDao extends AbstractDao<Member> {
-    public MemberDao() throws Exception {
-        load();
-    }
-    
-    public void load() throws Exception {
+public class MemberDao {
+    public int delete(String id) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-                ObjectInputStream in = new ObjectInputStream(
-                               new BufferedInputStream(
-                               new FileInputStream("data/member.data")));
-            ) {
-        
-            while (true) {
-                try {
-                    this.insert((Member) in.readObject());
-                } catch (Exception e) { // 데이터를 모두 읽었거나 파일 형식에 문제가 있다면,
-                    //e.printStackTrace();
-                    break; // 반복문을 나간다.
-                }
-            }
-        }
-    }
-    
-    public void save() throws Exception {
-        try (
-                ObjectOutputStream out = new ObjectOutputStream(
-                                new BufferedOutputStream(
-                                new FileOutputStream("data/member.data")));
-            ) {
-            Iterator<Member> members = this.list();
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "delete from pms_member where mid=?");) {
             
-            while (members.hasNext()) {
-                out.writeObject(members.next());
-            }
+            stmt.setString(1, id);
+            return stmt.executeUpdate();
         } 
     }
-        
-    public int indexOf(Object key) {
-        String id = (String) key;
-        for (int i = 0; i < collection.size(); i++) {
-            Member originMember = collection.get(i);
-            if (originMember.getId().toLowerCase().equals(id.toLowerCase())) {
-                return i;
+    
+    public List<Member> selectList() throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select mid, email from pms_member");
+            ResultSet rs = stmt.executeQuery();) {
+            
+            ArrayList<Member> arr = new ArrayList<>();
+            while (rs.next()) {
+                Member member = new Member();
+                member.setId(rs.getString("mid"));
+                member.setEmail(rs.getString("email"));
+                arr.add(member);
             }
+            return arr;
         }
-        return -1;
     }
-    
-    
+
+    public int insert(Member member) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "insert into pms_member(mid,email,pwd) values(?,?,sha2(?,224))");) {
+            
+            stmt.setString(1, member.getId());
+            stmt.setString(2, member.getEmail());
+            stmt.setString(3, member.getPassword());
+        
+            return stmt.executeUpdate();
+        }
+    }
+
+    public int update(Member member) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "update pms_member set email=?, pwd=sha2(?,224) where mid=?");) {
+            
+            stmt.setString(1, member.getEmail());
+            stmt.setString(2, member.getPassword());
+            stmt.setString(3, member.getId());
+            return stmt.executeUpdate();
+        }
+    }
+
+    public Member selectOne(String id) throws Exception {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        try (
+            Connection con = DriverManager.getConnection(
+                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
+                "java106", "1111");
+            PreparedStatement stmt = con.prepareStatement(
+                "select mid,email from pms_member where mid=?");) {
+            
+            stmt.setString(1, id);
+            
+            try (ResultSet rs = stmt.executeQuery();) {
+                if (!rs.next()) 
+                    return null;
+                
+                Member member = new Member();
+                member.setId(id);
+                member.setEmail(rs.getString("email"));
+                return member;
+            }
+        }  
+    }    
 }
 
+//ver 31 - JDBC API 적용
 //ver 24 - File I/O 적용
 //ver 23 - @Component 애노테이션을 붙인다.
 //ver 22 - 추상 클래스 AbstractDao를 상속 받는다.

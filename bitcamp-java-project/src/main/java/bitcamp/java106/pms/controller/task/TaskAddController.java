@@ -17,12 +17,12 @@ import bitcamp.java106.pms.server.ServerResponse;
 
 @Component("/task/add")
 public class TaskAddController implements Controller {
-    
+
     TeamDao teamDao;
     TaskDao taskDao;
     MemberDao memberDao;
     TeamMemberDao teamMemberDao;
-    
+
     public TaskAddController(TeamDao teamDao, 
             TaskDao taskDao, TeamMemberDao teamMemberDao, MemberDao memberDao) {
         this.teamDao = teamDao;
@@ -30,27 +30,33 @@ public class TaskAddController implements Controller {
         this.teamMemberDao = teamMemberDao;
         this.memberDao = memberDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
         String teamName = request.getParameter("teamName");
-        
-        Team team = teamDao.get(teamName);
-        if (team == null) {
-            out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
-            return;
+
+        try {
+            Team team = teamDao.selectOne(teamName);
+            if (team == null) {
+                out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
+                return;
+            }
+
+            Task task = new Task(team);
+            task.setTitle(request.getParameter("title"));
+            task.setStartDate(Date.valueOf(request.getParameter("startDate")));
+            task.setEndDate(Date.valueOf(request.getParameter("endDate")));
+            task.setState(Integer.parseInt(request.getParameter("state")));
+            task.setWorker(this.memberDao.selectOne(request.getParameter("memberId")));
+            task.setTeam(this.teamDao.selectOne(request.getParameter("teamName")));
+
+            taskDao.insert(task);
+            out.println("등록 성공!");
+        } catch (Exception e) {
+            out.println("삭제 실패!");
+            e.printStackTrace(out);
         }
-        
-        Task task = new Task(team);
-        task.setTitle(request.getParameter("title"));
-        task.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        task.setEndDate(Date.valueOf(request.getParameter("endDate")));
-        task.setWorker(this.memberDao.get(request.getParameter("memberId")));
-        
-        taskDao.insert(task);
-        
-        out.println("등록 성공!");
     }
 
 }

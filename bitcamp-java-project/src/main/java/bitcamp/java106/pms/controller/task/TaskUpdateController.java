@@ -17,12 +17,12 @@ import bitcamp.java106.pms.server.ServerResponse;
 
 @Component("/task/update")
 public class TaskUpdateController implements Controller {
-    
+
     TeamDao teamDao;
     TaskDao taskDao;
     MemberDao memberDao;
     TeamMemberDao teamMemberDao;
-    
+
     public TaskUpdateController(
             TeamDao teamDao, TaskDao taskDao, 
             TeamMemberDao teamMemberDao, MemberDao memberDao) {
@@ -31,33 +31,41 @@ public class TaskUpdateController implements Controller {
         this.teamMemberDao = teamMemberDao;
         this.memberDao = memberDao;
     }
-    
+
     @Override
     public void service(ServerRequest request, ServerResponse response) {
         PrintWriter out = response.getWriter();
-        String teamName = request.getParameter("teamName");
-        Team team = teamDao.get(teamName);
-        if (team == null) {
-            out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
-            return;
+
+        try {
+            String teamName = request.getParameter("teamName");
+            Team team = teamDao.selectOne(teamName);
+            if (team == null) {
+                out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
+                return;
+            }
+
+            int taskNo = Integer.parseInt(request.getParameter("no"));
+            Task originTask = taskDao.selectOne(taskNo);
+            if (originTask == null) {
+                out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
+                        teamName, taskNo);
+                return;
+            }
+            Task task = new Task(team);
+            task.setNo(taskNo);
+            task.setTitle(request.getParameter("title"));
+            task.setStartDate(Date.valueOf(request.getParameter("startDate")));
+            task.setEndDate(Date.valueOf(request.getParameter("endDate")));
+            task.setState(Integer.parseInt(request.getParameter("state")));
+            task.setWorker(this.memberDao.selectOne(request.getParameter("memberId")));
+            task.setTeam(this.teamDao.selectOne(request.getParameter("teamName")));
+            taskDao.update(task);
+            out.println("변경하였습니다.");
+            
+        } catch (Exception e) {
+            out.println("변경 실패!");
+            e.printStackTrace(out);
         }
-        int taskNo = Integer.parseInt(request.getParameter("no"));
-        Task originTask = taskDao.get(taskNo);
-        if (originTask == null) {
-            out.printf("'%s'팀의 %d번 작업을 찾을 수 없습니다.\n",
-                    teamName, taskNo);
-            return;
-        }
-        Task task = new Task(team);
-        task.setNo(taskNo);
-        task.setTitle(request.getParameter("title"));
-        task.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        task.setEndDate(Date.valueOf(request.getParameter("endDate")));
-        task.setWorker(this.memberDao.get(request.getParameter("memberId")));
-        
-        int index = taskDao.indexOf(task.getNo());
-        taskDao.update(index, task);
-        out.println("변경하였습니다.");
     }
 
 }
