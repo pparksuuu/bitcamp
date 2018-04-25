@@ -1,7 +1,6 @@
 package bitcamp.java106.pms.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -9,33 +8,36 @@ import java.util.List;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.domain.Member;
+import bitcamp.java106.pms.jdbc.DataSource;
 
 @Component
 public class MemberDao {
+
+    DataSource dataSource;
+
+    public MemberDao(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+
     public int delete(String id) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106", "1111");
-            PreparedStatement stmt = con.prepareStatement(
-                "delete from pms_member where mid=?");) {
-            
+                Connection con = dataSource.getConnection();
+                PreparedStatement stmt = con.prepareStatement(
+                        "delete from pms_member where mid=?");) {
+
             stmt.setString(1, id);
             return stmt.executeUpdate();
         } 
     }
-    
+
     public List<Member> selectList() throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106", "1111");
-            PreparedStatement stmt = con.prepareStatement(
-                "select mid, email from pms_member");
-            ResultSet rs = stmt.executeQuery();) {
-            
+                Connection con = dataSource.getConnection();
+                PreparedStatement stmt = con.prepareStatement(
+                        "select mid, email from pms_member");
+                ResultSet rs = stmt.executeQuery();) {
+
             ArrayList<Member> arr = new ArrayList<>();
             while (rs.next()) {
                 Member member = new Member();
@@ -48,31 +50,25 @@ public class MemberDao {
     }
 
     public int insert(Member member) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106", "1111");
-            PreparedStatement stmt = con.prepareStatement(
-                "insert into pms_member(mid,email,pwd) values(?,?,sha2(?,224))");) {
-            
+                Connection con = dataSource.getConnection();
+                PreparedStatement stmt = con.prepareStatement(
+                        "insert into pms_member(mid,email,pwd) values(?,?,sha2(?,224))");) {
+
             stmt.setString(1, member.getId());
             stmt.setString(2, member.getEmail());
             stmt.setString(3, member.getPassword());
-        
+
             return stmt.executeUpdate();
         }
     }
 
     public int update(Member member) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106", "1111");
-            PreparedStatement stmt = con.prepareStatement(
-                "update pms_member set email=?, pwd=sha2(?,224) where mid=?");) {
-            
+                Connection con = dataSource.getConnection();
+                PreparedStatement stmt = con.prepareStatement(
+                        "update pms_member set email=?, pwd=sha2(?,224) where mid=?");) {
+
             stmt.setString(1, member.getEmail());
             stmt.setString(2, member.getPassword());
             stmt.setString(3, member.getId());
@@ -81,20 +77,17 @@ public class MemberDao {
     }
 
     public Member selectOne(String id) throws Exception {
-        Class.forName("com.mysql.cj.jdbc.Driver");
         try (
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/java106db?serverTimezone=UTC&useSSL=false",
-                "java106", "1111");
-            PreparedStatement stmt = con.prepareStatement(
-                "select mid,email from pms_member where mid=?");) {
-            
+                Connection con = dataSource.getConnection();
+                PreparedStatement stmt = con.prepareStatement(
+                        "select mid,email from pms_member where mid=?");) {
+
             stmt.setString(1, id);
-            
+
             try (ResultSet rs = stmt.executeQuery();) {
                 if (!rs.next()) 
                     return null;
-                
+
                 Member member = new Member();
                 member.setId(id);
                 member.setEmail(rs.getString("email"));

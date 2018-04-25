@@ -1,11 +1,7 @@
 
-package step25.ex4;
+package bitcamp.java106.pms.jdbc;
 
-import java.io.FileInputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.util.ArrayList;
-import java.util.Properties;
 
 public interface DataSource {
     Connection getConnection() throws Exception;

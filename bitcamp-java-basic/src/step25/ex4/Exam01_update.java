@@ -19,7 +19,8 @@ public class Exam01_update {
         board.setContent(keyScan.nextLine());
         
         try {
-            BoardDao boardDao = new BoardDao();
+            DataSource dataSource = new DefaultDataSource();
+            BoardDao boardDao = new BoardDao(dataSource);
             int count = boardDao.update(board);
             System.out.printf("%d개 변경 성공!", count);
         } catch (Exception e) {

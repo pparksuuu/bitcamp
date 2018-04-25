@@ -11,7 +11,8 @@ public class Exam01_view {
         
         
         try {
-            BoardDao boardDao = new BoardDao();
+            DataSource dataSource = new DefaultDataSource();
+            BoardDao boardDao = new BoardDao(dataSource);
             Board board = boardDao.view(no);
             if (board == null) {
                 System.out.println("해당 번호의 게시물이 없습니다!");
