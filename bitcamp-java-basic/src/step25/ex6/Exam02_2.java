@@ -1,7 +1,8 @@
-// Mybatis - 자바 객체의 프로퍼티 이름과 컬럼명을 일치시키기 II
+// Mybatis - SQL에 파라미터 지정하기 : ${}
 package step25.ex6;
 
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -9,18 +10,23 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class Exam01_3 {
+public class Exam02_2 {
     public static void main(String[] args) throws Exception {
         InputStream inputStream = Resources.getResourceAsStream(
-                "step25/ex6/mybatis-config03.xml");
+                "step25/ex6/mybatis-config05.xml");
         
         SqlSessionFactory factory = 
                 new SqlSessionFactoryBuilder().build(inputStream);
         
         SqlSession sqlSession = factory.openSession();
+
+        // mybatis에 SQL문을 만들어 전달할 수 있다.
+        // => SQL 삽입 공격에 노출되기 때문에 이 방식을 사용하지 말라!
+        HashMap<String,Object> paramMap = new HashMap<>();
+        paramMap.put("limitSQL", "limit 9, 5"); //key는 SQL 맵퍼 파일에 지정된 이름과 같아야 한다.
         
         List<Board> list = 
-                sqlSession.selectList("BoardMapper.selectBoard");
+                sqlSession.selectList("BoardMapper.selectBoard", paramMap);
         
         for (Board board : list) {
             System.out.printf("%d, %s, %s, %s \n",

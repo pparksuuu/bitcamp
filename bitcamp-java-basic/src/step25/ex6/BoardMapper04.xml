@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mybatis 설정 파일에 클래스명의 별명이 설정되어 있다면,
+            그 별명을 사용할 수 있다 -->
+<mapper namespace="BoardMapper">
+  <resultMap type="Board" id="BoardMap">
+  
+    <id column="bno" property="no"/>
+    <result column="titl" property="title"/>
+    <result column="cont" property="content"/>
+    <result column="rdt" property="registeredDate"/> 
+  </resultMap>
+  
+  <!-- SQL문에 값 삽입하기 
+        => #{key이름}
+        => 값이 들어 있는 객체를 태그 속성에 지정하라!
+           parameterType="값이들어있는객체의타입"
+  -->
+  
+  <select id="selectBoard" 
+  resultMap="BoardMap" parameterType="map">
+    select bno,titl,cont,rdt 
+    from ex_board
+    limit #{startIndex}, #{pageSize}
+  </select>
+</mapper>
