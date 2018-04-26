@@ -1,5 +1,5 @@
-// Mybatis - 클래스 별명 지정하기
-package step25.ex5;
+// Mybatis - select와 resultType
+package step25.ex6;
 
 import java.io.InputStream;
 import java.util.List;
@@ -9,18 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-// mybatis 설정 파일에서 fully-qualified class name을 사용하는 대신에
-// 짧은 이름으로 대체할 수 있다.
-//<typeAliases>
-//<typeAlias type="step25.ex5.Board" alias="Board"/>
-//</typeAliases>
-//
-// 그러면 이 별명을 어디에 사용하는가?
-// => SQL 맵퍼 파일에서 
-public class Exam02_1 {
+public class Exam01_1 {
     public static void main(String[] args) throws Exception {
         InputStream inputStream = Resources.getResourceAsStream(
-                "step25/ex5/mybatis-config02.xml");
+                "step25/ex6/mybatis-config01.xml");
         
         SqlSessionFactory factory = 
                 new SqlSessionFactoryBuilder().build(inputStream);
@@ -37,6 +29,13 @@ public class Exam02_1 {
                     board.getContent(),
                     board.getRegisteredDate());
         }
+        // 실행 오류 발생 ! 이유?
+        // => mybatis에서 결과 값을 Board 객체에 담지 못했기 때문
+        //
+        // 왜 결과 값을 Board에 담지 못했는가?
+        // => mybatis에서 결과의 컬럼 값을 Board 객체에 담을 때
+        //    컬럼 이름과 같은 이름을 가진 프로퍼티(셋터 메서드)를 찾는다.
+        // =>
         
         sqlSession.close();
     }

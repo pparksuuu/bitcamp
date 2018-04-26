@@ -1,4 +1,4 @@
-// Mybatis - 클래스 별명 지정하기
+// Mybatis - SQL문 실행
 package step25.ex5;
 
 import java.io.InputStream;
@@ -9,14 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-// mybatis 설정 파일에서 fully-qualified class name을 사용하는 대신에
-// 짧은 이름으로 대체할 수 있다.
-//<typeAliases>
-//<typeAlias type="step25.ex5.Board" alias="Board"/>
-//</typeAliases>
-//
-// 그러면 이 별명을 어디에 사용하는가?
-// => SQL 맵퍼 파일에서 
 public class Exam01_2 {
     public static void main(String[] args) throws Exception {
         InputStream inputStream = Resources.getResourceAsStream(
@@ -24,11 +16,24 @@ public class Exam01_2 {
         
         SqlSessionFactory factory = 
                 new SqlSessionFactoryBuilder().build(inputStream);
-        
         SqlSession sqlSession = factory.openSession();
         
+        // SqlSession 객체를 이용하여 SQl 맵퍼 파일에 작성한 SQL 문을 실행한다.
+        // => select 문장
+        //    - sqlSession.selectList() : 목록 리턴
+        //    - sqlSession.selectOne() : 한 개의 결과 리턴
+        // => insert 문장
+        //    - sqlSession.insert()
+        // => update 문장
+        //    - sqlSession.update()
+        // => delete 문장
+        //    - sqlSession.update()
+        // => insert/update/delete인 경우 insert()/update()/delete() 메서드 중 
+        //    아무거나 호출해도 된다. 하지만 일관된 유지보수를 위해 
+        // 
+        // => SQL 문장 = 그룹명 + "." + SQL문장 아이디
         List<Board> list = 
-                sqlSession.selectList("step25.ex5.BoardDao.selectBoard");
+                sqlSession.selectList("BoardMapper.selectBoard");
         
         for (Board board : list) {
             System.out.printf("%d, %s, %s, %s \n",
