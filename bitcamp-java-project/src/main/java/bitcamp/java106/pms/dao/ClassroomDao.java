@@ -1,12 +1,6 @@
 package bitcamp.java106.pms.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -57,12 +51,6 @@ public class ClassroomDao {
         }
     }
 
-    public Classroom selectOne(int no) throws Exception {
-        try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
-            return sqlSession.selectOne(
-                    "bitcamp.java106.pms.dao.ClassroomDao.selectOne", no);
-        }  
-    }
 }
 
 //ver 32 - DB 커넥션 풀 적용

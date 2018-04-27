@@ -10,6 +10,11 @@
   <typeAliases>
     <typeAlias type="bitcamp.java106.pms.domain.Board" alias="Board"/>
     <typeAlias type="bitcamp.java106.pms.domain.Classroom" alias="Classroom"/>
+    <typeAlias type="bitcamp.java106.pms.domain.Member" alias="Member"/>
+    <typeAlias type="bitcamp.java106.pms.domain.Team" alias="Team"/>
+    <typeAlias type="bitcamp.java106.pms.domain.Task" alias="Task"/>
+    
+    
   </typeAliases>
   
   <environments default="development">
@@ -30,5 +35,9 @@
   <mappers>
     <mapper resource="bitcamp/java106/pms/sql/BoardMapper.xml"/>
     <mapper resource="bitcamp/java106/pms/sql/ClassroomMapper.xml"/>
+    <mapper resource="bitcamp/java106/pms/sql/MemberMapper.xml"/>
+    <mapper resource="bitcamp/java106/pms/sql/TeamMapper.xml"/>
+    <mapper resource="bitcamp/java106/pms/sql/TaskMapper.xml"/>
+    <mapper resource="bitcamp/java106/pms/sql/TeamMemberMapper.xml"/>
   </mappers>
 </configuration>

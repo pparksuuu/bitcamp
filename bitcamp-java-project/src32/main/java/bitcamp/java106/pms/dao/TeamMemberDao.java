@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
 
 import bitcamp.java106.pms.annotation.Component;
 import bitcamp.java106.pms.jdbc.DataSource;
@@ -12,21 +15,22 @@ import bitcamp.java106.pms.jdbc.DataSource;
 @Component
 public class TeamMemberDao {
 
-    DataSource dataSource;
+    SqlSessionFactory sqlSessionFactory;
     
-    public TeamMemberDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public TeamMemberDao(SqlSessionFactory sqlSessionFactory) {
+        this.sqlSessionFactory = sqlSessionFactory;
     }
     
     public int insert(String teamName, String memberId) throws Exception {
-        try (
-            Connection con = dataSource.getConnection();
-            PreparedStatement stmt = con.prepareStatement(
-                "insert into pms_team_member(tnm,mid) values(?,?)");) {
+        try (SqlSession sqlSession = this.sqlSessionFactory.openSession()) {
+            HashMap<String,Object> paramMap = new HashMap<>();
+            paramMap.put("teamName", teamName);
+            paramMap.put("memberId",memberId);
             
-            stmt.setString(1, teamName);
-            stmt.setString(2, memberId);
-            return stmt.executeUpdate();
+            int count = sqlSession.insert(
+                    "bitcamp.java106.pms.dao.TeamMemberDao.insert", paramMap);
+            sqlSession.commit();
+            return count;
         }
     }
     
