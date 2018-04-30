@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <!-- namespace 이름은 SQL을 찾을 때 사용하는 그룹명이다.
+                따라서 SQL문을 사용하는 DAO 클래스 이름과 같게 하면 
+                유지보수할 떄 알아보기 쉽다. 
+                단순히 알아보기 쉬울 뿐만 아니라 
+                스프링 프레임워크와 연동할 때 DAO객체를 자동생성하고
+                그 메서드를 자동생성할 때 사용할 수 있다.-->
+<mapper namespace="bitcamp.java106.pms.dao.TaskDao">
+
+  <resultMap type="Task" id="TaskMap">  
+    <!-- Task task = new Task(); -->
+    
+    <id column="tano" property="no"/>
+    <!-- task.set = new Task(); -->
+    
+    <result column="titl" property="title"/>
+    <result column="sdt" property="startDate"/>
+    <result column="edt" property="endDate"/>
+    <result column="stat" property="state"/>
+    
+     <association property="worker" javaType="Member">
+      <id column="mid" property="id"/>
+    </association>
+    <!-- Member obj = new Member();
+         obj.setId(rs.getString("mid"));
+         task.setWorker(obj);
+    -->
+     
+    <association property="team" javaType="Team">
+      <id column="tnm" property="name"/>
+    </association>
+    <!-- Team obj = new Team();
+         obj.setName(rs.getString("tnm"));
+         task.setTeam(obj);
+    -->
+  </resultMap>
+  
+  
+  <!-- SQL문 id를 설정할 때 SQL문을 사용하는 메서드 이름과 같게하면
+                유지보수할 때 알아보기 쉽다. 
+                알아보기 쉬울 뿐만 아니라 
+                스프링 프레임워크와 연동할 때 DAO객체를 자동생성하고
+                그 메서드를 자동생성할 때 사용할 수 있다.-->
+                
+  <select id="selectList" 
+        resultMap="TaskMap" parameterType="String">
+    select tano,titl,sdt,edt,stat,mid from pms_task where tnm= #{team.name}  
+    <!--  imit #{startIndex}, #{pageSize} -->
+  </select>
+  
+  <insert id="insert" parameterType="Task"
+        useGeneratedKeys="true" keyColumn="tano" keyProperty="no">
+    insert into pms_task(titl,sdt,edt,mid,tnm) 
+    values(#{title},#{startDate},#{endDate},#{worker.id},#{team.name})
+</insert>
+  
+  <!-- 파라미터의 타입이 primitive type이나 wrapper 클래스, String 클래스인 경우 ,
+               값을 꺼낼 때 프로퍼티 이름을 마음대로 해도 된다.
+  -->
+  <select id="selectOne" 
+        resultMap="TaskMap" parameterType="int">
+     select titl,sdt,edt,stat,mid,tnm from pms_task where tano=#{value}
+  </select>  
+  
+  <update id="update" parameterType="Task">
+    update pms_task set 
+	    titl=#{title},
+	    sdt=#{startDate},
+	    edt=#{endDate},
+	    mid=#{worker.id},
+	    tnm=#{team.name} 
+    where tano=#{no}
+  </update>
+  
+    <update id="updateState" parameterType="map">
+    update pms_task set 
+        stat=#{state}
+    where tano=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="int">
+    delete from pms_task where tano=#{value}
+  </delete>
+</mapper>
