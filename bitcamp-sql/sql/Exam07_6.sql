@@ -15,7 +15,7 @@ from lect_appl la
 
 /* select 절에 서브쿼리 사용하기 */
 
-/* => 1단계 : 수강신청 데이터를 출력*/
+/* => 1단계: 수강신청 데이터를 출력 */
 select la.lano, la.lno, la.mno, la.rdt
 from lect_appl la; 
 
@@ -43,6 +43,7 @@ select
     l.rno,
     l.mno
 from lect l;
+
 /* 1단계 : 강의 상세 정보를 가져오는 select를 준비한다.
     => 서브 쿼리를 이용하여 강의실 이름과 매니저 이름, 직위 정보를 가져오기 */
 select 
@@ -51,7 +52,7 @@ select
     (select name from room where rno=l.rno) as room_name, 
     (select name from memb where mno=l.mno) as manager_name,
     (select posi from mgr where mno=l.mno) as manager_posi
-from lect l;
+from lect l
 
 /* 2단계: 위에서 준비한 select 결과를 가상 테이블로 사용하여 
              기존의 lect_appl 테이블과 조인한다.*/
@@ -71,17 +72,16 @@ from lect_appl la
                 (select name from memb where mno=l.mno) as manager_name,
                 (select posi from mgr where mno=l.mno) as manager_posi
             from lect l) as lec on la.lno=lec.lno;
-            
+
 /* from 절에서 반복적으로 사용하는 서브 쿼리가 있다면,
  * 차라리 가상 테이블인 view로 정의해놓고 사용하는 것이 편하다. 
- */            
-
+ */ 
 create view lect2 as
 select 
     l.lno, 
     l.titl, 
-    l.mno as manager_no,
     (select name from room where rno=l.rno) as room_name, 
+    l.mno as manager_no,
     (select name from memb where mno=l.mno) as manager_name,
     (select posi from mgr where mno=l.mno) as manager_posi
 from lect l;
@@ -97,9 +97,8 @@ select
     lec.manager_posi
 from lect_appl la 
     join lect2 as lec on la.lno=lec.lno;
-
-    
-
+            
+            
 /* where 절에 서브쿼리 사용하기 */
 
 /* 과장 또는 대리 매니저가 담당하고 있는 수강 신청만 추출하기 */
@@ -115,7 +114,12 @@ select
 from lect_appl la 
     join lect2 as lec on la.lno=lec.lno 
 where
-    lec.manager_no in (select mno from mgr where posi in ('과장', '대리'));
+    lec.manager_no in (select 
+                           mno 
+                       from
+                           mgr 
+                       where 
+                           posi in ('과장', '대리'));
 
 
 
