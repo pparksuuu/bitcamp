@@ -84,7 +84,7 @@ where m.mno=s.mno;
 select lno, titl, rno, mno from lect;
 
 /* 전체 강의실 목록  */
-select rno, lno, name from room;
+select rno, loc, name from room;
 
 /* 강의 테이블에서 강의명을 가져오고, 감의실 테이블에서 지점명과 강의실명을 가져오자 */
 select 
