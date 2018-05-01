@@ -28,13 +28,13 @@
   <select id="selectList" 
         resultMap="BoardMap" parameterType="map">
     select bno,titl,cdt 
-    from pms_board
+    from pms2_board
     <!--  imit #{startIndex}, #{pageSize} -->
   </select>
   
   <insert id="insert" parameterType="Board"
         useGeneratedKeys="true" keyColumn="bno" keyProperty="no">
-    insert into pms_board(titl,cont,cdt) 
+    insert into pms2_board(titl,cont,cdt) 
     values(#{title},#{content},now())
 </insert>
   
@@ -43,18 +43,17 @@
   -->
   <select id="selectOne" 
         resultMap="BoardMap" parameterType="int">
-      select bno,titl,cont,cdt from pms_board where bno=#{value}
+      select bno,titl,cont,cdt from pms2_board where bno=#{value}
   </select>  
   
   <update id="update" parameterType="Board">
-    update pms_board set 
+    update pms2_board set 
         titl=#{title}, 
         cont=#{content}, 
-        cdt=now() 
     where bno=#{no}
   </update>
   
   <delete id="delete" parameterType="int">
-    delete from pms_board where bno=#{value}
+    delete from pms2_board where bno=#{value}
   </delete>
 </mapper>

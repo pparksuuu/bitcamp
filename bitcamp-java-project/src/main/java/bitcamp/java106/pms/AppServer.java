@@ -7,7 +7,7 @@ public class AppServer {
     ApplicationContainer applicationContainer;
     
     public AppServer(int port) throws Exception {
-        // 서버에서 작업하는데 필요한 객체를 준비한다.O
+        // 서버에서 작업하는데 필요한 객체를 준비한다.
         // => 클라이언트 요청을 처리할 객체를 준비한다.
         applicationContainer = new DefaultApplicationContainer();
         
