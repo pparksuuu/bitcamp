@@ -6,7 +6,7 @@ plus = {int a, int b ->
 }
 
 plus2 = {a, b ->
-    a + b
+    a + b // return을 생략하면 마지막 문장의 실행 값이 리턴된다.
 }
 
 println plus(100, 200)
