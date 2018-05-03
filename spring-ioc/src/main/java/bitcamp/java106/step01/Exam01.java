@@ -18,12 +18,16 @@ public class Exam01 {
         
         
         // ClassPathXmlApplicationContext 사용
+        // => 자바 classpath에서 해당 경로의 XML 파일을 찾는다.
+        // => 물론 XML 파일은 스프링 규칙에 따라 태그가 작성되어 있다.
+        // => 설정 파일에 지정된 객체를 자동으로 생성하고 의존 객체를 주입하여 보관한다.
         iocContainer = new ClassPathXmlApplicationContext(
                 "bitcamp/java106/step01/application-context.xml");
-        Car car = iocContainer.getBean("c1");
-        
+        Car car = (Car) iocContainer.getBean("c1");
         System.out.println(car);
         
-        
+        // 존재하지 않는 자바 객체를 꺼내려 한다면? 
+        // => 예외 발생!
+        Car car2 = (Car) iocContainer.getBean("c2");
     }
 }
