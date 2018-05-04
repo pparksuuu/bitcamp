@@ -1,7 +1,7 @@
 package bitcamp.java106.step06;
 
-public class CarFactory {
-    public static Car create(String model) {
+public class CarFactory2 {
+    public Car create(String model) {
         Car c = new Car();
         
         switch(model) {
