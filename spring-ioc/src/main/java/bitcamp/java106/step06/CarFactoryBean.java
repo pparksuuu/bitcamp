@@ -9,23 +9,23 @@ public class CarFactoryBean implements FactoryBean<Car> {
     String model;
     
     public CarFactoryBean() {
-        System.out.println("CarFactory3() 생성자 호출됨.");
+        System.out.println("CarFactoryBean() 생성자 호출됨.");
     }
     
     public void setModel(String model) {
-        System.out.println("CarFactory3.setModel() 호출됨");
+        System.out.println("CarFactoryBean.setModel() 호출됨");
         this.model = model;
     }
     
     @Override
     public Class<?> getObjectType() {
-        System.out.println("CarFactory3.getObjectType() 호출됨");
+        System.out.println("CarFactoryBean.getObjectType() 호출됨");
         return Car.class;
     }
 
     
     public Car getObject() throws Exception {
-        System.out.println("CarFactory3.getObject() 호출됨");
+        System.out.println("CarFactoryBean.getObject() 호출됨");
         // 객체를 생성해서 리턴하는 메서드이다
         // 스프링 IoC 컨테이너는 이 메서드를 호출할 것이다.
         // 만약 객체를 생성할 때 추가적으로 필요한 값을 파라미터로 받을 수 없기 때문에,

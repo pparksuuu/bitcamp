@@ -14,7 +14,7 @@
     </bean>
     
     <!-- 자바 코드:
-        CarFactory3 carFactory = new CarFactory();
+        CarFactoryBean carFactory = new CarFactory();
         carFactory.setModel("소나타");
         
         Object obj = null;
