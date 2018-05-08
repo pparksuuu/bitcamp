@@ -9,7 +9,7 @@ import bitcamp.java106.BeanUtils;
 public class Exam01 {
     public static void main(String[] args) {
         ApplicationContext iocContainer = 
-                new AnnotationConfigApplicationContext(AppConfig01.class);
+                new AnnotationConfigApplicationContext(AppConfig01.class); 
 
         BeanUtils.printBeanNames(iocContainer); 
         
