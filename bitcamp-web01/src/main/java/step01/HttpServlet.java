@@ -21,7 +21,7 @@ public abstract class HttpServlet extends GenericServlet {
         // 파라미터로 넘어오는 것은 실제로 HTTP 프로토콜을 다룰 수 있는 객체가 넘어온다.
         // 즉 ServletRequest 대신에 그 자식 객체인 HttpServletRequest가 넘어온다다.
         // ServletResponse 대신에 그 자식 객체인 HttpServletResponse 객체가 넘어온다.
-        // 따라서 이들 객체로 형변환 해도 된다.
+        // 따라서 이들 객체로 형변환 해도 된다.        
         HttpServletRequest httpRequest = (HttpServletRequest) req;
         HttpServletResponse httpResponse = (HttpServletResponse) res;
         
