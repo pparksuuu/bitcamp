@@ -52,6 +52,7 @@ public class Exam04 extends HttpServlet {
         
     }
     
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // 클라이언트가 POST 요청을 하면 이 메서드가 최종적으로 호출된다.
