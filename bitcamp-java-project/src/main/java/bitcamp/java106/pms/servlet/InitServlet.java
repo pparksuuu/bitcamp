@@ -1,23 +1,14 @@
 // 서블릿들이 사용할 자원을 미리 준비시키는 역할을 수행한다.
 package bitcamp.java106.pms.servlet;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import bitcamp.java106.pms.AppConfig;
-import bitcamp.java106.pms.controller.Controller;
 
 // 하는 일:
 // => Spring IoC 컨테이너(bean container)를 준비한다.
