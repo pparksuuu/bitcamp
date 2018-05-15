@@ -55,7 +55,7 @@ public class Exam02 extends HttpServlet {
         //    공장 객체가 파일로 만들어 HDD에 저장한다.
         ServletFileUpload upload = new ServletFileUpload(factory);
 
-        // 4) 멀티파트 데이터 분석하기
+        // 4) 멀티파트로 전송된 요청 데이터 분석하기
         Map<String,String> paramMap = new HashMap<>();
         try {
             List<FileItem> items = upload.parseRequest(request);
@@ -98,6 +98,8 @@ public class Exam02 extends HttpServlet {
                     out.println(savedPath);
                     
                     // => FileItem.write(저장할 경로) 호출하여 클라이언트가 보낸 파일을 저장한다.
+                    // => 업로드한 파일은 임시 폴더에 저장되어 있다.
+                    //    이 파일을 우리가 원하는 경로로 옮기는 것이다.
                     item.write(new File(savedPath +"/" + item.getName()));
                 }
             }
