@@ -32,33 +32,61 @@ public class TaskListServlet extends HttpServlet {
     
     @Override
     protected void doGet(
-            HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        response.setContentType("text/plain;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+            HttpServletRequest request, 
+            HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
         String teamName = request.getParameter("teamName");
+        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<title>작업 목록</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.printf("<h1>'%s'의 작업 목록</h1>\n", teamName);
         
         try {
             Team team = teamDao.selectOne(teamName);
             if (team == null) {
-                out.printf("'%s' 팀은 존재하지 않습니다.\n", teamName);
-                return;
+                throw new Exception(teamName + " 팀은 존재하지 않습니다.");
             }
             List<Task> list = taskDao.selectList(team.getName());
+            
+            out.printf("<p><a href='add?teamName=%s'>새 작업</a></p>", teamName);
+            out.println("<table border='1'>");
+            out.println("<tr>");
+            out.println("    <th>작업번호</th>"
+                          + "<th>작업명</th>"
+                          + "<th>기간</th>"
+                          + "<th>작업자</th>");
+            out.println("</tr>");
+            
             for (Task task : list) {
-                out.printf("%d,%s,%s,%s,%s\n", 
-                        task.getNo(), task.getTitle(), 
-                        task.getStartDate(), task.getEndDate(),
+                out.println("<tr>");
+                out.printf("    <td>%d</td>", task.getNo());
+                out.printf("    <td><a href='view?no=%d'>%s</a></td>", 
+                        task.getNo(),
+                        task.getTitle());
+                out.printf("    <td>%s ~ %s</td>", 
+                        task.getStartDate(),
+                        task.getEndDate());
+                out.printf("    <td>%s</td>", 
                         (task.getWorker() == null) ? 
                                 "-" : task.getWorker().getId());
+                out.println("</tr>");
             }
+            out.println("</table>");
         } catch (Exception e) {
-            out.println("목록 가져오기 실패!");
+            out.printf("<p>%s</p>", e.getMessage());
             e.printStackTrace(out);
         }
+        out.println("</body>");
+        out.println("</html>");
     }
-
 }
 
 //ver 31 - JDBC API가 적용된 DAO 사용

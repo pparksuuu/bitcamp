@@ -3,7 +3,6 @@ package bitcamp.java106.pms.servlet.teammember;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,14 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bitcamp.java106.pms.controller.Controller;
+import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.dao.TeamMemberDao;
+import bitcamp.java106.pms.server.ServerRequest;
+import bitcamp.java106.pms.server.ServerResponse;
 import bitcamp.java106.pms.servlet.InitServlet;
 
-
 @SuppressWarnings("serial")
-@WebServlet("/teammember/list")
-public class TeamMemberListServlet extends HttpServlet {
+@WebServlet("/team/member/delete")
+public class TeamMemberDeleteServlet extends HttpServlet {
     
     TeamDao teamDao;
     TeamMemberDao teamMemberDao;
@@ -29,32 +31,49 @@ public class TeamMemberListServlet extends HttpServlet {
         teamMemberDao = InitServlet.getApplicationContext().getBean(TeamMemberDao.class);
     }
     
+    
     @Override
     protected void doGet(
             HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        response.setContentType("text/plain;charset=UTF-8");
-        PrintWriter out = response.getWriter();
+        request.setCharacterEncoding("UTF-8");
         String teamName = request.getParameter("teamName");
+        String memberId = request.getParameter("memberId");
+        
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+        out.println("<!DOCTYPE html>");
+        out.println("<html>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.printf("<meta http-equiv='Refresh' content='1;url=../view?name=%s'>\n",
+                teamName);
+        
+        out.println("<title>팀 회원 삭제</title>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<h1>팀 회원 삭제 결과</h1>");
         
         try {
-            out.print("회원들: ");
-            List<String> list = teamMemberDao.selectList(teamName);
-            for (String memberId : list) {
-                out.printf("%s, ", memberId);
+            int count = teamMemberDao.delete(teamName, memberId);
+            if (count == 0) {
+                out.println("<p>해당 팀원이 존재하지 않습니다.</p>");
+            } else {
+                out.println("<p>팀에서 회원을 삭제하였습니다.</p>");
             }
-            out.println();
         } catch (Exception e) {
-            out.println("목록 가져오기 실패!");
+            out.println("<p>팀 회원 삭제 실패!</p>");
             e.printStackTrace(out);
         }
+        out.println("</body>");
+        out.println("</html>");
     }
 }
 
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
-//ver 26 - TeamMemberController에서 list() 메서드를 추출하여 클래스로 정의.
+//ver 26 - TeamMemberController에서 delete() 메서드를 추출하여 클래스로 정의.
 //ver 23 - @Component 애노테이션을 붙인다.
 //ver 18 - ArrayList가 적용된 TeamMemberDao를 사용한다.
 //ver 17 - TeamMemberDao 클래스를 사용하여 팀 멤버의 아이디를 관리한다.
