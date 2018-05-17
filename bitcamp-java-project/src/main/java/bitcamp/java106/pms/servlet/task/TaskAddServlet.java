@@ -51,7 +51,7 @@ public class TaskAddServlet extends HttpServlet {
         out.println("<html>");
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
-        out.printf("<title>작업 등록</title>\n", teamName);
+        out.println("<title>작업 등록</title>");
         out.println("</head>");
         out.println("<body>");
         out.printf("<h1>'%s' 팀의 작업 등록</h1>\n", teamName);

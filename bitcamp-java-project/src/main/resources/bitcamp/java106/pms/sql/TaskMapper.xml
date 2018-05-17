@@ -69,6 +69,7 @@
 		titl=#{title},
 		sdt=#{startDate},
 		edt=#{endDate},
+		stat=#{state},
 		mid=#{worker.id},
 		tnm=#{team.name}
 		where tano=#{no}

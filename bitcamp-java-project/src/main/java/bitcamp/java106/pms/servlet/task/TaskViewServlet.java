@@ -65,9 +65,13 @@ public class TaskViewServlet extends HttpServlet {
                     task.getTeam().getName());
 
             out.println("<form action='update' method='post'>");
-            out.printf("<input type='hidden' name='teamName' value='%s'>\n", 
-                    task.getTeam().getName());
+            out.printf("<input type='hidden' name='no' value='%d'>\n", no);
             out.println("<table border='1'>");
+            out.println("<tr>");
+            out.printf("    <th>팀명</th>"
+                    + "<td><input type='text' name='teamName' value='%s' readonly></td>\n",
+                    task.getTeam().getName());
+            out.println("</tr>");
             out.println("<tr>");
             out.printf("    <th>작업명</th>"
                     + "<td><input type='text' name='title' value='%s'></td>\n",
@@ -88,11 +92,12 @@ public class TaskViewServlet extends HttpServlet {
             out.println("    <td>");
             out.println("        <select name='memberId'>");
             out.println("            <option value=''>--선택 안함--</option>");
-            String memberId = task.getWorker().getId();
+            
+            
             for (Member member : members) {
 
-                out.printf("            <option %s>%s</option>",
-                        (memberId.equals(member.getId())) ? "selected" : "", 
+                out.printf("            <option %s>%s</option>\n",
+                        (member.equals(task.getWorker())) ? "selected" : "", 
                                 member.getId());    
             }
 
@@ -101,9 +106,12 @@ public class TaskViewServlet extends HttpServlet {
             out.println("</tr>");
             out.println("<tr>");
             out.println("    <th>작업상태</th><td><select name='state'>");
-            out.println("       <option value='0'>작업대기</option>");
-            out.println("       <option value='1'>작업중</option>");
-            out.println("       <option value='9'>작업완료</option>");
+            out.printf("       <option value='0' %s>작업대기</option>\n",
+                    (task.getState() == 0) ? "selected" : "");
+            out.printf("       <option value='1' %s>작업중</option>\n",
+                    (task.getState() == 1) ? "selected" : "");
+            out.printf("       <option value='9' %s>작업완료</option>\n",
+                    (task.getState() == 9) ? "selected" : "");
             out.println("</select></td>");
             out.println("</tr>");
             out.println("</table>");
