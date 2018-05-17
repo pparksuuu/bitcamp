@@ -116,6 +116,8 @@ public class TaskViewServlet extends HttpServlet {
             out.println("</tr>");
             out.println("</table>");
             out.println("<button>변경</button>");
+            out.printf("<a href='delete?no=%d&teamName=%s'>삭제</a>\n", 
+                    no, task.getTeam().getName());
             out.println("</form>");
 
         } catch (Exception e) {
