@@ -32,34 +32,38 @@ public class MemberAddServlet extends HttpServlet {
         
         request.setCharacterEncoding("UTF-8");
         
-        Member member = new Member();
-        member.setId(request.getParameter("id"));
-        member.setEmail(request.getParameter("email"));
-        member.setPassword(request.getParameter("password"));
 
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-        
-        out.println("<title>회원 등록</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>회원 등록 결과</h1>");
         
         try {
+            Member member = new Member();
+            member.setId(request.getParameter("id"));
+            member.setEmail(request.getParameter("email"));
+            member.setPassword(request.getParameter("password"));
+            
             memberDao.insert(member);
-            out.println("<p>등록 성공!</p>");
+            
+            response.sendRedirect("list");
         } catch (Exception e) {
-            out.println("<p>등록 실패!</p>");
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<meta charset='UTF-8'>");
+            out.println("<meta http-equiv='Refresh' content='3;url=list'>");
+            
+            out.println("<title>회원 등록</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>회원 등록 실패!</h1>");
+            out.println("<pre>");
             e.printStackTrace(out);
+            out.println("</pre>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        out.println("</body>");
-        out.println("</html>");
     }
 
 }

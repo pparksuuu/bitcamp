@@ -38,26 +38,13 @@ public class TeamMemberAddServlet extends HttpServlet {
             throws ServletException, IOException {
         
         request.setCharacterEncoding("UTF-8");
-        
         String teamName = request.getParameter("teamName");
-        String memberId = request.getParameter("memberId");
         
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
         
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.printf("<meta http-equiv='Refresh' content='1;url=../view?name=%s'>\n",
-                teamName);
-        
-        out.println("<title>팀 회원 등록</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>팀 회원 등록 결과</h1>");
         
         try {
+            String memberId = request.getParameter("memberId");
+            
             Team team = teamDao.selectOne(teamName);
             if (team == null) {
                 throw new Exception(teamName + "팀은 존재하지 않습니다.");
@@ -71,14 +58,30 @@ public class TeamMemberAddServlet extends HttpServlet {
                 throw new Exception("이미 등록된 회원입니다.");
             }
             teamMemberDao.insert(teamName, memberId);
-            out.println("<p>팀에 회원을 추가하였습니다.</p>");
             
+            response.sendRedirect("../view?name=" + teamName);
         } catch (Exception e) {
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<meta charset='UTF-8'>");
+            out.printf("<meta http-equiv='Refresh' content='1;url=../view?name=%s'>\n",
+                    teamName);
+            
+            out.println("<title>팀 회원 등록</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>팀 회원 등록 실패!</h1>");
             out.printf("<p>%s</p>\n", e.getMessage());
+            out.println("<pre>");
             e.printStackTrace(out);
+            out.println("</pre>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        out.println("</body>");
-        out.println("</html>");
     }
 }
 

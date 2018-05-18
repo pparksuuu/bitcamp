@@ -17,6 +17,8 @@ import bitcamp.java106.pms.servlet.InitServlet;
 public class MemberDeleteServlet extends HttpServlet {
 
     MemberDao memberDao;
+//    TeamMemberDao teamMemberDao;
+//    TaskDao taskDao;
     
     @Override
     public void init() throws ServletException {
@@ -28,35 +30,36 @@ public class MemberDeleteServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        String id = request.getParameter("id");
-        
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-        out.println("<title>게시물 삭제</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>게시물 삭제 결과</h1>");
         
         try {
+            
+            String id = request.getParameter("id");
             int count = memberDao.delete(id);
     
             if (count == 0) {
-                out.println("<p>해당 회원이 없습니다.</p>");
-            } else {
-                out.println("<p>삭제하였습니다.</p>");
+               throw new Exception("해당 회원이 없습니다.");
             }
+            
+            response.sendRedirect("list");
         } catch (Exception e) {
-            out.println("<p>삭제 실패!</p>");
+            response.setContentType("text/html;charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<meta charset='UTF-8'>");
+            //out.println("<meta http-equiv='Refresh' content='3;url=list'>");
+            out.println("<title>회원 삭제</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>회원 삭제 실패!</h1>");
+            out.println("<pre>");
             e.printStackTrace(out);
+            out.println("</pre>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        out.println("</body>");
-        out.println("</html>");
     }
     
 }
