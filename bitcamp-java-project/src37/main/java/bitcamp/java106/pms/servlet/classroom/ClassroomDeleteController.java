@@ -3,7 +3,6 @@ package bitcamp.java106.pms.servlet.classroom;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,12 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import bitcamp.java106.pms.dao.ClassroomDao;
-import bitcamp.java106.pms.domain.Classroom;
 import bitcamp.java106.pms.servlet.InitServlet;
 
 @SuppressWarnings("serial")
-@WebServlet("/classroom/update")
-public class ClassroomUpdateServlet extends HttpServlet {
+@WebServlet("/classroom/delete")
+public class ClassroomDeleteController extends HttpServlet {
     ClassroomDao classroomDao;
     
     @Override
@@ -26,18 +24,11 @@ public class ClassroomUpdateServlet extends HttpServlet {
     }
     
     @Override
-    protected void doPost(
+    protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response)
             throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-
-        Classroom classroom = new Classroom();
-        classroom.setNo(Integer.parseInt(request.getParameter("no")));
-        classroom.setTitle(request.getParameter("title"));
-        classroom.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        classroom.setEndDate(Date.valueOf(request.getParameter("endDate")));
-        classroom.setRoom(request.getParameter("room"));
+        int no = Integer.parseInt(request.getParameter("no"));
         
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
@@ -47,27 +38,27 @@ public class ClassroomUpdateServlet extends HttpServlet {
         out.println("<head>");
         out.println("<meta charset='UTF-8'>");
         out.println("<meta http-equiv='Refresh' content='1;url=list'>");
-        out.println("<title>수업 변경</title>");
+        out.println("<title>수업 삭제</title>");
         out.println("</head>");
         out.println("<body>");
-        out.println("<h1>수업 변경 결과</h1>");
+        out.println("<h1>수업 삭제 결과</h1>");
         try {
-            int count = classroomDao.update(classroom);
+            int count = classroomDao.delete(no);
+            
             if (count == 0) {
-                out.println("<p>유효하지 않은 수업 번호입니다.</p>");
+                out.println("<p>유효하지 않은 게시물 번호입니다.</p>");
             } else {
-                out.println("<p>변경하였습니다.</p>");
+                out.println("<p>삭제하였습니다.</p>");
             }
         } catch (Exception e) {
-            out.println("<p>변경 실패!</p>");
+            out.println("<p>삭제 실패!</p>");
             e.printStackTrace(out);
         }
         out.println("</body>");
         out.println("</html>");
     }
-
 }
 
 //ver 31 - JDBC API가 적용된 DAO 사용
 //ver 28 - 네트워크 버전으로 변경
-//ver 26 - ClassroomController에서 update() 메서드를 추출하여 클래스로 정의.
+//ver 26 - ClassroomController에서 delete() 메서드를 추출하여 클래스로 정의.
