@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.Date;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,25 +68,13 @@ public class TaskUpdateServlet extends HttpServlet {
             
             response.sendRedirect("list?teamName=" + URLEncoder.encode(teamName));
         } catch (Exception e) {
-            response.setContentType("text/html;charset=UTF-8");
-            PrintWriter out = response.getWriter();
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<meta charset='UTF-8'>");
-            out.printf("<meta http-equiv='Refresh' content='1;url=list?teamName=%s'>\n",
-                    teamName);
-            out.println("<title>작업 변경</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.printf("<h1>'%s' 팀의 작업 변경</h1>\n", teamName);
-            out.println("<p>변경 실패!</p>");
-            out.println("<pre>");
-            e.printStackTrace(out);
-            out.println("</pre>");
-            out.println("</body>");
-            out.println("</html>");
+            request.setAttribute("error", e);
+            request.setAttribute("title", "작업 변경 실패");
+            // 다른 서블릿으로 실행을 위임할 때,
+            // 이전까지 버퍼로 출력한 데이터는 버린다.
+            요청배달자.forward(request, response);
         }
     }
 }

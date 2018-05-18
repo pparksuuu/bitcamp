@@ -3,6 +3,7 @@ package bitcamp.java106.pms.servlet.board;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,22 +30,22 @@ public class BoardViewServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        //request.setCharacterEncoding("UTF-8");
-        int no = Integer.parseInt(request.getParameter("no"));
-        
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<meta charset='UTF-8'>");
-        out.println("<title>게시물 보기</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>게시물 보기</h1>");
-        out.println("<form action='update' method='post'>");
         try {
+            int no = Integer.parseInt(request.getParameter("no"));
+            
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<meta charset='UTF-8'>");
+            out.println("<title>게시물 보기</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>게시물 보기</h1>");
+            out.println("<form action='update' method='post'>");
+            
             Board board = boardDao.selectOne(no);
             if (board == null) {
                 throw new Exception("유효하지 않은 게시물 번호입니다.");
@@ -63,18 +64,23 @@ public class BoardViewServlet extends HttpServlet {
                     board.getCreatedDate());
             out.println("</table>");
             
+            out.println("<p>");
+            out.println("<a href='list'>목록</a>");
+            out.println("<button>변경</button>");
+            out.printf("<a href='delete?no=%d'>삭제</a>\n", no);
+            out.println("</p>");
+            out.println("</form>");
+            out.println("</body>");
+            out.println("</html>");
         } catch (Exception e) {
-            out.printf("<p>%s</p>\n", e.getMessage());
-            e.printStackTrace(out);
+            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
+            
+            request.setAttribute("error", e);
+            request.setAttribute("title", "게시물 목록조회 실패");
+            // 다른 서블릿으로 실행을 위임할 때,
+            // 이전까지 버퍼로 출력한 데이터는 버린다.
+            요청배달자.forward(request, response);
         }
-        out.println("<p>");
-        out.println("<a href='list'>목록</a>");
-        out.println("<button>변경</button>");
-        out.printf("<a href='delete?no=%d'>삭제</a>\n", no);
-        out.println("</p>");
-        out.println("</form>");
-        out.println("</body>");
-        out.println("</html>");
     }
 }
 //ver 37 - BoardViewController를 서블릿으로 변경
