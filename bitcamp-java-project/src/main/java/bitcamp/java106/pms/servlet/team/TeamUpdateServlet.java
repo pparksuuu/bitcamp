@@ -10,26 +10,31 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.servlet.InitServlet;
+import bitcamp.java106.pms.support.WebApplicationContextUtils;
 
 @SuppressWarnings("serial")
 @WebServlet("/team/update")
 public class TeamUpdateServlet extends HttpServlet {
 
     TeamDao teamDao;
-    
+
     @Override
     public void init() throws ServletException {
-        teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext());
+        teamDao = iocContainer.getBean(TeamDao.class); 
     }
 
     @Override
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
+
         try {
             Team team = new Team();
             team.setName(request.getParameter("name"));
@@ -37,13 +42,13 @@ public class TeamUpdateServlet extends HttpServlet {
             team.setMaxQty(Integer.parseInt(request.getParameter("maxQty")));
             team.setStartDate(Date.valueOf(request.getParameter("startDate")));
             team.setEndDate(Date.valueOf(request.getParameter("endDate")));
-            
+
             int count = teamDao.update(team);
             if (count == 0) {
                 throw new Exception("<p>해당 팀이 존재하지 않습니다.</p>");
             }
             response.sendRedirect("list");
-            
+
         } catch (Exception e) {
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
@@ -51,7 +56,7 @@ public class TeamUpdateServlet extends HttpServlet {
             요청배달자.forward(request, response);
         }
     }
-    
+
 }
 
 //ver 39 - forward 적용

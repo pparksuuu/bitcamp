@@ -11,19 +11,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.servlet.InitServlet;
+import bitcamp.java106.pms.support.WebApplicationContextUtils;
 
 @SuppressWarnings("serial")
 @WebServlet("/team/list")
 public class TeamListServlet extends HttpServlet {
 
     TeamDao teamDao;
-    
+
     @Override
     public void init() throws ServletException {
-        teamDao = InitServlet.getApplicationContext().getBean(TeamDao.class);
+        ApplicationContext iocContainer = 
+                WebApplicationContextUtils.getWebApplicationContext(
+                        this.getServletContext());
+        teamDao = iocContainer.getBean(TeamDao.class); 
     }
 
 
@@ -31,10 +36,10 @@ public class TeamListServlet extends HttpServlet {
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
@@ -43,16 +48,16 @@ public class TeamListServlet extends HttpServlet {
         out.println("</head>");
         out.println("<body>");
         out.println("<h1>팀 목록</h1>");
-        
+
         try {
             List<Team> list = teamDao.selectList();
-            
+
             out.println("<p><a href='form.html'>새 팀</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
             out.println("    <th>팀명</th><th>최대인원</th><th>기간</th>");
             out.println("</tr>");
-            
+
             for (Team team : list) {
                 out.println("<tr>");
                 out.printf("    <td><a href='view?name=%s'>%s</a></td><td>%d</td><td>%s~%s</td>\n",
