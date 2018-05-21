@@ -35,7 +35,6 @@ public class TaskListServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        request.setCharacterEncoding("UTF-8");
         String teamName = request.getParameter("teamName");
 
         response.setContentType("text/html;charset=UTF-8");

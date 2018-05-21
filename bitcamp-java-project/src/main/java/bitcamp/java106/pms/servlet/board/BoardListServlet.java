@@ -31,8 +31,6 @@ public class BoardListServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        // 출력할 때 String 객체의 값(UTF-16)을 어떤 문자표를 사용하여 인코딩해서 보낼 것인지 설정한다.
-        // => 반드시 출력 스트림을 얻기 전에 설정해야 한다.
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
