@@ -1,10 +1,10 @@
 //패키지
 //소스 파일이 놓이는 루트 폴더의 하위 폴더명을 적어야 한다.
 //src폴더는 루트폴더 -> 패키지명에 포함 X.
-package step01;
+package step00_WooAh;
 import java.util.Stack;
 
-public class Exam01 {
+public class Exam01_1 {
     public static int solution(String S) {
         if (!(S.length() <2000)) {
             return -1;
@@ -18,6 +18,8 @@ public class Exam01 {
         }
     }
 
+    
+    
     public static int calculate(String[] arr) {
         Stack<Integer> stack = new Stack<>();
         //int result = 0;

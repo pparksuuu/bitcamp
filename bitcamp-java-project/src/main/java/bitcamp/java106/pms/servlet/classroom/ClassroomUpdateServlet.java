@@ -26,8 +26,7 @@ public class ClassroomUpdateServlet extends HttpServlet {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext());
-        classroomDao = iocContainer.getBean(ClassroomDao.class); 
-    }
+        classroomDao = iocContainer.getBean(ClassroomDao.class);    }
     
     @Override
     protected void doPost(

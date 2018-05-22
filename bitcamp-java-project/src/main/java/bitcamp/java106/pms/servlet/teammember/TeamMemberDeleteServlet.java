@@ -28,8 +28,8 @@ public class TeamMemberDeleteServlet extends HttpServlet {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext());
-        teamDao = iocContainer.getBean(TeamDao.class); 
-        teamMemberDao = iocContainer.getBean(TeamMemberDao.class); 
+        teamDao = iocContainer.getBean(TeamDao.class);
+        teamMemberDao = iocContainer.getBean(TeamMemberDao.class);
     }
     
     @Override
@@ -47,9 +47,9 @@ public class TeamMemberDeleteServlet extends HttpServlet {
                 throw new Exception("<p>해당 팀원이 존재하지 않습니다.</p>");
             }
             response.sendRedirect("../view?name=" + 
-                    URLEncoder.encode(teamName,"UTF-8"));
-            // 개발자가 직접 요청이나 응답헤더를 작성하여 값을 주고 받으려 한다면,
-            // URL 인코딩과 URL 디코딩을 손수 해줘야 한다.
+                    URLEncoder.encode(teamName, "UTF-8"));
+            // 개발자가 요청이나 응답헤더를 직접 작성하여 값을 주고 받으로 한다면,
+            // URL 인코딩과 URL 디코딩을 손수 해 줘야 한다.
             
         } catch (Exception e) {
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");

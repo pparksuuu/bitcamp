@@ -26,8 +26,8 @@ public class BoardUpdateServlet extends HttpServlet {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext());
-        boardDao = iocContainer.getBean(BoardDao.class);   
-        }
+        boardDao = iocContainer.getBean(BoardDao.class);
+    }
     
     @Override
     protected void doPost(

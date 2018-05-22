@@ -27,13 +27,14 @@ public class TeamAddServlet extends HttpServlet {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext());
-        teamDao = iocContainer.getBean(TeamDao.class); 
-         }
+        teamDao = iocContainer.getBean(TeamDao.class);
+    }
 
     @Override
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
+        
         
         try {
             Team team = new Team();

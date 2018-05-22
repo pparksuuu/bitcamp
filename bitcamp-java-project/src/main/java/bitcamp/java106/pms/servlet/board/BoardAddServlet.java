@@ -23,9 +23,6 @@ public class BoardAddServlet extends HttpServlet {
     
     @Override
     public void init() throws ServletException {
-        // 1)
-        // 
-        
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext());
@@ -36,7 +33,7 @@ public class BoardAddServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
+            
         
         try {
             Board board = new Board();
@@ -47,11 +44,16 @@ public class BoardAddServlet extends HttpServlet {
             response.sendRedirect("list");
             
         } catch (Exception e) {
+            // 예외가 발생하면 ErrorServlet으로 예외 내용을 출력하도록 실행을 위임한다.
+            // 1) 실행을 위임할 객체를 준비한다.
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             
+            // 2) 다른 서블릿에게 실행을 위임하기 전에 그 서블릿에 전달할 데이터가 있다면,
+            //    ServletRequest 보관소에 담아라.
             request.setAttribute("error", e);
             request.setAttribute("title", "게시물 등록 실패!");
             
+            // 3) 다른 서블릿으로 실행을 위임한다.
             요청배달자.forward(request, response);
         }
     }

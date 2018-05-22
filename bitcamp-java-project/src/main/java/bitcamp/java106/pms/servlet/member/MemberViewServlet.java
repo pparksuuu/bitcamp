@@ -27,8 +27,7 @@ public class MemberViewServlet extends HttpServlet {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
                         this.getServletContext());
-        memberDao = iocContainer.getBean(MemberDao.class); 
-        }
+        memberDao = iocContainer.getBean(MemberDao.class);    }
 
     @Override
     protected void doGet(
