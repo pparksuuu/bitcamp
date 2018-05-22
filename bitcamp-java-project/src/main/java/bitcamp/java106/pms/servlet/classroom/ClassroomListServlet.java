@@ -27,8 +27,9 @@ public class ClassroomListServlet extends HttpServlet {
     public void init() throws ServletException {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
-                        this.getServletContext());
-        classroomDao = iocContainer.getBean(ClassroomDao.class);    }
+                        this.getServletContext()); 
+        classroomDao = iocContainer.getBean(ClassroomDao.class);
+    }
 
     @Override
     protected void doGet(

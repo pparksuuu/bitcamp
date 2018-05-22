@@ -25,7 +25,7 @@ public class BoardUpdateServlet extends HttpServlet {
     public void init() throws ServletException {
         ApplicationContext iocContainer = 
                 WebApplicationContextUtils.getWebApplicationContext(
-                        this.getServletContext());
+                        this.getServletContext()); 
         boardDao = iocContainer.getBean(BoardDao.class);
     }
     
@@ -33,7 +33,6 @@ public class BoardUpdateServlet extends HttpServlet {
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
         
         try {
             Board board = new Board();
@@ -57,6 +56,7 @@ public class BoardUpdateServlet extends HttpServlet {
     
 }
 
+//ver 40 - 필터 적용
 //ver 39 - forward 적용
 //ver 38 - redirect 적용
 //ver 37 - BoardUpdateController를 서블릿으로 변경
