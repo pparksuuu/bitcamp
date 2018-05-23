@@ -11,19 +11,18 @@
     
     <!-- 선택 항목 -->
     <description>
-                웹 애플리케이션에 대한 설명을 적는 태그이다.
+      웹 애플리케이션에 대한 설명을 적는 태그이다.
     </description>
     
     <!-- 선택 항목 -->
     <display-name>
-                서버 관리자 화면에서 출력될 웹 애플리케이션 이름을 적는 태그이다.
+      서버 관리자 화면에서 출력될 웹 애플리케이션 이름을 적는 태그이다.
     </display-name>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>bitcamp.java106.pms.AppConfig</param-value>
     </context-param>
-
 
     <filter>
         <filter-name>CharacterEncodingFilter</filter-name>
@@ -33,6 +32,7 @@
             <param-value>UTF-8</param-value>
         </init-param>
     </filter>
+    
     <filter-mapping>
         <filter-name>CharacterEncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
