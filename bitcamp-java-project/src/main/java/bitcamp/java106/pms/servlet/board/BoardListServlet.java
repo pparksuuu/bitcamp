@@ -10,19 +10,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 
 import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
+import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.support.WebApplicationContextUtils;
 
 @SuppressWarnings("serial")
 @WebServlet("/board/list")
 public class BoardListServlet extends HttpServlet {
-    
+
     BoardDao boardDao;
-    
+
     @Override
     public void init() throws ServletException {
         ApplicationContext iocContainer = 
@@ -30,17 +32,17 @@ public class BoardListServlet extends HttpServlet {
                         this.getServletContext()); 
         boardDao = iocContainer.getBean(BoardDao.class);
     }
-    
+
     @Override
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
-        
+
         // 출력할 때 String 객체의 값(UTF-16)을 어떤 문자표를 사용하여 인코딩해서 보낼 것인지 설정한다.
         // => 반드시 출력 스트림을 얻기 전에 설정해야 한다.
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
@@ -48,10 +50,13 @@ public class BoardListServlet extends HttpServlet {
         out.println("<title>게시물 목록</title>");
         out.println("</head>");
         out.println("<body>");
+
+        request.getRequestDispatcher("/header").include(request, response);
+
         out.println("<h1>게시물 목록</h1>");
         try {
             List<Board> list = boardDao.selectList();
-            
+
             out.println("<p><a href='form.html'>새 글</a></p>");
             out.println("<table border='1'>");
             out.println("<tr>");
@@ -60,14 +65,14 @@ public class BoardListServlet extends HttpServlet {
             for (Board board : list) {
                 out.println("<tr>");
                 out.printf("    <td>%d</td><td><a href='view?no=%d'>%s</a></td><td>%s</td>\n",
-                    board.getNo(), 
-                    board.getNo(),
-                    board.getTitle(), 
-                    board.getCreatedDate());
+                        board.getNo(), 
+                        board.getNo(),
+                        board.getTitle(), 
+                        board.getCreatedDate());
                 out.println("</tr>");
             }
             out.println("</table>");
-            
+
         } catch (Exception e) {
             RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
