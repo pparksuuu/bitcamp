@@ -47,10 +47,10 @@ public class LoginServlet extends HttpServlet {
                 }
             }
         }
-        
+
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
-        
+
         out.println("<!DOCTYPE html>");
         out.println("<html>");
         out.println("<head>");
@@ -73,16 +73,16 @@ public class LoginServlet extends HttpServlet {
         out.println("</html>");
 
     }
-    
+
     @Override
     protected void doPost(
             HttpServletRequest request, 
             HttpServletResponse response)
-            throws ServletException, IOException {
-        
+                    throws ServletException, IOException {
+
         String id = request.getParameter("id");
         String password = request.getParameter("password");
-        
+
         Cookie cookie = null;
         if (request.getParameter("savedId") != null) {
             // 입력폼에서 로그인할 때 사용한 ID를 자동으로 출력할 수 있도록
@@ -94,30 +94,27 @@ public class LoginServlet extends HttpServlet {
             cookie.setMaxAge(0);
         }
         response.addCookie(cookie);
-        
+
         try {
             Member member = memberDao.selectOneWithPassword(id, password);
-            
+
             HttpSession session = request.getSession();
-            
+
             if (member != null) { // 로그인 성공
                 response.sendRedirect(request.getContextPath());
                 session.setAttribute("loginUser", member);
             } else { // 로그인 실패!
                 session.invalidate();
-                
+
                 response.setContentType("text/html;charset=UTF-8");
                 PrintWriter out = response.getWriter();
-                
+
                 out.println("<!DOCTYPE html>");
                 out.println("<html>");
                 out.println("<head>");
                 out.println("<meta charset='UTF-8'>");
-                String refererUrl = request.getHeader("Referer");
-                if (refererUrl != null) {
-                    out.printf("<meta http-equiv='Refresh' content='1;url=%s'>",
-                            request.getContextPath() + "/auth/login");
-                }
+                out.printf("<meta http-equiv='Refresh' content='1;url=%s'>",
+                        request.getContextPath() + "/auth/login");
                 out.println("<title>로그인</title>");
                 out.println("</head>");
                 out.println("<body>");
@@ -133,7 +130,7 @@ public class LoginServlet extends HttpServlet {
             요청배달자.forward(request, response);
         }
     }
-    
+
 }
 
 //  [웹브라우저]                                          [웹서버] 
