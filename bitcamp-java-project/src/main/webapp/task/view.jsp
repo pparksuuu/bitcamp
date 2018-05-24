@@ -48,9 +48,9 @@ List<Member> members = (List<Member>)request.getAttribute("members");
 </tr>
 <tr>
     <th>작업상태</th><td><select name='state'>
-        <option value='0' selected>작업대기</option>
-        <option value='1' >작업중</option>
-        <option value='9' >작업완료</option>
+        <option value='0' <%= (task.getState() == 0) ? "selected" : "" %>>작업대기</option>
+        <option value='1' <%= (task.getState() == 1) ? "selected" : "" %>>작업중</option>
+        <option value='9' <%= (task.getState() == 9) ? "selected" : "" %>>작업완료</option>
     </select></td>
 </tr>
 </table>
