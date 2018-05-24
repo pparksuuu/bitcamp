@@ -54,6 +54,7 @@ public class TaskViewServlet extends HttpServlet {
             List<Member> members = teamMemberDao.selectListWithEmail(
                     task.getTeam().getName());
             
+            request.setAttribute("no", no);
             request.setAttribute("members", members);
             request.setAttribute("task", task);
             response.setContentType("text/html;charset=UTF-8");

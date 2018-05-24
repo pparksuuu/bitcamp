@@ -16,9 +16,10 @@
 <%
 Task task = (Task)request.getAttribute("task");
 List<Member> members = (List<Member>)request.getAttribute("members");
+int no = (int)request.getAttribute("no");
 %>
 <form action='update' method='post'>
-<input type='hidden' name='no' value='<%=task.getNo()%>'>
+<input type='hidden' name='no' value='<%=no%>'>
 <table border='1'>
 <tr>
     <th>팀명</th><td><input type='text' name='teamName' value='<%=task.getTeam().getName()%>' readOnly></td>
@@ -55,7 +56,7 @@ List<Member> members = (List<Member>)request.getAttribute("members");
 </tr>
 </table>
 <button>변경</button> 
-<a href='delete?no=<%=task.getNo()%>&teamName=<%=task.getTeam()%>'>삭제</a>
+<a href='delete?no=<%=no%>&teamName=<%=task.getTeam().getName()%>'>삭제</a>
 </form>
 </body>
 </html>
