@@ -94,6 +94,7 @@ public class LoginServlet extends HttpServlet {
 //                                                       <=== 응답: index.html
 // 메인화면 출력!
 
+//ver 42 - JSP 적용
 //ver 41 - 클래스 추가
 
 

@@ -34,26 +34,12 @@ public class TeamMemberListServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
 
-        // including 하기 전의 서블릿에서 문자셋을 지정할 것이고
-        // 이미 getParameter()를 호출했을 것이기 때문에 다음 코드는 의미가 없다.
-        //request.setCharacterEncoding("UTF-8");
-        
+        String name = request.getParameter("name");
 
-        // including 하기 전의 서블릿에서 콘텐트 타입을 설정했을 것이기 때문에 다음 코드는 의미가 없다.
-        //response.setContentType("text/html;charset=UTF-8");
-        
-        
         try {
-            String name = request.getParameter("name");
             List<Member> members = teamMemberDao.selectListWithEmail(name);
-            
-            request.setAttribute("name", name);
             request.setAttribute("members", members);
-            
-            response.setContentType("text/html;charset=UTF-8");
-            
-            request.getRequestDispatcher("/teammember/list.jsp").include(request, response);
-               
+            request.getRequestDispatcher("/team/member/list.jsp").include(request, response);
         } catch (Exception e) {
             request.setAttribute("error", e);
             request.setAttribute("title", "팀 멤버 조회 실패!");
@@ -62,4 +48,5 @@ public class TeamMemberListServlet extends HttpServlet {
     }
 }
 
+//ver 42 - JSP 적용
 //ver 39 - forward 적용

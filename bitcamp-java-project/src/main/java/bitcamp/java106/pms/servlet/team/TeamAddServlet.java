@@ -49,11 +49,12 @@ public class TeamAddServlet extends HttpServlet {
             request.setAttribute("error", e);
             request.setAttribute("title", "팀 등록 실패!");
             request.getRequestDispatcher("/error.jsp").forward(request, response);
-            }
+        }
     }
     
 }
 
+//ver 42 - JSP 적용
 //ver 40 - CharacterEncodingFilter 필터 적용.
 //         request.setCharacterEncoding("UTF-8") 제거
 //ver 39 - forward 적용

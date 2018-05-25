@@ -33,8 +33,6 @@ public class ClassroomViewServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
 
-        
-        
         try {
             int no = Integer.parseInt(request.getParameter("no"));
             Classroom classroom = classroomDao.selectOne(no);
@@ -44,7 +42,7 @@ public class ClassroomViewServlet extends HttpServlet {
             }
             request.setAttribute("classroom", classroom);
             response.setContentType("text/html;charset=UTF-8");
-            request.getRequestDispatcher("/classroom/view.jsp").include(request, response);
+            request.getRequestDispatcher("/classroom/view.jsp").forward(request, response);
             
         } catch (Exception e) {
             request.setAttribute("error", e);
@@ -54,6 +52,7 @@ public class ClassroomViewServlet extends HttpServlet {
     }
 }
 
+//ver 42 - JSP 적용
 //ver 39 - forward 적용
 //ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용

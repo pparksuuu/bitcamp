@@ -37,17 +37,20 @@ public class TaskListServlet extends HttpServlet {
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
+        
+        String teamName = request.getParameter("teamName");
+
         try {
-            String teamName = request.getParameter("teamName");
             Team team = teamDao.selectOne(teamName);
             if (team == null) {
                 throw new Exception(teamName + " 팀은 존재하지 않습니다.");
             }
             List<Task> list = taskDao.selectList(team.getName());
             request.setAttribute("list", list);
-            request.setAttribute("team", team);
+            
             response.setContentType("text/html;charset=UTF-8");
             request.getRequestDispatcher("/task/list.jsp").include(request, response);
+            
         } catch (Exception e) {
             request.setAttribute("error", e);
             request.setAttribute("title", "작업 목록조회 실패!");
@@ -57,6 +60,7 @@ public class TaskListServlet extends HttpServlet {
 
 }
 
+//ver 42 - JSP 적용
 //ver 40 - CharacterEncodingFilter 필터 적용.
 //         request.setCharacterEncoding("UTF-8") 제거
 //ver 39 - forward 적용

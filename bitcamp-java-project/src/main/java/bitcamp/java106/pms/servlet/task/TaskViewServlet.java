@@ -41,7 +41,6 @@ public class TaskViewServlet extends HttpServlet {
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        
         try {
             int no = Integer.parseInt(request.getParameter("no"));
             
@@ -53,19 +52,21 @@ public class TaskViewServlet extends HttpServlet {
             List<Member> members = teamMemberDao.selectListWithEmail(
                     task.getTeam().getName());
             
-            request.setAttribute("no", no);
-            request.setAttribute("members", members);
             request.setAttribute("task", task);
-            response.setContentType("text/html;charset=UTF-8");
-            request.getRequestDispatcher("/task/view.jsp").include(request, response);
+            request.setAttribute("members", members);
             
+            response.setContentType("text/html;charset=UTF-8");
+            request.getRequestDispatcher("/task/view.jsp").forward(request, response);
+
         } catch (Exception e) {
             request.setAttribute("error", e);
             request.setAttribute("title", "작업 상세조회 실패!");
-            request.getRequestDispatcher("/error.jsp").forward(request, response);        }
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+        }
     }
 }
 
+//ver 42 - JSP 적용
 //ver 39 - forward 적용
 //ver 37 - 컨트롤러를 서블릿으로 변경
 //ver 31 - JDBC API가 적용된 DAO 사용

@@ -3,11 +3,9 @@
     pageEncoding="UTF-8"%>
 <%
 String refererUrl = request.getHeader("Referer");
-if (refererUrl != null && refererUrl.endsWith("/auth/login")) {
+if (refererUrl != null && !refererUrl.endsWith("/auth/login")) {
     session.setAttribute("refererUrl", refererUrl);
 }
-
-// 웹브라우저가 "id"라는 쿠키를 보냈으면 입력폼을 출력할 때 사용한다.
 String id = "";
 Cookie[] cookies = request.getCookies();
 if (cookies != null) {
@@ -39,3 +37,4 @@ if (cookies != null) {
 </form>
 </body>
 </html>
+    

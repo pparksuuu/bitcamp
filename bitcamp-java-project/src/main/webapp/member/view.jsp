@@ -1,5 +1,6 @@
 <%@page import="bitcamp.java106.pms.domain.Member"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" 
+    contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,11 @@
 <title>멤버 보기</title>
 </head>
 <body>
-<%request.getRequestDispatcher("/header.jsp").include(request,response);%>
+
+<%
+out.flush();
+request.getRequestDispatcher("/header.jsp").include(request, response);%>
+
 <h1>멤버 보기(MVC)</h1>
 <%
 Member member = (Member)request.getAttribute("member");
@@ -31,3 +36,6 @@ Member member = (Member)request.getAttribute("member");
 </form>
 </body>
 </html>
+
+
+    

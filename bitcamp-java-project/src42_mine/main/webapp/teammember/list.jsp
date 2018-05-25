@@ -19,4 +19,3 @@ List<Member> members = (List<Member>)request.getAttribute("members");
 <td><a href='member/delete?teamName=<%=name%>&memberId=<%=member.getId()%>'>삭제</a></td></tr>
 <%} %>
 </table>
-    
