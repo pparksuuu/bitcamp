@@ -2,7 +2,6 @@
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,8 +9,7 @@
 <title>팀 보기</title>
 </head>
 <body>
-<div id='header'>
-<a href='/bitcamp-java-project/auth/login'>로그인</a></div>
+<%request.getRequestDispatcher("/header.jsp").include(request,response);%>
 <h1>팀 보기(MVC)</h1>
 <%
 String name = (String)request.getAttribute("name");
@@ -43,4 +41,5 @@ Team team = (Team)request.getAttribute("team");
 <a href='../task/list?teamName=<%=name %>'>작업목록</a>
 </p>
 </form>
-    
+</body>
+</html>

@@ -1,10 +1,8 @@
 package bitcamp.java106.pms.servlet.teammember;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -44,7 +42,6 @@ public class TeamMemberListServlet extends HttpServlet {
         // including 하기 전의 서블릿에서 콘텐트 타입을 설정했을 것이기 때문에 다음 코드는 의미가 없다.
         //response.setContentType("text/html;charset=UTF-8");
         
-        PrintWriter out = response.getWriter();
         
         try {
             String name = request.getParameter("name");
@@ -58,10 +55,9 @@ public class TeamMemberListServlet extends HttpServlet {
             request.getRequestDispatcher("/teammember/list.jsp").include(request, response);
                
         } catch (Exception e) {
-            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
             request.setAttribute("title", "팀 멤버 조회 실패!");
-            요청배달자.forward(request, response);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

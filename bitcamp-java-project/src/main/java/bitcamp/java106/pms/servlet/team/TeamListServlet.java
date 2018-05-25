@@ -3,7 +3,6 @@ package bitcamp.java106.pms.servlet.team;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,29 +29,21 @@ public class TeamListServlet extends HttpServlet {
         teamDao = iocContainer.getBean(TeamDao.class);
     }
 
-
     @Override
     protected void doGet(
             HttpServletRequest request, 
             HttpServletResponse response) throws ServletException, IOException {
         
-        
-        
         try {
             List<Team> list = teamDao.selectList();
-
             request.setAttribute("list", list);
             
             response.setContentType("text/html;charset=UTF-8");
-            
             request.getRequestDispatcher("/team/list.jsp").include(request, response);
         } catch (Exception e) {
-            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
             request.setAttribute("title", "팀 목록조회 실패!");
-            // 다른 서블릿으로 실행을 위임할 때,
-            // 이전까지 버퍼로 출력한 데이터는 버린다.
-            요청배달자.forward(request, response);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

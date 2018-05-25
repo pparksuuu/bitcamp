@@ -49,17 +49,11 @@ public class TeamViewServlet extends HttpServlet {
             request.setAttribute("team", team);
             
             request.getRequestDispatcher("/team/view.jsp").include(request, response);
-            
-            // 팀 회원의 목록을 출력하는 것은 TeamMemberListServlet에게 맡긴다.
-            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/team/member/list");
-            요청배달자.include(request, response);
-            // TeamMemberListServlet이 작업을 수행한 후 이 서블릿으로 되돌아 온다.
-               
+            request.getRequestDispatcher("/team/member/list").include(request, response);
         } catch (Exception e) {
-            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
             request.setAttribute("title", "팀 상세조회 실패!");
-            요청배달자.forward(request, response);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

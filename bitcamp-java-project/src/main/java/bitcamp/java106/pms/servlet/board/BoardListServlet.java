@@ -3,7 +3,6 @@ package bitcamp.java106.pms.servlet.board;
 import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -47,12 +46,9 @@ public class BoardListServlet extends HttpServlet {
             // JSP를 실행한다. 실행 완료 후 이 서블릿으로 되돌아 온다.
             request.getRequestDispatcher("/board/list.jsp").include(request, response);
         } catch (Exception e) {
-            RequestDispatcher 요청배달자 = request.getRequestDispatcher("/error");
             request.setAttribute("error", e);
             request.setAttribute("title", "게시물 목록조회 실패!");
-            // 다른 서블릿으로 실행을 위임할 때,
-            // 이전까지 버퍼로 출력한 데이터는 버린다.
-            요청배달자.forward(request, response);
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 }

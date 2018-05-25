@@ -10,8 +10,7 @@
 <title>작업 보기</title>
 </head>
 <body>
-<div id='header'>
-<a href='/bitcamp-java-project/auth/login'>로그인</a></div>
+<%request.getRequestDispatcher("/header.jsp").include(request,response);%>
 <h1>작업 보기(MVC)</h1>
 <%
 Task task = (Task)request.getAttribute("task");
@@ -36,14 +35,16 @@ int no = (int)request.getAttribute("no");
     <td>
         <select name='memberId'>
                 <option value=''>--선택 안함--</option>
-                <% for (Member member : members) { 
+                <% if (members != null) {
+                    for (Member member : members) { 
                     if (member.getId().equals(task.getWorker().getId())) {
                 %>
                 <option selected><%=member.getId()%></option>
                 <%} else{ %>
-                <option ><%=member.getId() %></option>
+                <option><%=member.getId() %></option>
                 <%} 
-                    }%>
+                    }
+                      }%>
         </select>
     </td>
 </tr>
@@ -56,7 +57,7 @@ int no = (int)request.getAttribute("no");
 </tr>
 </table>
 <button>변경</button> 
-<a href='delete?no=<%=no%>&teamName=<%=task.getTeam().getName()%>'>삭제</a>
+<a href='delete?no=<%=task.getNo()%>&teamName=<%=task.getTeam().getName()%>'>삭제</a>
 </form>
 </body>
 </html>

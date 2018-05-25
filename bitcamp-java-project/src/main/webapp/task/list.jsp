@@ -10,8 +10,7 @@
 <title>작업 목록</title>
 </head>
 <body>
-<div id='header'>
-<a href='/bitcamp-java-project/auth/login'>로그인</a></div>
+<%request.getRequestDispatcher("/header.jsp").include(request,response);%>
 <%
 Team team = (Team)request.getAttribute("team");
 %>
