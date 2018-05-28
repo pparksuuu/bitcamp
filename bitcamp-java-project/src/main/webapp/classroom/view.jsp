@@ -1,7 +1,7 @@
-<%@page import="bitcamp.java106.pms.domain.Classroom"%>
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +10,7 @@
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
-<h1>강의 보기(MVC) + JSP + EL</h1>
+<h1>강의 보기(MVC) + JSP + EL + JSTL</h1>
 <form action='update' method='post'>
 <input type='hidden' name='no' value='${classroom.no}'>
 <table border='1'>
