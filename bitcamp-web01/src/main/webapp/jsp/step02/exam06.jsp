@@ -10,13 +10,6 @@
 <%@ page import="java.io.FileReader" %>   
 <%@ page import="java.io.FileWriter" %>   
 <%@ page import="java.io.FileInputStream, java.io.FileOutputStream" %>
-    
-    
-    
-    
-    
-    
-    
 <!DOCTYPE html>
 <html>
 <head>
