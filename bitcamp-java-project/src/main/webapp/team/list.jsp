@@ -12,7 +12,7 @@
 </head>
 <body>
 <jsp:include page="/header.jsp"/>
-<h1>팀 목록(MVC)</h1>
+<h1>팀 목록(MVC) + JSP + EL </h1>
 <p><a href='form.html'>새 팀</a></p>
 <table border='1'>
 <tr>
@@ -24,11 +24,12 @@
 	scope="request"/>
 <%
 for (Team team : list) {
+    pageContext.setAttribute("team",team);
 %>
 <tr>
-    <td><a href='view?name=<%=team.getName()%>'><%=team.getName()%></a></td>
-    <td><%=team.getMaxQty()%></td>
-    <td><%=team.getStartDate()%>~<%=team.getEndDate()%></td>
+    <td><a href='view?name=${team.name}'>${team.name}</a></td>
+    <td>${team.maxQty}</td>
+    <td>${team.startDate}~${team.endDate}</td>
 </tr>
 <%}%>
 </table>
