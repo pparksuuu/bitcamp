@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="/header.jsp"/>
 <h1><a href='../team/view.do?name=${param.teamName}'>${param.teamName}</a>의 작업 목록(MVC) + JSP + EL + JSTL</h1>
-<p><a href='add.do?teamName=${param.teamName}'>새작업</a></p>
+<p><a href='add_receive.do?teamName=${param.teamName}'>새작업</a></p>
 <table border='1'>
 <tr>
     <th>번호</th><th>작업명</th><th>기간</th><th>작업자</th>
