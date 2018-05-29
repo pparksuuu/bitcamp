@@ -7,14 +7,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.TaskDao;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/task/list")
-public class TaskListServlet implements PageController  {
+public class TaskListServlet {
 
     TeamDao teamDao;
     TaskDao taskDao;
@@ -24,8 +24,8 @@ public class TaskListServlet implements PageController  {
         this.taskDao = taskDao;
     }
 
-    @Override
-    public String service(
+    @RequestMapping
+    public String list(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {   
 

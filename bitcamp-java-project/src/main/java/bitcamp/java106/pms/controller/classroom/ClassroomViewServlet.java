@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.domain.Classroom;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/classroom/view")
-public class ClassroomViewServlet implements PageController {
+public class ClassroomViewServlet {
 
     ClassroomDao classroomDao;
 
@@ -18,7 +18,8 @@ public class ClassroomViewServlet implements PageController {
         this.classroomDao = classroomDao;
     }
     
-    public String service(
+    @RequestMapping
+    public String view(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
 

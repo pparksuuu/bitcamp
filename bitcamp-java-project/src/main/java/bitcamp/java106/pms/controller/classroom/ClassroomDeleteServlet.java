@@ -5,11 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.ClassroomDao;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/classroom/delete")
-public class ClassroomDeleteServlet implements PageController {
+public class ClassroomDeleteServlet {
 
     ClassroomDao classroomDao;
 
@@ -17,7 +17,8 @@ public class ClassroomDeleteServlet implements PageController {
         this.classroomDao = classroomDao;
     }
 
-    public String service(
+    @RequestMapping
+    public String delete(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
 

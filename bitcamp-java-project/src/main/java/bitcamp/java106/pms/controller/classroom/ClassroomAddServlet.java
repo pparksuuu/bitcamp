@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.ClassroomDao;
 import bitcamp.java106.pms.domain.Classroom;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/classroom/add")
-public class ClassroomAddServlet implements PageController {
+public class ClassroomAddServlet {
     
     ClassroomDao classroomDao;
 
@@ -20,7 +20,8 @@ public class ClassroomAddServlet implements PageController {
         this.classroomDao = classroomDao;
     }
     
-    public String service(
+    @RequestMapping
+    public String add(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
         

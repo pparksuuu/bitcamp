@@ -5,21 +5,21 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/board/view")
-public class BoardViewController implements PageController {
+public class BoardViewController {
     
     BoardDao boardDao;
     
     public BoardViewController(BoardDao boardDao) {
         this.boardDao = boardDao;
     }
-    
-    @Override
-    public String service(
+
+    @RequestMapping
+    public String view(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
         

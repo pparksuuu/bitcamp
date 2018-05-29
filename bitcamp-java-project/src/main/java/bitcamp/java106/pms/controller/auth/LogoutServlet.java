@@ -6,13 +6,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/auth/logout")
-public class LogoutServlet implements PageController {
+public class LogoutServlet {
 
-    @Override
-    public String service(
+    @RequestMapping
+    public String logout(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {  
 

@@ -8,12 +8,12 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.MemberDao;
 import bitcamp.java106.pms.domain.Member;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/auth/login")
-public class LoginServlet implements PageController{
+public class LoginServlet {
 
     MemberDao memberDao;
 
@@ -21,7 +21,8 @@ public class LoginServlet implements PageController{
         this.memberDao = memberDao;
     }
 
-    public String service(
+    @RequestMapping
+    public String login(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
 

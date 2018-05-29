@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/team/view")
-public class TeamViewServlet implements PageController {
+public class TeamViewServlet {
 
     TeamDao teamDao;
 
@@ -18,8 +18,8 @@ public class TeamViewServlet implements PageController {
         this.teamDao = teamDao;
     }
 
-    @Override
-    public String service(
+    @RequestMapping
+    public String view(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
 

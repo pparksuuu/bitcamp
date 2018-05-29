@@ -7,12 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
-import bitcamp.java106.pms.controller.PageController;
 import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.domain.Team;
+import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/team/update")
-public class TeamUpdateServlet implements PageController {
+public class TeamUpdateServlet {
 
     TeamDao teamDao;
 
@@ -20,8 +20,8 @@ public class TeamUpdateServlet implements PageController {
         this.teamDao = teamDao;
     }
 
-    @Override
-    public String service(
+    @RequestMapping
+    public String update(
             HttpServletRequest request, 
             HttpServletResponse response) throws Exception {
 
