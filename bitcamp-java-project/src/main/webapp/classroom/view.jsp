@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="/header.jsp"/>
 <h1>강의 보기(MVC) + JSP + EL + JSTL</h1>
-<form action='update' method='post'>
+<form action='update.do' method='post'>
 <input type='hidden' name='no' value='${classroom.no}'>
 <table border='1'>
 <tr>
@@ -29,12 +29,12 @@
 <tr>
     <th>강의실</th>
     <td><input type='text' name='room' value='${classroom.room}'></td>
-</tr>
+</tr>   
 </table>
 <p>
-<a href='list'>목록</a>
+<a href='list.do'>목록</a>
 <button>변경</button>
-<a href='delete?no=${classroom.no}'>삭제</a>
+<a href='delete.do?no=${classroom.no}'>삭제</a>
 </p>
 </form>
 </body>

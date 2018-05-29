@@ -65,17 +65,18 @@ public class LoginServlet extends HttpServlet {
                 
                 if (refererUrl == null) { 
                     // 이전 페이지가 없다면 메인 화면으로 이동시킨다.
-                    response.sendRedirect(request.getContextPath()); // => "/java106-java-project"
+                    request.setAttribute("viewUrl", "redirect:" + request.getContextPath());
+                    //response.sendRedirect(request.getContextPath()); // => "/java106-java-project"
                 } else { 
                     // 이전 페이지가 있다면 그 페이지로 이동시킨다.
-                    response.sendRedirect(refererUrl);
+                    request.setAttribute("viewUrl", "redirect:" + refererUrl);
+                    //response.sendRedirect(refererUrl);
                 }
                 return;
                 
             } else { // 로그인 실패!
                 session.invalidate();
-                response.setContentType("text/html;charset=UTF-8");
-                request.getRequestDispatcher("/auth/fail.jsp").include(request, response);
+                request.setAttribute("viewUrl", "/auth/fail.jsp");
             }
         } catch (Exception e) {
             request.setAttribute("error", e);

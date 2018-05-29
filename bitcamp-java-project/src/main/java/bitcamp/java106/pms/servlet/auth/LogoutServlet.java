@@ -22,7 +22,7 @@ public class LogoutServlet extends HttpServlet {
         request.getSession().invalidate();
         
         // 웹 애플리케이션의 시작 페이지로 가라고 웹브라우저에게 얘기한다.
-        response.sendRedirect(request.getContextPath()); // ==> "/java106-java-project"
+        request.setAttribute("viewUrl", "redirect:" + request.getContextPath());
     }
 }
 
