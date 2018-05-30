@@ -2,9 +2,7 @@ package bitcamp.java106.pms.web;
 
 import java.net.URLEncoder;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import bitcamp.java106.pms.dao.TeamDao;
 import bitcamp.java106.pms.dao.TeamMemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/team/member")
 public class TeamMemberController {
@@ -30,11 +27,8 @@ public class TeamMemberController {
 
     @RequestMapping("/add")
     public String add(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
-
-        String teamName = request.getParameter("teamName");
-        String memberId = request.getParameter("memberId");
+            @RequestParam("teamName") String teamName,
+            @RequestParam("memberId") String memberId) throws Exception {
 
         Team team = teamDao.selectOne(teamName);
         if (team == null) {
@@ -54,11 +48,8 @@ public class TeamMemberController {
 
     @RequestMapping("/delete")
     public String delete(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
-
-        String teamName = request.getParameter("teamName");
-        String memberId = request.getParameter("memberId");
+            @RequestParam("teamName") String teamName,
+            @RequestParam("memberId") String memberId) throws Exception {
 
         int count = teamMemberDao.delete(teamName, memberId);
         if (count == 0) {
@@ -70,13 +61,12 @@ public class TeamMemberController {
     
     @RequestMapping("/list")
     public String list(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+            @RequestParam("name") String name,
+            Map<String,Object> map) throws Exception {
 
-        String name = request.getParameter("name");
 
         List<Member> members = teamMemberDao.selectListWithEmail(name);
-        request.setAttribute("members", members);
+        map.put("members", members);
         return "/team/member/list.jsp";
     }
 }

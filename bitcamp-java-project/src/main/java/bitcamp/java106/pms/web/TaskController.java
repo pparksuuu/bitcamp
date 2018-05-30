@@ -1,11 +1,8 @@
 package bitcamp.java106.pms.web;
 
 import java.net.URLEncoder;
-import java.sql.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +12,6 @@ import bitcamp.java106.pms.dao.TeamMemberDao;
 import bitcamp.java106.pms.domain.Member;
 import bitcamp.java106.pms.domain.Task;
 import bitcamp.java106.pms.domain.Team;
-import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/task")
 public class TaskController {
@@ -32,17 +28,12 @@ public class TaskController {
 
     @RequestMapping("/add_insert")
     public String addInsert(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {   
+            Task task,
+            @RequestParam("teamName") String teamName,
+            @RequestParam("memberId") String memberId) throws Exception {   
 
-        String teamName = request.getParameter("teamName");
-
-        Task task = new Task();
-        task.setTitle(request.getParameter("title"));
-        task.setStartDate(Date.valueOf(request.getParameter("startDate")));
-        task.setEndDate(Date.valueOf(request.getParameter("endDate")));
         task.setTeam(new Team().setName(teamName));
-        task.setWorker(new Member().setId(request.getParameter("memberId")));
+        task.setWorker(new Member().setId(memberId));
 
         Team team = teamDao.selectOne(task.getTeam().getName());
         if (team == null) {
@@ -66,29 +57,25 @@ public class TaskController {
 
     @RequestMapping("/add_receive")
     public String addReceive(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {   
+            @RequestParam("teamName") String teamName,
+            Map<String,Object> map) throws Exception {   
 
 
-        String teamName = request.getParameter("teamName");
         Team team = teamDao.selectOne(teamName);
         if (team == null) {
             throw new Exception(teamName + " 팀은 존재하지 않습니다.");
         }
         List<Member> members = teamMemberDao.selectListWithEmail(teamName);
 
-        request.setAttribute("members", members);
+        map.put("members", members);
         return "/task/form.jsp";
     }
-    
+
     @RequestMapping("/delete")
     public String delete(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {    
+            @RequestParam("teamName") String teamName,
+            @RequestParam("no") int no) throws Exception {    
 
-        String teamName = request.getParameter("teamName");
-
-        int no = Integer.parseInt(request.getParameter("no"));
         int count = taskDao.delete(no);
         if (count == 0) {
             throw new Exception("해당 작업이 존재하지 않습니다.");
@@ -99,36 +86,26 @@ public class TaskController {
 
     @RequestMapping("/list")
     public String list(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {   
-
-        String teamName = request.getParameter("teamName");
+            @RequestParam("teamName") String teamName,
+            Map<String,Object> map) throws Exception {   
 
         Team team = teamDao.selectOne(teamName);
         if (team == null) {
             throw new Exception(teamName + " 팀은 존재하지 않습니다.");
         }
         List<Task> list = taskDao.selectList(team.getName());
-        request.setAttribute("list", list);
+        map.put("list", list);
 
         return "/task/list.jsp";
     }
 
     @RequestMapping("/update")
-    public String update(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {  
+    public String update(Task task,
+            @RequestParam("teamName") String teamName,
+            @RequestParam("memberId") String memberId) throws Exception {  
 
-        String teamName = request.getParameter("teamName");
-
-        Task task = new Task()
-                .setNo(Integer.parseInt(request.getParameter("no")))
-                .setTitle(request.getParameter("title"))
-                .setStartDate(Date.valueOf(request.getParameter("startDate")))
-                .setEndDate(Date.valueOf(request.getParameter("endDate")))
-                .setState(Integer.parseInt(request.getParameter("state")))
-                .setTeam(new Team().setName(request.getParameter("teamName")))
-                .setWorker(new Member().setId(request.getParameter("memberId")));
+        task.setTeam(new Team().setName(teamName));
+        task.setWorker(new Member().setId(memberId));
 
         int count = taskDao.update(task);
         if (count == 0) {
@@ -136,13 +113,11 @@ public class TaskController {
         }
         return "redirect:list.do?teamName=" + URLEncoder.encode(teamName,"UTF-8");
     }
-    
+
     @RequestMapping("/view")
     public String view(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {   
-
-        int no = Integer.parseInt(request.getParameter("no"));
+            @RequestParam("no") int no,
+            Map<String,Object> map) throws Exception {   
 
         Task task = taskDao.selectOne(no);
         if (task == null) {
@@ -152,8 +127,8 @@ public class TaskController {
         List<Member> members = teamMemberDao.selectListWithEmail(
                 task.getTeam().getName());
 
-        request.setAttribute("task", task);
-        request.setAttribute("members", members);
+        map.put("task", task);
+        map.put("members", members);
 
         return "/task/view.jsp";
     }

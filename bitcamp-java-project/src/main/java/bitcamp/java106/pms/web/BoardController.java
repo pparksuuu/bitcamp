@@ -1,15 +1,12 @@
 package bitcamp.java106.pms.web;
 
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 import org.springframework.stereotype.Component;
 
 import bitcamp.java106.pms.dao.BoardDao;
 import bitcamp.java106.pms.domain.Board;
-import bitcamp.java106.pms.web.RequestMapping;
 
 @Component("/board")
 public class BoardController {
@@ -21,13 +18,7 @@ public class BoardController {
     }
 
     @RequestMapping("/add")
-    public String add(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
-
-            Board board = new Board();
-            board.setTitle(request.getParameter("title"));
-            board.setContent(request.getParameter("content"));
+    public String add(Board board) throws Exception {
 
             boardDao.insert(board);
             return "redirect:list.do";
@@ -35,11 +26,8 @@ public class BoardController {
     }
     
     @RequestMapping("/delete")
-    public String delete(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+    public String delete(@RequestParam("no") int no) throws Exception {
 
-        int no = Integer.parseInt(request.getParameter("no"));
         int count = boardDao.delete(no);
         if (count == 0) {
             throw new Exception("해당 게시물이 없습니다.");
@@ -48,24 +36,15 @@ public class BoardController {
     }
     
     @RequestMapping("/list")
-    public String list(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+    public String list(Map<String,Object> map) throws Exception {
 
         List<Board> list = boardDao.selectList();
-        request.setAttribute("list", list);
+        map.put("list", list);
         return "/board/list.jsp";
     }
     
     @RequestMapping("/update")
-    public String update(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
-
-        Board board = new Board();
-        board.setNo(Integer.parseInt(request.getParameter("no")));
-        board.setTitle(request.getParameter("title"));
-        board.setContent(request.getParameter("content"));
+    public String update(Board board) throws Exception {
 
         int count = boardDao.update(board);
         if (count == 0) {
@@ -76,15 +55,14 @@ public class BoardController {
     
     @RequestMapping("/view")
     public String view(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
+            @RequestParam("no") int no,
+            Map<String,Object> map) throws Exception {
         
-            int no = Integer.parseInt(request.getParameter("no"));
             Board board = boardDao.selectOne(no);
             if (board == null) {
                 throw new Exception("유효하지 않은 게시물 번호입니다.");
             }
-            request.setAttribute("board", board);
+            map.put("board", board);
             return "/board/view.jsp";
     }
 }
