@@ -1,4 +1,4 @@
-package bitcamp.java106.step12.ex1;
+package bitcamp.java106.step12.ex2;
 
 import java.util.HashMap;
 import java.util.List;
