@@ -1,5 +1,27 @@
 # 버전 별 주제
 
+## src06 - 프론트 컨트롤러가 사용할 IoC 컨테이너를 자바로 설정하기
+- mvc-servlet.xml 대신 AppConfig로 설정
+- 작업
+  - bitcamp.mvc.web.AppConfig 생성
+  
+
+## src05 - 설정 클래스를 사용하여 프론트 컨트롤러 설정
+- web.xml 이 아닌 클래스를 통해 프론트 컨트롤러 설정
+- 작업
+  - web.xml 에서 프론트 컨트롤러 지정하는 부분을 제거
+  - MyWebApplicationInitializer 생성
+- 학습
+  - 서블릿 컨테이너가 MyWebApplicataionInitializer를 호출되는 과정을 이해
+  - 자바 코드를 프론트 컨트롤러(DispatcherServlet)를 웹 애플리케이션에 등록
+  
+## src04 - 스프링 설정 파일의 경로 지정하기
+- 기본 경로(/WEB-INF)가 아닌 경로에 있는 설정 파일 지정하기
+- 작업
+  - /WEB-INF/spring 폴더 생성
+  - 스프링 설정 파일을 spring폴더로 옮긴다.
+  - web.xml 에 설정 파일의 위치를 지정
+
 ## src03 - ContextLoaderListener사용
 - ContextLoaderListener 설정하기
 - 작업
