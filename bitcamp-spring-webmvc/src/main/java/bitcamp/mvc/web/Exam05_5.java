@@ -1,4 +1,4 @@
-// 요청 핸들러의 파라미터 - custom property editor 등록하기
+// 요청 핸들러의 파라미터 - custom property editor 등록하기 II
 package bitcamp.mvc.web;
 
 import java.sql.Date;
@@ -16,12 +16,15 @@ public class Exam05_5 {
     // 기본적으로 클라이언트가 보낸 문자열 데이터를 primitive type의 값으로 변환시켜 준다.
     // 그 외의 타입에 대해서는 개발자가 프로퍼티 값 변환기(property editor)를 등록해야 한다.
     // 테스트:
-    // http://localhost:8888/bitcamp-spring-webmvc/mvc/exam05_4/m1?title=aaa&content=bbb&createdDate=2018-06-04
+    // http://localhost:8888/bitcamp-spring-webmvc/mvc/exam05_/m1?title=aaa&content=bbb&createdDate=2018-06-04
     @GetMapping(value="m1")  
     @ResponseBody  
     public String m1(String title, String content, Date createdDate) {
         return String.format("m1(): %s, %s, %s", title, content, createdDate);
     }
+    // 글로벌 컨트롤러 어드바이스 객체에 따로 프로퍼티 에디터를 초기화시키는 메서드를 정의해 두었기 때문에
+    // 다음 메서드를 이 컨트롤러에 등록하지 않아도 된다.
+    
     /*
     @InitBinder // 이렇게 표시를 해야만 프론트 컨트롤러가 요청 핸들러를 호출하기 전에 먼저 이 메서드를 호출한다.
     public void initBinder(WebDataBinder binder) {
