@@ -1,5 +1,52 @@
 # 자바 프로젝트
 
+## src52 - Spring WebMVC 기타 설정
+학습목표
+    - view resolver의 역할을 이해한다.
+    - view resolver를 설정할 수 있다.
+작업내용
+    - 프론트 컨트롤러의 스프링 설정에 뷰 리졸버 설정을 추가한다.
+
+## src51 - Spring WebMVC 기본 적용
+학습목표
+    - Spring WebMVC를 사용하여 웹 애플리케이션을 만들 수 있다.
+    - Spring WebMVC의 구동 원리를 이해한다.
+작업내용
+    - 기존에 작성했던 프론트 컨트롤러인 DispatcherServlet을 Spring WebMVC 클래스로 대체한다.
+    - 기존에 작성했던 필터인 CharacterEncodingFilter를 Spring WebMVC 클래스로 대체한다.
+    - @RequestParam, @RequestMapping 애노테이션을 Spring WebMVC 애노테이션으로 대체한다.
+    - 문자열 파라미터 값을 java.sql.Date 객체로 변환시키는 커스텀 프로퍼티 에디터를 등록한다.
+학습목표
+    - 스프링 WebMVC의 프론트 컨트롤러를 프로젝트에 적용할 수 있다.
+    - 스프링 WebMVC의 규칙에 따라 페이지 컨트롤러를 만들 수 있다.
+    - @InitBinder 애노테이션을 사용할 수 있다.
+    - 커스텀 프로퍼티 에디터를 사용하여 클라이언트 파라미터 값을 요청 핸들러의 파라미터 값으로 변환할 수 있다.
+    - @ControllerAdvice 애노테이션을 사용할 수 있다.
+    
+## src50 - mybatis와 Spring IoC 컨테이너 연동하기
+학습목표 
+    - mybatis를 Spring IoC 컨테이너와 연동할 수 있다.
+    - Spring 설정 파일에 mybatis 객체와 관련된 정보를 설정하고 구동원리를 이해한다.
+작업내용
+    - mybatis 스프링 연동 라이브러리를 가져온다.
+    - 스프링 설정 파일에 mybatis 설정을 추가한다.
+    - DAO 클래스를 인터페이스로 전환한다.
+    - SQL 맵퍼 파일을 DAO 인터페이스에 맞춰 변경한다. 
+
+## src49 - 요청 핸들러의 파라미터 값을 자동 주입하기
+학습목표
+    - Reflection API를 사용하여 메서드의 파라미터 값을 다룰 수 있다.
+    - 스프링 WebMVC 구동 원리를 이해한다.
+작업내용
+    - 요청 핸들러의 파라미터를 분석하여 그 값을 자동으로 주입시킨다.
+
+## src48 - CRUD 페이지 컨트롤러들을 한 개의 클래스로 묶기
+학습목표
+    - CRUD 기능을 한 개의 클래스로 묶어서 다룰 수 있다.
+    - Reflection API를 사용하여 메서드를 찾고 호출할 수 있다.
+작업내용
+    - CRUD 각 기능 별로 나뉘어져 있는 클래스들을 한 개의 클래스로 묶는다. 
+
 ## src47 - PageController 인터페이스 대신 애노테이션을 사용하여 호출할 메서드를 지정하기
 학습목표
     - Reflection API를 사용하여 클래스의 애노테이션 및 메서드 정보를 다룰 수 있다.
