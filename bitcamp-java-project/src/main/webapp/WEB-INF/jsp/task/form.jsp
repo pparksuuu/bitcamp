@@ -1,7 +1,7 @@
 <%@ page language="java" 
     contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>     
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +11,7 @@
 <body>
 <jsp:include page="../header.jsp"/>
 <h1><a href='../team/view.do?name=${param.teamName}'>'${param.teamName}'</a> 팀의 작업 등록</h1>
-<form action='add.do' method='post'>
+<form action='add_insert.do' method='post'>
 <input type='hidden' name='teamName' value='${param.teamName}'>
 <table border='1'>
 <tr>

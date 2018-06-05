@@ -29,11 +29,22 @@ public class TaskController {
         this.taskDao = taskDao;
         this.teamMemberDao = teamMemberDao;
     }
-    
+
     @RequestMapping("/form")
-    public void form() {
+    public void addReceive(
+            @RequestParam("teamName") String teamName,
+            Map<String,Object> map) throws Exception {   
         
+        
+        Team team = teamDao.selectOne(teamName);
+        if (team == null) {
+            throw new Exception(teamName + " 팀은 존재하지 않습니다.");
+        }
+        List<Member> members = teamMemberDao.selectListWithEmail(teamName);
+        
+        map.put("members", members);
     }
+    
 
     @RequestMapping("/add_insert")
     public String addInsert(
@@ -68,20 +79,6 @@ public class TaskController {
 
     }
 
-    @RequestMapping("/add_receive")
-    public void addReceive(
-            @RequestParam("teamName") String teamName,
-            Map<String,Object> map) throws Exception {   
-
-
-        Team team = teamDao.selectOne(teamName);
-        if (team == null) {
-            throw new Exception(teamName + " 팀은 존재하지 않습니다.");
-        }
-        List<Member> members = teamMemberDao.selectListWithEmail(teamName);
-
-        map.put("members", members);
-    }
 
     @RequestMapping("/delete")
     public String delete(

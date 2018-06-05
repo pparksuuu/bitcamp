@@ -25,6 +25,7 @@ public class BoardController {
         // 입력 폼에서 사용할 데이터가 있다면
         // 이 request handler에서 준비하면 된다.
         // model.addAttribute("프로퍼티명","값");
+        // ex) task에서 작업자 같은 경우에 미리 세팅해되는 값들을 여기서 세팅한다.
         
         // 요청 URL
         // http://localhost:8888/bitcamp-java-project/board/form.do
