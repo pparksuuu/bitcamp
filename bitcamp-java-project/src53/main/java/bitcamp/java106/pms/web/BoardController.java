@@ -1,11 +1,9 @@
 package bitcamp.java106.pms.web;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,17 +56,10 @@ public class BoardController {
         return "redirect:list";
     }
     
-    @RequestMapping("list{page}")
-    public void list(
-            @MatrixVariable(defaultValue="1") int pageNo,
-            @MatrixVariable(defaultValue="3") int pageSize,
-            Map<String,Object> map) throws Exception {
+    @RequestMapping("list")
+    public void list(Map<String,Object> map) throws Exception {
 
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("startRowNo", (pageNo - 1) * pageSize);
-        params.put("pageSize", pageSize);
-        
-        List<Board> list = boardDao.selectList(params);
+        List<Board> list = boardDao.selectList();
         map.put("list", list); 
     }
     

@@ -1,4 +1,4 @@
-
+// URL에서 값을 추출하기 - PathVariable
 package bitcamp.mvc.web;
 
 import org.springframework.stereotype.Controller;
