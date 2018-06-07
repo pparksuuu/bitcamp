@@ -60,7 +60,7 @@ public class BoardController {
     public void list(Map<String,Object> map) throws Exception {
 
         List<Board> list = boardDao.selectList();
-        map.put("list", list);
+        map.put("list", list); 
     }
     
     @RequestMapping("update")
