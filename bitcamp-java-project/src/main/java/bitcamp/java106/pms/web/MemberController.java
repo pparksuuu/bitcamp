@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,19 +21,19 @@ public class MemberController {
         this.memberDao = memberDao;
     }
     
-    @RequestMapping("/form")
+    @RequestMapping("form")
     public void form() {
         
     }
 
-    @RequestMapping("/add")
+    @RequestMapping("add")
     public String add(Member member) throws Exception {
 
         memberDao.insert(member);
-        return "redirect:list.do";
+        return "redirect:list";
     }
 
-    @RequestMapping("/delete")
+    @RequestMapping("delete")
     public String delete(@RequestParam("id") String id) throws Exception {
 
         int count = memberDao.delete(id);
@@ -40,10 +41,10 @@ public class MemberController {
             throw new Exception("해당 회원이 없습니다.");
 
         }
-        return "redirect:list.do";
+        return "redirect:list";
     }
     
-    @RequestMapping("/list")
+    @RequestMapping("list")
     public void list(Map<String,Object> map) throws Exception {
 
         List<Member> list = memberDao.selectList();
@@ -51,7 +52,7 @@ public class MemberController {
 
     }
     
-    @RequestMapping("/update")
+    @RequestMapping("update")
     public String update(Member member) throws Exception {
 
         int count = memberDao.update(member);
@@ -59,12 +60,12 @@ public class MemberController {
             throw new Exception("해당 회원이 존재하지 않습니다.");
         }
 
-        return "redirect:list.do";
+        return "redirect:list";
     }
 
-    @RequestMapping("/view")
-    public void view(
-            @RequestParam("id") String id,
+    @RequestMapping("{id}")
+    public String view(
+            @PathVariable String id,
             Map<String,Object> map) throws Exception {
  
         Member member = memberDao.selectOne(id);
@@ -72,6 +73,7 @@ public class MemberController {
             throw new Exception("유효하지 않은 멤버 아이디입니다.");
         }
         map.put("member", member);
+        return "member/view";
     }
 }
 

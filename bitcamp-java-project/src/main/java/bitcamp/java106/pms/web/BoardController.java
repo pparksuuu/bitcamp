@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,7 +21,7 @@ public class BoardController {
         this.boardDao = boardDao;
     }
     
-    @RequestMapping("/form")
+    @RequestMapping("form")
     public void form(/*Model model*/) {
         // 입력 폼에서 사용할 데이터가 있다면
         // 이 request handler에서 준비하면 된다.
@@ -36,44 +37,45 @@ public class BoardController {
 
     
     
-    @RequestMapping("/add")
+    @RequestMapping("add")
     public String add(Board board) throws Exception {
 
             boardDao.insert(board);
-            return "redirect:list.do";
+            return "redirect:list";
             
     }
     
-    @RequestMapping("/delete")
-    public String delete(@RequestParam("no") int no) throws Exception {
+    @RequestMapping("delete")
+    public String delete(
+            @RequestParam("no") int no) throws Exception {
 
         int count = boardDao.delete(no);
         if (count == 0) {
             throw new Exception("해당 게시물이 없습니다.");
         }
-        return "redirect:list.do";
+        return "redirect:list";
     }
     
-    @RequestMapping("/list")
+    @RequestMapping("list")
     public void list(Map<String,Object> map) throws Exception {
 
         List<Board> list = boardDao.selectList();
         map.put("list", list);
     }
     
-    @RequestMapping("/update")
+    @RequestMapping("update")
     public String update(Board board) throws Exception {
 
         int count = boardDao.update(board);
         if (count == 0) {
             throw new Exception("해당 게시물이 존재하지 않습니다.");
         } 
-        return "redirect:list.do";
+        return "redirect:list";
     }
     
-    @RequestMapping("/view")
-    public void view(
-            @RequestParam("no") int no, 
+    @RequestMapping("{no}")
+    public String view(
+            @PathVariable int no, 
             Map<String,Object> map) throws Exception {
         
         Board board = boardDao.selectOne(no);
@@ -81,6 +83,7 @@ public class BoardController {
             throw new Exception("유효하지 않은 게시물 번호입니다.");
         }
         map.put("board", board);
+        return "board/view";
     }
     
 }
