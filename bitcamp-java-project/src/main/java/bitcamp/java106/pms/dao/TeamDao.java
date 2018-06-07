@@ -8,7 +8,7 @@ import bitcamp.java106.pms.domain.Team;
 public interface TeamDao {
 
     public int delete(String name);
-    public List<Team> selectList(Map<String,Object> params);
+    public List<Team> selectList();
     public int insert(Team team);
     public int update(Team team);
     public Team selectOne(String name);

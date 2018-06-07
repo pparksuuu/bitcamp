@@ -9,7 +9,7 @@ public interface TaskDao {
 
     public int delete(int no);
     public int deleteByTeam(String teamName);
-    public List<Task> selectList(String teamName);
+    public List<Task> selectList(Map<String,Object> params);
     public int insert(Task task);
     public int update(Task task);
     public Task selectOne(int no);

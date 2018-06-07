@@ -1,6 +1,5 @@
 package bitcamp.java106.pms.web;
 
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,11 +107,13 @@ public class TaskController {
         if (team == null) {
             throw new Exception(teamName + " 팀은 존재하지 않습니다.");
         }
-        List<Task> list = taskDao.selectList(team.getName());
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("startRowNo", (pageNo - 1) * pageSize);
+        params.put("pageSize", pageSize);
+        params.put("teamName",teamName);
+        List<Task> list = taskDao.selectList(params);
         map.put("list", list);
         map.put("teamName", teamName);
-        map.put("startRowNo", (pageNo - 1) * pageSize);
-        map.put("pageSize", pageSize);
         return "task/list";
     }
 

@@ -58,17 +58,9 @@ public class TeamController {
     }
     
     @RequestMapping("list")
-    public void list(
-            @MatrixVariable(defaultValue="1") int pageNo,
-            @MatrixVariable(defaultValue="3") int pageSize,
-            Map<String,Object> map) throws Exception {
-
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("startRowNo", (pageNo - 1) * pageSize);
-        params.put("pageSize", pageSize);
-        List<Team> list = teamDao.selectList(params);
+    public void list(Map<String,Object> map) throws Exception {
+        List<Team> list = teamDao.selectList();
         map.put("list", list);
-
     }
     
     @RequestMapping("update")
