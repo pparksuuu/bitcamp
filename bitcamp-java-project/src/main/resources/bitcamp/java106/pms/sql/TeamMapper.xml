@@ -21,7 +21,7 @@
           resultMap="TeamMap" parameterType="map">
     select name, sdt, edt, max_qty 
     from pms2_team
-    <!--  limit #{startIndex}, #{pageSize} -->
+    limit #{startRowNo}, #{pageSize}
   </select>
   <!-- 
     ArrayList<Task> list = new new ArrayList<>();

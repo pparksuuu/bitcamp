@@ -1,13 +1,14 @@
 package bitcamp.java106.pms.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import bitcamp.java106.pms.domain.Team;
 
 public interface TeamDao {
 
     public int delete(String name);
-    public List<Team> selectList();
+    public List<Team> selectList(Map<String,Object> params);
     public int insert(Team team);
     public int update(Team team);
     public Team selectOne(String name);

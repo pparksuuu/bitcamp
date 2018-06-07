@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,9 +58,15 @@ public class TeamController {
     }
     
     @RequestMapping("list")
-    public void list(Map<String,Object> map) throws Exception {
+    public void list(
+            @MatrixVariable(defaultValue="1") int pageNo,
+            @MatrixVariable(defaultValue="3") int pageSize,
+            Map<String,Object> map) throws Exception {
 
-        List<Team> list = teamDao.selectList();
+        HashMap<String,Object> params = new HashMap<>();
+        params.put("startRowNo", (pageNo - 1) * pageSize);
+        params.put("pageSize", pageSize);
+        List<Team> list = teamDao.selectList(params);
         map.put("list", list);
 
     }

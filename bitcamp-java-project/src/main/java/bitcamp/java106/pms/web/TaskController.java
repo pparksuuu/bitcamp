@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.MatrixVariable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,6 +99,8 @@ public class TaskController {
 
     @RequestMapping("list")
     public String list(
+            @MatrixVariable(defaultValue="1") int pageNo,
+            @MatrixVariable(defaultValue="3") int pageSize,
             @PathVariable("teamName") String teamName,
             Map<String,Object> map) throws Exception {   
 
@@ -108,6 +111,8 @@ public class TaskController {
         List<Task> list = taskDao.selectList(team.getName());
         map.put("list", list);
         map.put("teamName", teamName);
+        map.put("startRowNo", (pageNo - 1) * pageSize);
+        map.put("pageSize", pageSize);
         return "task/list";
     }
 
