@@ -96,7 +96,7 @@ public class TaskController {
 
     }
 
-    @RequestMapping("list")
+    @RequestMapping("list{page}")
     public String list(
             @MatrixVariable(defaultValue="1") int pageNo,
             @MatrixVariable(defaultValue="3") int pageSize,
@@ -111,6 +111,7 @@ public class TaskController {
         params.put("startRowNo", (pageNo - 1) * pageSize);
         params.put("pageSize", pageSize);
         params.put("teamName",teamName);
+        
         List<Task> list = taskDao.selectList(params);
         map.put("list", list);
         map.put("teamName", teamName);

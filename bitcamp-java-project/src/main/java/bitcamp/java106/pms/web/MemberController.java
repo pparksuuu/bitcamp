@@ -46,7 +46,7 @@ public class MemberController {
         return "redirect:list";
     }
     
-    @RequestMapping("list")
+    @RequestMapping("list{page}")
     public void list(
             @MatrixVariable(defaultValue="1") int pageNo,
             @MatrixVariable(defaultValue="3") int pageSize,

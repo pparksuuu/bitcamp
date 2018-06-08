@@ -60,10 +60,13 @@ public class BoardController {
     
     @RequestMapping("list{page}")
     public void list(
+            @PathVariable String page,
             @MatrixVariable(defaultValue="1") int pageNo,
             @MatrixVariable(defaultValue="3") int pageSize,
             Map<String,Object> map) throws Exception {
 
+        System.out.printf("%s, %d, %d\n", page, pageNo, pageSize);
+        
         HashMap<String,Object> params = new HashMap<>();
         params.put("startRowNo", (pageNo - 1) * pageSize);
         params.put("pageSize", pageSize);
