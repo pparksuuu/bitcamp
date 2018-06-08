@@ -32,7 +32,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Exam01 {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext iocContainer = 
-                new ClassPathXmlApplicationContext("bitcamp/java106/step13/ex2/application-context-01.xml");
+                new ClassPathXmlApplicationContext(
+                        "bitcamp/java106/step13/ex2/application-context-01.xml");
         
         String[] names = iocContainer.getBeanDefinitionNames();
         for (String name : names) {

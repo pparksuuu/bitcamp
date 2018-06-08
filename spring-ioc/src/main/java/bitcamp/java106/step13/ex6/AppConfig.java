@@ -1,0 +1,12 @@
+package bitcamp.java106.step13.ex6;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration // 이 클래스가 설정 클래스임을 선언한다.
+@ComponentScan("bitcamp.java106.step13.ex6")
+@EnableAspectJAutoProxy
+public class AppConfig {
+
+}
