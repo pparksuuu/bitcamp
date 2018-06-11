@@ -8,11 +8,12 @@ import bitcamp.java106.pms.domain.Member;
 public interface MemberDao {
     
     public int delete(String id);
-    public List<Member> selectList(Map<String,Object> paramsO);
+    public List<Member> selectList(Map<String,Object> params);
     public int insert(Member member);
     public int update(Member member);
     public Member selectOne(String id);
     public Member selectOneWithPassword(Map<String,Object> params);
+    public int count(Map<String,Object> params);
 }
 
 //ver 41 - 로그인을 위한 selectOneWithPassword(id, password) 메서드 추가

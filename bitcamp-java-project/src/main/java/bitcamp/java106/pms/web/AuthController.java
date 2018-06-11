@@ -1,8 +1,6 @@
 // 로그인 폼 출력과 사용자 인증처리 서블릿
 package bitcamp.java106.pms.web;
 
-import java.util.HashMap;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,17 +10,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import bitcamp.java106.pms.dao.MemberDao;
-import bitcamp.java106.pms.domain.Member;
+import bitcamp.java106.pms.service.MemberService;
 
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
 
-    MemberDao memberDao;
+    MemberService memberService;
 
-    public AuthController(MemberDao memberDao) {
-        this.memberDao = memberDao;
+    public AuthController(MemberService memberService) {
+        this.memberService = memberService;
     }
     
     @RequestMapping("/form") 
@@ -53,14 +50,9 @@ public class AuthController {
         }
         response.addCookie(cookie);
 
-        HashMap<String,Object> params = new HashMap<>();
-        params.put("id", id);
-        params.put("password", password);
-        
-        Member member = memberDao.selectOneWithPassword(params);
+        if (memberService.isExist(id, password)) { // 로그인 성공!
 
-        if (member != null) { // 로그인 성공!
-            session.setAttribute("loginUser", member);
+            session.setAttribute("loginUser", memberService.get(id));
 
             // 로그인 하기 전의 페이지로 이동한다.
             String refererUrl = (String)session.getAttribute("refererUrl");
