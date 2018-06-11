@@ -14,28 +14,23 @@ public class Exam01_insert {
         BoardDao boardDao = iocContainer.getBean(BoardDao.class);
         
         Board board = new Board();
-        board.setNo(131);
+        board.setNo(141);
         board.setTitle("1111");
         board.setContent("xxxx");
         boardDao.insert(board);
         System.out.printf("%d번 게시물 입력!\n", board.getNo());
 
-        board.setNo(132);
+        board.setNo(142);
         board.setTitle("2222");
         boardDao.insert(board);
         System.out.printf("%d번 게시물 입력!\n", board.getNo());
         
-        board.setNo(133);
+        board.setNo(141);
         board.setTitle("3333");
         boardDao.insert(board);
         System.out.printf("%d번 게시물 입력!\n", board.getNo());
         
         System.out.println("-----------------------------------------");
         
-        List<Board> list = boardDao.selectList();
-        for (Board b : list) {
-            System.out.printf("%d, %s, %s\n",
-                    b.getNo(), b.getTitle(), b.getRegisteredDate());
-        }
     }
 }
