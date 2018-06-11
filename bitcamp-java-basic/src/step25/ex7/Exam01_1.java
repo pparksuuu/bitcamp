@@ -1,4 +1,4 @@
-// JDBC 프로그래밍 개요 - DBMS에 SQL문 보내기 : insert
+ // JDBC 프로그래밍 개요 - DBMS에 SQL문 보내기 : insert
 package step25.ex7;
 
 import java.sql.DriverManager;

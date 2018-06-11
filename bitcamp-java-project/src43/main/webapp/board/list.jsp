@@ -18,7 +18,7 @@
     <th>번호</th><th>제목</th><th>등록일</th>
 </tr>
 <jsp:useBean id="list" 
-            type="java.util.List<bitcamp.java106.step12.Board>"
+            type="java.util.List<step25.ex7.step25.ex8.Board.Board>"
             class="java.util.ArrayList" 
             scope="request"/>
 <%

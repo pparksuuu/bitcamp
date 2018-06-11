@@ -42,6 +42,11 @@ public class Exam01_2 {
         stmt.executeUpdate();
         System.out.println("입력 성공!");
         
+        // 이렇게 commit을 해야만 DB의 연결을 끊기 전에
+        // 임시 저장소에 보관된 변경 작업 결과(insert|update|delete)를 
+        // 실제 테이블에 적용한다.
+        con.commit();
+        
         stmt.close();
         con.close();
     }
