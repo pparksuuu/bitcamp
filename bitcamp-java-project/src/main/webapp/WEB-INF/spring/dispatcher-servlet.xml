@@ -59,7 +59,7 @@
     </bean>
     
     
-     <aop:config>
+     <aop:config> 
         <aop:advisor advice-ref="txAdvice" 
                      pointcut="execution(* bitcamp.java106.pms.service.impl.*.*(..))"/>
     </aop:config>
