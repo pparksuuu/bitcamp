@@ -1,17 +1,14 @@
 plugins {
     id 'java'
-    id 'application'
-    id 'eclipse'
+    id 'eclipse-wtp' // ='eclipse' 플러그인 + 웹 관련 작업들
+
+    id 'war'
 }
 
 // 소스 파일에서 사용하는 문자표 (characterset)를 지정한다.
 compileJava{
     options.encoding = "UTF-8"
 }
-
-mainClassName = 'App'
-
-
 
 
 
