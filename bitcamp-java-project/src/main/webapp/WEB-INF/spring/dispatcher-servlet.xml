@@ -53,7 +53,7 @@
         </tx:attributes>
     </tx:advice>
     
-    <bean id="txManager" 
+    <bean id="txManager"  
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
