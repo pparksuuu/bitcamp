@@ -13,7 +13,7 @@ b: <input id="ib" type="text"><br>
      submit 버튼은 클릭하면 웹브라우저가 form 값을 가지고 서버에 자동으로 요청한다.
      form의 action 속성을 지정하지 않으면 기본이 현재 페이지의 URL이다. -->
 <button id="btn1" type="button">계산</button>
-<button type="reset">초기화</button><br>
+<button id="btn2" type="reset">초기화</button><br>
 <textarea id="ta" cols="40" rows="5"></textarea>
 </form>
 
@@ -24,6 +24,7 @@ b: <input id="ib" type="text"><br>
 // 정상적인 응답(200)일 경우에 작업을 수행하라!
 //
 var ta = document.querySelector("#ta"),
+    btn2 = document.querySelector("#btn2"),
     ia = document.querySelector("#ia"),
     ib = document.querySelector("#ib")
 
@@ -38,6 +39,9 @@ document.querySelector("#btn1").onclick = () => {
 	    		ta.value = xhr.responseText
 	    	} else {
 	    		window.alert("서버 작업 실패")
+	    		var e = new MouseEvent("click")
+	    		btn2.dispatchEvent(e)
+	    		
 	    	}
 	    }
 	}
