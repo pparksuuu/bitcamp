@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ex07</title>
+</head>
+<body>
+<h1>AJAX - POST 요청</h1>
+<button id="btn1">요청</button><br>
+<textarea id="ta" cols="80" rows="10"></textarea>
+
+<script>
+"use strict"
+
+// AJAX로 요청하는 서버를 자신이 통제할 수 있다면,
+// 언제든 응답 헤더에 "Access-Control-Allow-Origin"을 붙여
+// 다른 사이트에서 AJAX 요청을 할 수 있도록 허락할 수 있다.
+// 문제는 자신이 통제할 수 없는 서버는 어떻게 처리할 것인가?
+// => 프록시 기법을 사용한다.
+// => 웹브라우저는 HTML을 다운로드 받은 서버에 AJAX 요청을 하고,
+//    그 서버는 중간에서 실제 목적지 서버로 요청을 대행한다.
+//    목적지 서버로부터 받은 응답을 그대로 AJAX 요청자에게 전달한다.
+//
+// 버튼을 클릭할 때 서버에 HTTP 요청하여 응답 결과를 textarea 태그에 출력한다.
+var ta = document.querySelector("#ta")
+
+document.querySelector("#btn1").onclick = () => {
+	var xhr = new XMLHttpRequest();
+	
+	// POST 요청은 데이터를 send()를 호출할 떄 넘긴다.
+	xhr.open("POST", "../../jsp/test2.jsp", false)
+	
+	// 주의!
+	// 서버에 POST 요청으로 데이터를 보낼 때는 반드시 Content-Type 헤더를 설정하여 
+	// 어떤 타입의 데이터를 보내는지 서버에 알려줘야 한다.
+	// => 일반적인 form 데이터의 형식(이름=값&이름=값&...)은 다음과 같이 MIME 타입을 선언해야 한다.
+	//    "application/x-www-form-urlencoded"
+    xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded")
+	
+	xhr.send("name=홍길동&age=20");
+	ta.value = xhr.responseText;
+	
+}
+
+</script>
+</body>
+</html>

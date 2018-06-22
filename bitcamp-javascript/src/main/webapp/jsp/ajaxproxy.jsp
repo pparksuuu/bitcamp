@@ -12,6 +12,5 @@
            변수를 지정하지 않으면 응답 결과를 따로 보관하지 않고
      c:import 태그가 있는 그 위치에서 응답 결과를 그대로 출력한다.--%>
 <textarea cols="80" rows="10">
-
-<c:import url="http://m.zdnet.co.kr/"/>
+	<c:import url="http://m.zdnet.co.kr/"/>
 </textarea>
