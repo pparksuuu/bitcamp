@@ -27,11 +27,21 @@ public class Exam10_2 {
     @ResponseBody
     public String list() {
         List<Board> boards = boardDao.selectList();
+        // 요청 핸들러의 리턴 값이 @rResponseVody일 경우,
+        // 일반 객체를 리턴하면
+        // 스프링에서 자동으로 JSON으로 바꿔등장한다.
         
         // Gson 라이브러리를 이용하여 객체를 JSON 문자열로 변환한다.
         String json = new Gson().toJson(boards);
         
         // 그리고 그 JSON 문자열을 출력한다.
+        return json;
+    }
+    
+    public String lis2() {
+        List<Board> boards = boardDao.selectList();
+        String json = new Gson().toJson(boards);
+        
         return json;
     }
 }

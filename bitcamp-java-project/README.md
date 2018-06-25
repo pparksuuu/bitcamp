@@ -1,5 +1,12 @@
 # 자바 프로젝트
 
+## src55 - AJAX를 이용하여 Front-End와 Back-End를 분리한다.
+학습목표
+    - 페이지 컨트롤러에서 JSON 데이터를 출력할 수 있다.
+    - 자바스크립트의 AJAX를 이용하여 서버에 데이터를 요청할 수 있다.
+    - 자바스크립트
+
+
 ## src52 - Spring WebMVC 기타 설정
 학습목표
     - view resolver의 역할을 이해한다.
