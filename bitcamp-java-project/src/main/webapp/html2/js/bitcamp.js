@@ -50,6 +50,21 @@ var jQuery = function(param) {
 		}
 		return tags;
 	}
+	
+	tags.text = function(value) {
+		for (var tag of tags) {
+			tag.textContent = value;
+		}
+		return tags;
+	};
+	
+	tags.is = function(selector) {
+		if (tags[0].querySelectorAll(selector).length > 0)
+			return true;
+		else
+			return false;
+	}
+	
 	return tags;
 };
 
@@ -75,7 +90,7 @@ jQuery.ajax = function(url, settings) {
 				if (settings.dataType == "text")
 					settings.success(xhr.responseText);
 				else if (settings.dataType == "json")
-					settings.success(JSON.parse(xhr.responseText));
+					settings.success(xhr.responseText == "" ? "" : JSON.parse(xhr.responseText));
 			} else {
 				if (settings.error) 
 					settings.error();
