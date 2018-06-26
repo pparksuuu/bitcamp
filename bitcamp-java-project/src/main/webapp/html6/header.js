@@ -1,11 +1,11 @@
-//div#header 태그에 /html/header.html 내용을 삽입한다.
+// div#header 태그에 /html/header.html 내용을 삽입한다.
 $.get("/bitcamp-java-project/html6/header.html", (data) => {
 	$("#header").html(data);
 	loadLoginUser();
 });
 
-function loadLoginUser() {	
-	// 로그인 정보를 가져와서 span#username 태그에 사용자 아이디를 삽입한다.
+function loadLoginUser() {
+	
 	$.getJSON("/bitcamp-java-project/json/auth/loginUser", (data) => {
 		$("#username").text(data.id);
 		$("#logoutBtn").click((e) => {
@@ -17,4 +17,9 @@ function loadLoginUser() {
 	}).fail(() => {
 		location.href = "/bitcamp-java-project/html6/auth/login.html";
 	});
+	
 }
+
+
+
+
