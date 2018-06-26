@@ -66,7 +66,7 @@ jQuery.ajax = function(url, settings) {
 	var xhr = new XMLHttpRequest();
 	xhr.onreadystatechange = () => {
 		if (xhr.readyState == 4) {
-			if (xhr.status == 200) {
+			if (xhr.status == 200 || xhr.status == 201) {
 				if (settings.success == undefined) 
 					return;
 
@@ -82,21 +82,31 @@ jQuery.ajax = function(url, settings) {
 			}
 		}
 	};
-	xhr.open(settings.method, url, true);
 	if (settings.method == "POST") {
+		xhr.open(settings.method, url, true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		var qs = "";
-		if (settings.data) {
-			for (var key in settings.data) {
-				if (qs.length > 0) qs += "&";
-				qs += key + "=" + encodeURIComponent(settings.data[key]);
-			}
-		}
-		xhr.send(qs);
+		xhr.send(jQuery.toQueryString(settings.data));
 
 	} else { // GET 
+		if (url.indexOf("?") != -1) {
+			url += "&" + jQuery.toQueryString(settings.data);
+		} else {
+			url += "?" +  jQuery.toQueryString(settings.data);
+		}
+		xhr.open(settings.method, url, true);
 		xhr.send();
 	}   
+};
+
+jQuery.toQueryString = function(obj) {
+	var qs = "";
+	if (obj) {
+		for (var key in obj) {
+			if (qs.length > 0) qs += "&";
+			qs += key + "=" + encodeURIComponent(obj[key]);
+		}
+	}
+	return qs;
 };
 
 jQuery.getJSON = function(url, p1, p2) {
@@ -118,6 +128,36 @@ jQuery.getJSON = function(url, p1, p2) {
 		});
 	}
 };
+
+jQuery.get = function(url, p1, p2, p3) {
+	var settings = {
+		method: "GET"
+	}
+	
+	if (arguments.length == 2) {
+		if (typeof p1 == "function") settings.success = p1;
+		else if (typeof p1 =="string") settings.dataType = p1;
+		else settings.data = p1;
+	} else if (arguments.length == 3) {
+		if (typeof p2 == "function") {
+			// .get(url, data, function);
+			settings.data = p1;
+			settings.success = p2;
+		} else if (typeof p2 == "string") {
+			settings.dataType = p2;
+			if (typeof p1 == "function") settings.success = p1; // .get(url, function, dataType);
+			else settings.data = p1; // .get(url, data, dataType);
+		}
+	} else if (arguments.length == 4) {
+		// .get(url, data, dataType);
+		settings.data = p1;
+		settings.success = p2;
+		settings.dataType = p3;
+	}
+ 
+	jQuery.ajax(url, settings);
+};
+
 
 jQuery.post = function(url, p1, p2, p3) {
 	var settings = {
@@ -147,6 +187,7 @@ jQuery.post = function(url, p1, p2, p3) {
  
 	jQuery.ajax(url, settings);
 };
+
 /*
 	if (p1 == undefined || typeof p1 != "function") {
 		// => getJSON("board/list");

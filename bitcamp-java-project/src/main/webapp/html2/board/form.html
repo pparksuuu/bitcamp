@@ -5,36 +5,44 @@
 <title>게시물 보기</title>
 </head>
 <body>
-<div id='header'></div>
+	<div id='header'></div>
 
-<h1 class="detail-view">게시물 보기</h1>
-<h1 class="input-view">새 게시글</h1>
-<form>
-<table border='1'>
-<tbody>
-<tr class="detail-view"><th>번호</th><td>
-    <input id="fNo" type='text' readonly></td></tr>
-<tr><th>제목</th>
-    <td><input id="fTitle" type='text'></td></tr>
-<tr><th>내용</th>
-    <td><textarea id='fContent' rows='10' cols='60'></textarea></td></tr>
-<tr class="detail-view"><th>등록일</th>
-    <td><input id="fCreatedDate" type='text' readonly></td></tr>
-</tbody>
-</table>
-<p>
-<a href='list.html'>목록</a>
-<button id="addBtn" type="button" class="input-view">등록</button>
-<button id="resetBtn" type="reset" class="input-view">초기화</button>
-<button id="updBtn" type="button" class="detail-view">변경</button>
-<button id="delBtn" type="button" class="detail-view">삭제</button>
-</p>
-</form>
+	<h1 class="detail-view">게시물 보기</h1>
+	<h1 class="input-view">새 게시글</h1>
+	<form>
+		<table border='1'>
+			<tbody>
+				<tr class="detail-view">
+					<th>번호</th>
+					<td><input id="fNo" type='text' readonly></td>
+				</tr>
+				<tr>
+					<th>제목</th>
+					<td><input id="fTitle" type='text'></td>
+				</tr>
+				<tr>
+					<th>내용</th>
+					<td><textarea id='fContent' rows='10' cols='60'></textarea></td>
+				</tr>
+				<tr class="detail-view">
+					<th>등록일</th>
+					<td><input id="fCreatedDate" type='text' readonly></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+			<a href='list.html'>목록</a>
+			<button id="addBtn" type="button" class="input-view">등록</button>
+			<button id="resetBtn" type="reset" class="input-view">초기화</button>
+			<button id="updBtn" type="button" class="detail-view">변경</button>
+			<button id="delBtn" type="button" class="detail-view">삭제</button>
+		</p>
+	</form>
 
 
-<script src="../js/bitcamp.js"></script>
-<!-- <script src="../header.js"></script> -->
-<script>
+	<script src="../js/bitcamp.js"></script>
+	<!-- <script src="../header.js"></script> -->
+	<script>
 
 if (location.href.split("?").length > 1) {
    var tags = $(".input-view");
@@ -59,62 +67,40 @@ if (location.href.split("?").length > 1) {
 	  });
    });
    
-    document.querySelector("#delBtn").onclick = () => {
+    $("#delBtn").click(() => {
         if (window.confirm("삭제하시겠습니까?") == false) 
            return;
-        
-      var xhr = new XMLHttpRequest();
-       xhr.onreadystatechange = () => {
-           if (xhr.readyState == 4) {
-               if (xhr.status == 200) {
-                   location.href = "list.html";
-               } else {
-                  window.alert("삭제 실패!")
-               }
-           }
-       };
-       xhr.open("GET", "../../json/board/delete?no=" + no, true);
-       xhr.send();
-   };
+    
+    $.get("../../json/board/delete", {"no": no}, () => {
+    	  location.href = "list.html";
+      });
+   });
    
 } else { // 새 글 등록
-    var tags = document.querySelectorAll(".detail-view");
-    for (var tag of tags) {
-        tag.style.display = "none"; // <h1 style="display: none;">...</h1>
-    }
+    var tags = $(".detail-view");
+    tags.css("display", "none");
     
-    document.querySelector("#addBtn").onclick = () => {
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = () => {
-            if (xhr.readyState == 4) {
-                if (xhr.status == 201) {
-                    location.href = "list.html";
-                } else {
-                   window.alert("등록 실패!")
-                }
-            }
-        };
-        xhr.open("POST", "../../json/board/add", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        //주의!
-        //=> 자바스크립트의 AJAX를 사용하여 직접 서버에 한글을 포함하는 데이터를 보낼 때는
-        //   개발자가 URL 인코딩 해서 보내야 한다.
-        xhr.send("title=" + encodeURIComponent(fTitle.value) + 
-              "&content=" + encodeURIComponent(fContent.value));
-    };
+    
+    $("#addBtn").click(() => {
+    	$.post("../../json/board/add", {
+    		title: $(fTitle).val(),
+    		content: $(fContent).val()
+    	}, () => {
+    		location.href = "list.html";
+    	});
+    });
 }
 
 </script>
 
 </body>
 </html>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
+
