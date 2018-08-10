@@ -1,38 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>ajax 파일 업로드</title>
-<!-- <link rel="stylesheet" href="node_modules/blueimp-file-upload/css/jquery.fileupload.css">
-<link rel="stylesheet" href="node_modules/blueimp-file-upload/css/jquery.fileupload-ui.css"> -->
-</head>
-<body>
-<h1>fileupload() 사용법 - 업로드 사진 미리보기</h1>
-<pre>
-1) jquery.fileupload() 함수
-   - 버튼을 클릭 했을 때 서버에 비동기 요청하도록 설정한다.
-   - 바로 파일을 업로드 하라는 의미가 아니다.
-   - processalways 이벤트에서 미리보기 이미지 태그를 출력하고 버튼의 이벤트 핸들러를 등록한다.
-</pre>
-
-이름: <input id='name' type='text'><br>
-나이: <input id='age' type='text'><br>
-사진: <input id="fileupload" type="file" name="files" multiple><br>
-<button id='upload-btn' type='button'>등록</button>
-<div id='images-div'></div>
-
-<script src='node_modules/jquery/dist/jquery.js'></script>
-<script src="node_modules/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
-<script src="node_modules/blueimp-load-image/js/load-image.all.min.js"></script>
-<script src="node_modules/blueimp-canvas-to-blob/js/canvas-to-blob.js"></script>
-<script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
-<script src="node_modules/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
-<script src="node_modules/blueimp-file-upload/js/jquery.fileupload.js"></script>
-<script src="node_modules/blueimp-file-upload/js/jquery.fileupload-process.js"></script> 
-<script src="node_modules/blueimp-file-upload/js/jquery.fileupload-image.js"></script>  
-
-<script>
-"use strict"
 
 $('#fileupload').fileupload({
   url: '../mvc/exam11_2/upload03',        // 서버에 요청할 URL
@@ -64,10 +29,10 @@ $('#fileupload').fileupload({
   }, 
   submit: function (e, data) { // 서버에 전송하기 직전에 호출된다.
     console.log('submit()...');
-    data.formData = {
-        name: $('#name').val(),
-        age: $('#age').val()
-    };
+//    data.formData = {
+//        name: $('#name').val(),
+//        age: $('#age').val()
+//    };
   }, 
   done: function (e, data) { // 서버에서 응답이 오면 호출된다. 각 파일 별로 호출된다.
     console.log('done()...');
@@ -79,14 +44,3 @@ $('#fileupload').fileupload({
     });
   }
 });
-
-</script>
-
-</body>
-</html>
-
-
-
-
-
-

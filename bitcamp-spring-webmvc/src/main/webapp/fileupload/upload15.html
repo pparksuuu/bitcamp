@@ -42,10 +42,12 @@ $('#fileupload').fileupload({
       console.log('done()...');
       console.log(data.result);
       
-      $('<img>').attr('src', '../files/' + data.result.filename)
-                .appendTo(imgBox);
-      $('<img>').attr('src', '../files/' + data.result.filename + '_50x50.jpg')
-                .appendTo(imgBox);
+      $('<img>')
+        .attr('src', '../files/' + data.result.filename)
+        .appendTo(imgBox);
+      $('<img>')
+        .attr('src', '../files/' + data.result.filename + '_50x50.jpg')
+        .appendTo(imgBox);
     }
 });
 
@@ -53,6 +55,7 @@ $('#fileupload').fileupload({
 
 </body>
 </html>
+
 
 
 
