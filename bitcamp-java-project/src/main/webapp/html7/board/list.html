@@ -5,23 +5,13 @@
 <title>게시물 목록</title>
 <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="../css/common.css">
-<style>
-#웹페이지용 {
-#nav
-.class
-
-}
-
-#테블릿용 {
-}
-</style>
 </head>
 <body>
 <div class="container">
 
 <nav id="header" class="navbar navbar-expand-lg navbar-light bg-light"></nav>
 
-<h1>게시물 목록</h1>
+<h1>게시물 목록 HTML7</h1>
 <p><a href='form.html' class="btn btn-primary btn-sm">새 글</a></p>
 <table class="table table-hover">
 <thead>
@@ -42,9 +32,84 @@
 {{/each}}
 </script>
 
+<script id="tr-template" type="text/x-handlebars-template">
+{{#each list}}
+<!-- 타임라인 카드 시작 -->
+<div class="sh-tl-card sh-card">
+  <!--글쓴이 시작 -->
+  <section class="sh-tl-card-primary">
+    <div class="sh-tl-user">
+      <img src="../../img/timeline/sh_profile.jpg" style="border-radius:50%; width:50px;">
+      <h1 class="sh-tl-user-name">박수현</h1>
+      <h6 class="sh-tl-post-date">{{createdDate}}</h6>
+    </div>
+  </section>
+  <!-- 글쓴이 종료-->
+  <!-- 글내용 시작-->
+  <div class="sh-tl-card-content">
+    <p>{{content}}}</p>
+    <div><img src="../../img/timeline/madrid.PNG"></div>
+    <p>타임라인 좀 힘들지만 할 수 있다!</p>
+  </div>
+  <!-- 글내용 종료 -->
+  <!-- 좋아요/댓글 시작-->
+  <section class="sh-tl-card-actions">
+    <div class="sh-tl-like-count">
+      <a class="sh-like-clicked" href="#!"><i class="far fa-thumbs-up"></i></a>
+      <a class="sh-like-clicked" id="sh-tl-CountedClicks" href="#!">0 명이 좋아합니다.</a>
+      <a href="#!"></a>
+    </div>
+    <div class="sh-tl-card-bottom">
+      <div class="sh-tl-like sh-tl-card-bottom-items">
+        <a onclick="TlAddClick()" class="sh-like-clicked" href="#!"><i class="far fa-thumbs-up"></i><span>     좋아요</span></a>
+      </div>
+      <div class="sh-tl-comment sh-tl-card-bottom-items">
+        <a href="#!"><i class="far fa-comments"></i>     댓글달기</a>
+      </div>
+    </div>
+  </section>
+  <!-- 좋아요/댓글 종료-->
+
+  <!-- 댓글쓰기 시작-->
+  <section class="sh-tl-card-reply-write">
+    <div class="sh-tl-reply-user">
+      <i class="sh-tl-reply-user-circle fas fa-user-circle"></i>
+      <div class="sh-tl-review-write">
+        <textarea class="sh-tl-review-title  sh-tl-reply-textarea" placeholder="댓글을 입력하세요" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
+        <div class="sh-tl-img-upload"><button class="sh-tl-reply-btn">게시</button> </div>
+      </div>
+    </div>
+  </section>
+  <!-- 댓글쓰기 종료 -->
+  <!-- 대댓글 불러오기-->
+  <section class="sh-tl-card-reply-load">
+    <div class="sh-tl-reply-user">
+      <i class="sh-tl-reply-user-circle fas fa-user-circle"></i>
+      <div class="sh-tl-review-write">
+        <!-- <span class="sh-tl-review-content sh-tl-reply-content" onkeydown="resize(this)" onkeyup="resize(this)"></span> -->
+        <textarea readonly class="sh-tl-review-content  sh-tl-reply-content"></textarea>
+        <div class="sh-tl-img-upload">
+        </div>
+      </div>
+  </section>
+  <!-- 대댓글 불러오기 종료-->
+  <div style="clear:both;"></div>
+  </div>
+</div>
+<!-- 타임라인 카드 하나 종료 -->
+{{/each}}
+</script>
+
+
+
+
+<script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
 <script src="../node_modules/jquery/dist/jquery.min.js"></script>
 <script src="../node_modules/handlebars/dist/handlebars.min.js"></script>
+<script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../js/common.js"></script>
 <script src="../header.js"></script>
+<script src="list.js"></script>
 
 <script>
 
@@ -64,8 +129,8 @@ $.ajax("../../json/board/list", {
     success(data) {
     	for (var item of data) {
             var tr = document.createElement("tr");
-            tr.innerHTML = "<td>" + item.no + "</td>" + 
-                "<td><a href='form.html?no=" + item.no + "'>" + item.title + "</a></td>" + 
+            tr.innerHTML = "<td>" + item.no + "</td>" +
+                "<td><a href='form.html?no=" + item.no + "'>" + item.title + "</a></td>" +
                 "<td>" + item.createdDate + "</td>";
             tableBody.appendChild(tr);
         }
@@ -79,10 +144,3 @@ $.ajax("../../json/board/list", {
 
 </body>
 </html>
-
-
-
-
-
-
-
